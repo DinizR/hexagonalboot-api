@@ -1,4 +1,6 @@
 .envrc.local
+switch-remote.sh
+.git-remote-host
 target/
 logs/
 .idea/

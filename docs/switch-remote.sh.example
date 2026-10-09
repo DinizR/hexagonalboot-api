@@ -1,0 +1,148 @@
+#!/usr/bin/env bash
+# Local only — do not commit. Retargets `origin` so `git push` / `git pull`
+# hit GitHub (DinizR) or GitLab (shine-group114134).
+#
+#   ./switch-remote.sh github
+#   ./switch-remote.sh gitlab
+#   ./switch-remote.sh status
+#   ./switch-remote.sh github hexagonalboot-api
+#
+# Named remotes `github` and `gitlab` are kept so you can still
+# `git push github` / `git push gitlab` without switching.
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+STATE="$ROOT/.git-remote-host"
+GH=DinizR
+GL=shine-group114134
+
+usage() {
+  echo "Usage: $0 github|gitlab|status [project]" >&2
+  echo "Projects: hexagonalboot-api registry-api-deploy porto-api-plugins shine-media-api-deploy" >&2
+  exit 1
+}
+
+# dir|github_url_or_empty|gitlab_url_or_empty
+project_row() {
+  case "$1" in
+    hexagonalboot-api)
+      echo "$ROOT/hexagonalboot-api|https://github.com/${GH}/hexagonalboot-api.git|git@gitlab.com:${GL}/hexagonalboot-api.git"
+      ;;
+    registry-api-deploy)
+      echo "$ROOT/registry-api-deploy|https://github.com/${GH}/registry-api-deploy.git|git@gitlab.com:${GL}/registry-api-deploy.git"
+      ;;
+    porto-api-plugins)
+      echo "$ROOT/porto-api-plugins||git@gitlab.com:${GL}/porto-api-plugins.git"
+      ;;
+    shine-media-api-deploy)
+      echo "$ROOT/shine-media-api-deploy||git@gitlab.com:${GL}/shine-media-api-deploy.git"
+      ;;
+    *)
+      echo "Unknown project: $1" >&2
+      exit 1
+      ;;
+  esac
+}
+
+ALL_PROJECTS=(hexagonalboot-api registry-api-deploy porto-api-plugins shine-media-api-deploy)
+
+ensure_remote() {
+  local dir="$1" name="$2" url="$3"
+  [[ -z "$url" ]] && return 0
+  if git -C "$dir" remote get-url "$name" >/dev/null 2>&1; then
+    git -C "$dir" remote set-url "$name" "$url"
+  else
+    git -C "$dir" remote add "$name" "$url"
+  fi
+}
+
+warn_if_needed() {
+  local name="$1" host="$2"
+  if [[ "$name" == hexagonalboot-api && "$host" == gitlab ]]; then
+    echo "note: GitLab ${GL}/hexagonalboot-api may not exist yet; create it before push." >&2
+  fi
+  if [[ "$name" == registry-api-deploy && "$host" == github ]]; then
+    echo "note: GitHub registry-api-deploy is a fresh tree (no GitLab history). First push may need: git push --force origin main" >&2
+  fi
+  if [[ "$name" == porto-api-plugins && "$host" == github ]]; then
+    echo "skip porto-api-plugins: GitHub has split repos (porto-api-common, porto-shared-plugins, registry-plugins), not this monorepo." >&2
+    echo "  GitLab remains origin for porto-api-plugins (includes shine-media)." >&2
+    return 1
+  fi
+  if [[ "$name" == shine-media-api-deploy && "$host" == github ]]; then
+    echo "skip shine-media-api-deploy: not on GitHub." >&2
+    return 1
+  fi
+  return 0
+}
+
+switch_one() {
+  local host="$1" name="$2"
+  local row dir gh_url gl_url url
+  row="$(project_row "$name")"
+  IFS='|' read -r dir gh_url gl_url <<<"$row"
+  if [[ ! -d "$dir/.git" ]]; then
+    echo "skip $name: not a git repo ($dir)" >&2
+    return 0
+  fi
+  if ! warn_if_needed "$name" "$host"; then
+    return 0
+  fi
+  ensure_remote "$dir" github "$gh_url"
+  ensure_remote "$dir" gitlab "$gl_url"
+  if [[ "$host" == github ]]; then
+    url="$gh_url"
+  else
+    url="$gl_url"
+  fi
+  if [[ -z "$url" ]]; then
+    echo "skip $name: no $host remote" >&2
+    return 0
+  fi
+  git -C "$dir" remote set-url origin "$url"
+  local branch
+  branch="$(git -C "$dir" rev-parse --abbrev-ref HEAD)"
+  git -C "$dir" branch --set-upstream-to="origin/${branch}" "$branch" >/dev/null 2>&1 || true
+  echo "$name  origin -> $url  ($branch)"
+}
+
+show_status() {
+  local name row dir
+  echo "target: $(cat "$STATE" 2>/dev/null || echo '(not set)')"
+  for name in "${ALL_PROJECTS[@]}"; do
+    row="$(project_row "$name")"
+    IFS='|' read -r dir _ _ <<<"$row"
+    if [[ ! -d "$dir/.git" ]]; then
+      echo "$name  (no .git)"
+      continue
+    fi
+    echo "$name  origin=$(git -C "$dir" remote get-url origin 2>/dev/null || echo none)"
+  done
+  echo
+  echo "porto-api-common, porto-shared-plugins, and registry are folders inside porto-api-plugins on GitLab;"
+  echo "on GitHub they are https://github.com/${GH}/{porto-api-common,porto-shared-plugins,registry-plugins}"
+}
+
+HOST="${1:-}"
+PROJECT="${2:-}"
+[[ -n "$HOST" ]] || usage
+
+case "$HOST" in
+  status)
+    show_status
+    exit 0
+    ;;
+  github|gitlab) ;;
+  *) usage ;;
+esac
+
+if [[ -n "$PROJECT" ]]; then
+  switch_one "$HOST" "$PROJECT"
+else
+  for name in "${ALL_PROJECTS[@]}"; do
+    switch_one "$HOST" "$name"
+  done
+fi
+echo "$HOST" > "$STATE"
+echo "saved $STATE"
+echo "git commit / git push in those repos now use origin ($HOST)."
