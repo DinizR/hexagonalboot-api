@@ -4,14 +4,16 @@ HexagonalBoot is a **hexagonal architecture framework** for building business AP
 
 It is an evolution of **[Picollo](https://github.com/DinizR/picollo)**, also on GitHub. Picollo used **OSGi** as the plugin runtime. HexagonalBoot does **not**: plugins are ordinary JARs loaded from a runtime home, and the platform is organized as **ports and adapters** (hexagonal architecture) instead of OSGi bundles and services.
 
-This repository is **one host**: the current implementation runs **on top of Spring Boot**. Spring Boot is the infrastructure, not the framework. The same hexagonal model — ports, plugins, and a runtime home — is meant to sit on other hosts later (**Quarkus**, **Micronaut**, and similar). Those hosts are not shipped here yet.
+This repository is **one host**: the current implementation runs **on top of Spring Boot**. Spring Boot is the infrastructure, not the framework. The same hexagonal model — ports, plugins, and a runtime home — is meant to sit on other hosts later (**Jakarta EE / JEE**, **Quarkus**, **Micronaut**, and similar). Those hosts are not shipped here yet.
 
 You build an API by adding:
 
 1. **Plugins** — entry adapters, use-case processors, and client adapters (plus DTOs and datasources). These should depend on framework contracts, not on Spring (or any other host).
 2. **A runtime home** (`PORTO_API_HOME`) — config, plugin YAML, Liquibase, OpenAPI, data, and logs
 
-The same application runs by pointing `PORTO_API_HOME` at that directory. A future Quarkus or Micronaut host should load the same plugins and the same runtime home.
+The same application runs by pointing `PORTO_API_HOME` at that directory. A future JEE, Quarkus, or Micronaut host should load the same plugins and the same runtime home.
+
+That is the point of the hexagonal split: **business logic is reused at the highest level**. Processors, adapters, and DTOs are written once against ports. Changing platform does **not** mean rewriting the product. You migrate the HexagonalBoot **substrate** (this host) to the new stack and keep **100% of the business logic**. The dream of “write the domain once, swap Spring Boot / JEE / Quarkus / Micronaut underneath” is what this architecture is built to make real.
 
 ## Architecture
 
@@ -33,10 +35,10 @@ This git tree is the **Spring Boot host only**. It wires the framework to Spring
 | Layer | Role | Today | Later |
 |-------|------|--------|--------|
 | Framework | Hexagonal ports, plugin loader, runtime home | porto-core + porto-api-common + this model | unchanged |
-| Host | Process, HTTP server, config bootstrap | **Spring Boot 4.1.1** (this repo) | Quarkus, Micronaut, … |
-| Application | Your APIs | plugins + `PORTO_API_HOME` | same plugins and home, different host |
+| Host (substrate) | Process, HTTP server, config bootstrap | **Spring Boot 4.1.1** (this repo) | JEE, Quarkus, Micronaut, … |
+| Application | Your APIs | plugins + `PORTO_API_HOME` | **same** plugins and home; no rewrite of business logic |
 
-The host is not fully abstract yet: this tree still uses Spring Boot APIs and `application.yml`. The target is that application plugins and the runtime home stay portable while a new host module replaces this one.
+The host is not fully abstract yet: this tree still uses Spring Boot APIs and `application.yml`. The target is that application plugins and the runtime home stay portable while a new HexagonalBoot substrate replaces this one. Domain code does not move with the platform.
 
 ## Requirements
 
