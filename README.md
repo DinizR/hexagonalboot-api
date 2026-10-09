@@ -2,6 +2,8 @@
 
 HexagonalBoot is a **hexagonal architecture framework** for building business APIs. Your domain lives in plugins; the framework does not.
 
+It is an evolution of **[Picollo](https://github.com/DinizR/picollo)**, also on GitHub. Picollo used **OSGi** as the plugin runtime. HexagonalBoot does **not**: plugins are ordinary JARs loaded from a runtime home, and the platform is organized as **ports and adapters** (hexagonal architecture) instead of OSGi bundles and services.
+
 This repository is **one host**: the current implementation runs **on top of Spring Boot**. Spring Boot is the infrastructure, not the framework. The same hexagonal model — ports, plugins, and a runtime home — is meant to sit on other hosts later (**Quarkus**, **Micronaut**, and similar). Those hosts are not shipped here yet.
 
 You build an API by adding:
@@ -373,6 +375,7 @@ A Java bump without a Spring Boot bump is fine if Boot still supports that JDK. 
 
 ## Related libraries
 
+- **[Picollo](https://github.com/DinizR/picollo)** — earlier plugable Spring Boot platform (OSGi). HexagonalBoot replaces that model with ports and adapters.
 - **porto-core** — hexagonal contracts: `EntryAdapter`, `ClientAdapter`, `BusinessProcessor`, `Context` (host-agnostic)
 - **porto-api-common** — SPI that application plugins compile against (keep host-agnostic so the same JARs can run on Spring Boot, Quarkus, or Micronaut)
 
