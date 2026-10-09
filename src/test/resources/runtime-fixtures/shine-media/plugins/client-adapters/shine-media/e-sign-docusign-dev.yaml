@@ -1,0 +1,27 @@
+configs:
+  - key: esign.backend
+    value: docusign
+    description: stub (local free) or docusign
+  - key: esign.stub.root
+    value: ~/tmp/shine-media/esign-stub
+    description: Unused when esign.backend=docusign. Stub envelopes live outside the API working tree.
+  - key: docusign.integrationKey
+    value: "4854f799-96ab-40d7-8272-93ff50e6be49"
+    description: Apps and Keys → Integration Key GUID
+  - key: docusign.userId
+    value: "d5e4a57a-6697-46fb-9bda-728161c0c873"
+    description: Apps and Keys → User ID GUID
+  - key: docusign.accountId
+    value: "b430e161-4908-4d02-80ce-a48e96d3157d"
+    description: Apps and Keys → API Account ID GUID
+  - key: docusign.authServer
+    value: https://account-d.docusign.com
+  - key: docusign.baseUri
+    value: https://demo.docusign.net/restapi
+  - key: docusign.privateKeyPem
+    value: ""
+  - key: docusign.privateKeyPath
+    value: config/shine-media/secrets/docusign-private-key-pkcs8.pem
+  - key: docusign.webhookSecret
+    value: ""
+    description: HMAC key from DocuSign Connect. When set, POST /media-provider-sows/esign-webhook verifies X-DocuSign-Signature-1.

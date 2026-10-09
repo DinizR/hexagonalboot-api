@@ -1,0 +1,109 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: h2
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_ROLE_PERMISSION
+        sql: |
+          SELECT id, role_id, permission_code
+          FROM role_permissions
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_ROLE_PERMISSION
+        sql: |
+          SELECT COUNT(*) FROM role_permissions
+      - name: READ_ROLE_PERMISSION
+        sql: |
+          SELECT id, role_id, permission_code
+          FROM role_permissions WHERE id = ?
+      - name: SEARCH_ROLE_PERMISSION
+        sql: |
+          SELECT id, role_id, permission_code
+          FROM role_permissions
+          WHERE (LOWER(CAST(permission_code AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_ROLE_PERMISSION
+        sql: |
+          INSERT INTO role_permissions (role_id, permission_code)
+          VALUES (?, ?)
+      - name: UPDATE_ROLE_PERMISSION
+        sql: |
+          UPDATE role_permissions
+          SET role_id = ?, permission_code = ?
+          WHERE id = ?
+      - name: DELETE_ROLE_PERMISSION
+        sql: |
+          DELETE FROM role_permissions WHERE id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_ROLE_PERMISSION
+        sql: |
+          SELECT id, role_id, permission_code
+          FROM role_permissions
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_ROLE_PERMISSION
+        sql: |
+          SELECT COUNT(*) FROM role_permissions
+      - name: READ_ROLE_PERMISSION
+        sql: |
+          SELECT id, role_id, permission_code
+          FROM role_permissions WHERE id = ?
+      - name: SEARCH_ROLE_PERMISSION
+        sql: |
+          SELECT id, role_id, permission_code
+          FROM role_permissions
+          WHERE (LOWER(CAST(permission_code AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_ROLE_PERMISSION
+        sql: |
+          INSERT INTO role_permissions (role_id, permission_code)
+          VALUES (?, ?)
+      - name: UPDATE_ROLE_PERMISSION
+        sql: |
+          UPDATE role_permissions
+          SET role_id = ?, permission_code = ?
+          WHERE id = ?
+      - name: DELETE_ROLE_PERMISSION
+        sql: |
+          DELETE FROM role_permissions WHERE id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_ROLE_PERMISSION
+        sql: |
+          SELECT id, role_id, permission_code
+          FROM role_permissions
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_ROLE_PERMISSION
+        sql: |
+          SELECT COUNT(*) FROM role_permissions
+      - name: READ_ROLE_PERMISSION
+        sql: |
+          SELECT id, role_id, permission_code
+          FROM role_permissions WHERE id = ?
+      - name: SEARCH_ROLE_PERMISSION
+        sql: |
+          SELECT id, role_id, permission_code
+          FROM role_permissions
+          WHERE (LOWER(CAST(permission_code AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_ROLE_PERMISSION
+        sql: |
+          INSERT INTO role_permissions (role_id, permission_code)
+          VALUES (?, ?)
+      - name: UPDATE_ROLE_PERMISSION
+        sql: |
+          UPDATE role_permissions
+          SET role_id = ?, permission_code = ?
+          WHERE id = ?
+      - name: DELETE_ROLE_PERMISSION
+        sql: |
+          DELETE FROM role_permissions WHERE id = ?
+

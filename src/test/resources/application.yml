@@ -1,0 +1,19 @@
+spring:
+  profiles:
+    active: test
+  datasource:
+    url: jdbc:h2:mem:porto-api-test;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: registry
+    password: registry
+  liquibase:
+    # Schema migrations run from datasource plugins (liquibase.change-log).
+    enabled: false
+
+porto:
+  api:
+    environment: dev
+    home-directory: ${user.dir}/src/test/resources/runtime-fixtures/registry
+    config-path: ${porto.api.home-directory}/config
+    plugins-path: ${porto.api.home-directory}/plugins
+    application-path: ${porto.api.config-path}/registry

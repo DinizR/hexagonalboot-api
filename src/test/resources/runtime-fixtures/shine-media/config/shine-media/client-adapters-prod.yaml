@@ -1,0 +1,395 @@
+client-adapters:
+  - id: business-area-jdbc
+    version: 1.0.0
+    label: BusinessArea JDBC Adapter
+    description: Persists business-areas to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.BusinessAreaJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: city-jdbc
+    version: 1.0.0
+    label: City JDBC Adapter
+    description: Persists cities to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.CityJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: city-regulation-jdbc
+    version: 1.0.0
+    label: CityRegulation JDBC Adapter
+    description: Persists city-regulations to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.CityRegulationJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: sales-commission-jdbc
+    version: 1.0.0
+    label: SalesCommission JDBC Adapter
+    description: Persists sales-commissions to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.SalesCommissionJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: commission-allocation-jdbc
+    version: 1.0.0
+    label: CommissionAllocation JDBC Adapter
+    description: Persists commission-allocations to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.CommissionAllocationJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: media-category-jdbc
+    version: 1.0.0
+    label: MediaCategory JDBC Adapter
+    description: Persists media-categories to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.MediaCategoryJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: media-channel-jdbc
+    version: 1.0.0
+    label: MediaChannel JDBC Adapter
+    description: Persists media-channels to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.MediaChannelJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: media-vehicle-jdbc
+    version: 1.0.0
+    label: MediaVehicle JDBC Adapter
+    description: Persists media-vehicles to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.MediaVehicleJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: media-location-jdbc
+    version: 1.0.0
+    label: MediaLocation JDBC Adapter
+    description: Persists media-locations to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.MediaLocationJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: offering-media-jdbc
+    version: 1.0.0
+    label: OfferingMedia JDBC Adapter
+    description: Persists offering-media to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.OfferingMediaJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+        - jarFile: inventory-slot-jdbc-1.0.0.jar
+  - id: inventory-slot-jdbc
+    version: 1.0.0
+    label: InventorySlot JDBC Adapter
+    description: Persists edition inventory slots for offerings (anonymous capacity or line positions).
+    className: systems.porto.shinemedia.adapter.jdbc.InventorySlotJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: house-fill-jdbc
+    version: 1.0.0
+    label: HouseFill JDBC Adapter
+    description: Persists unsold-slot house fills to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.HouseFillJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+        - jarFile: insertion-line-jdbc-1.0.0.jar
+        - jarFile: inventory-slot-jdbc-1.0.0.jar
+  - id: creative-service-jdbc
+    version: 1.0.0
+    label: CreativeService JDBC Adapter
+    description: Persists creative-services to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.CreativeServiceJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: creative-service-rate-jdbc
+    version: 1.0.0
+    label: CreativeServiceRate JDBC Adapter
+    description: Persists city-localized creative-service rates to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.CreativeServiceRateJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: party-jdbc
+    version: 1.0.0
+    label: Party JDBC Adapter
+    description: Persists parties to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.PartyJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: template-jdbc
+    version: 1.0.0
+    label: Template JDBC Adapter
+    description: Persists templates to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.TemplateJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: payment-condition-jdbc
+    version: 1.0.0
+    label: PaymentCondition JDBC Adapter
+    description: Persists payment-conditions to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.PaymentConditionJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: document-storage-s3
+    version: 1.0.0
+    label: Document storage (filesystem / S3)
+    description: Stores SoW documents under documents/ and images (channel icons) under images/.
+    className: systems.porto.shinemedia.adapter.storage.DocumentStorageS3Adapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: e-sign-docusign
+    version: 1.0.0
+    label: DocuSign e-sign
+    description: Dual-party SoW envelopes (stub locally; DocuSign JWT in sandbox/prod).
+    className: systems.porto.shinemedia.adapter.esign.ESignDocusignAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: document-render-thymeleaf
+    version: 1.0.0
+    label: Document render (Thymeleaf → PDF)
+    description: Renders country SoW HTML templates to PDF for e-sign.
+    className: systems.porto.shinemedia.adapter.document.DocumentRenderThymeleafAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: company-legal-entity-jdbc
+    version: 1.0.0
+    label: Company legal entity JDBC
+    description: Persists company tax/legal entities per country (SoW party block).
+    className: systems.porto.shinemedia.adapter.jdbc.CompanyLegalEntityJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: email-smtp
+    version: 1.0.0
+    label: SMTP email
+    description: App notification email (Mailpit locally; SES SMTP in prod).
+    className: systems.porto.shinemedia.adapter.email.EmailSmtpAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: media-provider-sow-jdbc
+    version: 1.0.0
+    label: MediaProviderSow JDBC Adapter
+    description: Persists media-provider-sows to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.MediaProviderSowJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+        - jarFile: inventory-slot-jdbc-1.0.0.jar
+  - id: media-provider-sow-line-jdbc
+    version: 1.0.0
+    label: MediaProviderSowLine JDBC Adapter
+    description: Persists media-provider-sow-lines to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.MediaProviderSowLineJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: media-provider-sow-line-position-jdbc
+    version: 1.0.0
+    label: MediaProviderSowLinePosition JDBC Adapter
+    description: Persists provider SoW line positions (pages, breaks, rolls) and regenerates inventory slots.
+    className: systems.porto.shinemedia.adapter.jdbc.MediaProviderSowLinePositionJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+        - jarFile: inventory-slot-jdbc-1.0.0.jar
+  - id: media-creative-sow-jdbc
+    version: 1.0.0
+    label: MediaCreativeSow JDBC Adapter
+    description: Persists media-creative-sows to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.MediaCreativeSowJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: creative-service-line-jdbc
+    version: 1.0.0
+    label: CreativeServiceLine JDBC Adapter
+    description: Persists creative-service-lines to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.CreativeServiceLineJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: creative-deliverable-jdbc
+    version: 1.0.0
+    label: CreativeDeliverable JDBC Adapter
+    description: Persists creative-deliverables to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.CreativeDeliverableJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: media-insertion-sow-jdbc
+    version: 1.0.0
+    label: MediaInsertionSow JDBC Adapter
+    description: Persists media-insertion-sows to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.MediaInsertionSowJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+        - jarFile: insertion-line-jdbc-1.0.0.jar
+        - jarFile: inventory-slot-jdbc-1.0.0.jar
+  - id: insertion-line-jdbc
+    version: 1.0.0
+    label: InsertionLine JDBC Adapter
+    description: Persists insertion-lines to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.InsertionLineJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+        - jarFile: inventory-slot-jdbc-1.0.0.jar
+  - id: insertion-media-content-jdbc
+    version: 1.0.0
+    label: InsertionMediaContent JDBC Adapter
+    description: Persists insertion-media-contents to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.InsertionMediaContentJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: provider-media-content-jdbc
+    version: 1.0.0
+    label: ProviderMediaContent JDBC Adapter
+    description: Persists provider-media-contents to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.ProviderMediaContentJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: contract-execution-evidence-jdbc
+    version: 1.0.0
+    label: ContractExecutionEvidence JDBC Adapter
+    description: Persists contract-execution-evidences to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.ContractExecutionEvidenceJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: account-jdbc
+    version: 1.0.0
+    label: Account JDBC Adapter
+    description: Persists chart-of-accounts rows to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.AccountJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: cash-flow-jdbc
+    version: 1.0.0
+    label: CashFlow JDBC Adapter
+    description: Persists cash-flows to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.CashFlowJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: user-jdbc
+    version: 1.0.0
+    label: User JDBC Adapter
+    description: Persists users to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.UserJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: role-jdbc
+    version: 1.0.0
+    label: Role JDBC Adapter
+    description: Persists roles to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.RoleJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: role-permission-jdbc
+    version: 1.0.0
+    label: RolePermission JDBC Adapter
+    description: Persists role-permissions to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.RolePermissionJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: user-role-jdbc
+    version: 1.0.0
+    label: UserRole JDBC Adapter
+    description: Persists user-roles to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.UserRoleJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: scheduled-job-jdbc
+    version: 1.0.0
+    label: ScheduledJob JDBC Adapter
+    description: Persists scheduled-jobs and parameters to the shine-media database.
+    className: systems.porto.shinemedia.adapter.jdbc.ScheduledJobJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: slot-execution-alert-jdbc
+    version: 1.0.0
+    label: Slot execution alert JDBC Adapter
+    description: Lists insertion slots that are not MEDIA_EXECUTED on or before a date.
+    className: systems.porto.shinemedia.adapter.jdbc.SlotExecutionAlertJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+
+  - id: identity-store-jdbc
+    version: 1.0.0
+    label: Identity store JDBC Adapter
+    description: Local login accounts and profiles from users, roles, and bcrypt hashes.
+    className: systems.porto.shinemedia.adapter.jdbc.IdentityStoreJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: local-idp
+    version: 1.0.0
+    label: Local Identity Provider
+    description: Authenticates local users and asks the host to issue JWTs.
+    className: systems.porto.shinemedia.adapter.idp.LocalIdentityProviderAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar

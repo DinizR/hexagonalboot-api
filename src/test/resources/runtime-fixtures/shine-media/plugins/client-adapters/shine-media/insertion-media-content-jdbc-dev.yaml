@@ -1,0 +1,192 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: h2
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_INSERTION_MEDIA_CONTENT
+        sql: |
+          SELECT id, name, insertion_line_id, inventory_slot_id, slot_duration_minutes, storage_location_url,
+                 storage_key, source, uploaded_by_user_id, detected_mime_type, detected_extension,
+                 width_px, height_px, duration_seconds, byte_size
+          FROM insertion_media_contents
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_INSERTION_MEDIA_CONTENT
+        sql: |
+          SELECT COUNT(*) FROM insertion_media_contents
+      - name: COUNT_INSERTION_MEDIA_CONTENT_BY_LINE
+        sql: |
+          SELECT COUNT(*) FROM insertion_media_contents WHERE insertion_line_id = ?
+      - name: COUNT_INSERTION_MEDIA_CONTENT_BY_SLOT
+        sql: |
+          SELECT COUNT(*) FROM insertion_media_contents WHERE inventory_slot_id = ?
+      - name: LIST_INSERTION_MEDIA_CONTENT_BY_SLOT
+        sql: |
+          SELECT id, name, insertion_line_id, inventory_slot_id, slot_duration_minutes, storage_location_url,
+                 storage_key, source, uploaded_by_user_id, detected_mime_type, detected_extension,
+                 width_px, height_px, duration_seconds, byte_size
+          FROM insertion_media_contents
+          WHERE inventory_slot_id = ?
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: READ_INSERTION_MEDIA_CONTENT
+        sql: |
+          SELECT id, name, insertion_line_id, inventory_slot_id, slot_duration_minutes, storage_location_url,
+                 storage_key, source, uploaded_by_user_id, detected_mime_type, detected_extension,
+                 width_px, height_px, duration_seconds, byte_size
+          FROM insertion_media_contents WHERE id = ?
+      - name: SEARCH_INSERTION_MEDIA_CONTENT
+        sql: |
+          SELECT id, name, insertion_line_id, inventory_slot_id, slot_duration_minutes, storage_location_url,
+                 storage_key, source, uploaded_by_user_id, detected_mime_type, detected_extension,
+                 width_px, height_px, duration_seconds, byte_size
+          FROM insertion_media_contents
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ?
+              OR LOWER(CAST(source AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_INSERTION_MEDIA_CONTENT
+        sql: |
+          INSERT INTO insertion_media_contents (
+            name, insertion_line_id, inventory_slot_id, slot_duration_minutes, storage_location_url,
+            storage_key, source, uploaded_by_user_id, detected_mime_type, detected_extension,
+            width_px, height_px, duration_seconds, byte_size)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_INSERTION_MEDIA_CONTENT
+        sql: |
+          UPDATE insertion_media_contents
+          SET name = ?, insertion_line_id = ?, inventory_slot_id = ?, slot_duration_minutes = ?,
+              storage_location_url = ?, storage_key = ?, source = ?, uploaded_by_user_id = ?,
+              detected_mime_type = ?, detected_extension = ?, width_px = ?, height_px = ?,
+              duration_seconds = ?, byte_size = ?
+          WHERE id = ?
+      - name: DELETE_INSERTION_MEDIA_CONTENT
+        sql: |
+          DELETE FROM insertion_media_contents WHERE id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_INSERTION_MEDIA_CONTENT
+        sql: |
+          SELECT id, name, insertion_line_id, inventory_slot_id, slot_duration_minutes, storage_location_url,
+                 storage_key, source, uploaded_by_user_id, detected_mime_type, detected_extension,
+                 width_px, height_px, duration_seconds, byte_size
+          FROM insertion_media_contents
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_INSERTION_MEDIA_CONTENT
+        sql: |
+          SELECT COUNT(*) FROM insertion_media_contents
+      - name: COUNT_INSERTION_MEDIA_CONTENT_BY_LINE
+        sql: |
+          SELECT COUNT(*) FROM insertion_media_contents WHERE insertion_line_id = ?
+      - name: COUNT_INSERTION_MEDIA_CONTENT_BY_SLOT
+        sql: |
+          SELECT COUNT(*) FROM insertion_media_contents WHERE inventory_slot_id = ?
+      - name: LIST_INSERTION_MEDIA_CONTENT_BY_SLOT
+        sql: |
+          SELECT id, name, insertion_line_id, inventory_slot_id, slot_duration_minutes, storage_location_url,
+                 storage_key, source, uploaded_by_user_id, detected_mime_type, detected_extension,
+                 width_px, height_px, duration_seconds, byte_size
+          FROM insertion_media_contents
+          WHERE inventory_slot_id = ?
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: READ_INSERTION_MEDIA_CONTENT
+        sql: |
+          SELECT id, name, insertion_line_id, inventory_slot_id, slot_duration_minutes, storage_location_url,
+                 storage_key, source, uploaded_by_user_id, detected_mime_type, detected_extension,
+                 width_px, height_px, duration_seconds, byte_size
+          FROM insertion_media_contents WHERE id = ?
+      - name: SEARCH_INSERTION_MEDIA_CONTENT
+        sql: |
+          SELECT id, name, insertion_line_id, inventory_slot_id, slot_duration_minutes, storage_location_url,
+                 storage_key, source, uploaded_by_user_id, detected_mime_type, detected_extension,
+                 width_px, height_px, duration_seconds, byte_size
+          FROM insertion_media_contents
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ?
+              OR LOWER(CAST(source AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_INSERTION_MEDIA_CONTENT
+        sql: |
+          INSERT INTO insertion_media_contents (
+            name, insertion_line_id, inventory_slot_id, slot_duration_minutes, storage_location_url,
+            storage_key, source, uploaded_by_user_id, detected_mime_type, detected_extension,
+            width_px, height_px, duration_seconds, byte_size)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_INSERTION_MEDIA_CONTENT
+        sql: |
+          UPDATE insertion_media_contents
+          SET name = ?, insertion_line_id = ?, inventory_slot_id = ?, slot_duration_minutes = ?,
+              storage_location_url = ?, storage_key = ?, source = ?, uploaded_by_user_id = ?,
+              detected_mime_type = ?, detected_extension = ?, width_px = ?, height_px = ?,
+              duration_seconds = ?, byte_size = ?
+          WHERE id = ?
+      - name: DELETE_INSERTION_MEDIA_CONTENT
+        sql: |
+          DELETE FROM insertion_media_contents WHERE id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_INSERTION_MEDIA_CONTENT
+        sql: |
+          SELECT id, name, insertion_line_id, inventory_slot_id, slot_duration_minutes, storage_location_url,
+                 storage_key, source, uploaded_by_user_id, detected_mime_type, detected_extension,
+                 width_px, height_px, duration_seconds, byte_size
+          FROM insertion_media_contents
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_INSERTION_MEDIA_CONTENT
+        sql: |
+          SELECT COUNT(*) FROM insertion_media_contents
+      - name: COUNT_INSERTION_MEDIA_CONTENT_BY_LINE
+        sql: |
+          SELECT COUNT(*) FROM insertion_media_contents WHERE insertion_line_id = ?
+      - name: COUNT_INSERTION_MEDIA_CONTENT_BY_SLOT
+        sql: |
+          SELECT COUNT(*) FROM insertion_media_contents WHERE inventory_slot_id = ?
+      - name: LIST_INSERTION_MEDIA_CONTENT_BY_SLOT
+        sql: |
+          SELECT id, name, insertion_line_id, inventory_slot_id, slot_duration_minutes, storage_location_url,
+                 storage_key, source, uploaded_by_user_id, detected_mime_type, detected_extension,
+                 width_px, height_px, duration_seconds, byte_size
+          FROM insertion_media_contents
+          WHERE inventory_slot_id = ?
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: READ_INSERTION_MEDIA_CONTENT
+        sql: |
+          SELECT id, name, insertion_line_id, inventory_slot_id, slot_duration_minutes, storage_location_url,
+                 storage_key, source, uploaded_by_user_id, detected_mime_type, detected_extension,
+                 width_px, height_px, duration_seconds, byte_size
+          FROM insertion_media_contents WHERE id = ?
+      - name: SEARCH_INSERTION_MEDIA_CONTENT
+        sql: |
+          SELECT id, name, insertion_line_id, inventory_slot_id, slot_duration_minutes, storage_location_url,
+                 storage_key, source, uploaded_by_user_id, detected_mime_type, detected_extension,
+                 width_px, height_px, duration_seconds, byte_size
+          FROM insertion_media_contents
+          WHERE (LOWER(CAST(name AS CHAR(4000))) LIKE ?
+              OR LOWER(CAST(source AS CHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_INSERTION_MEDIA_CONTENT
+        sql: |
+          INSERT INTO insertion_media_contents (
+            name, insertion_line_id, inventory_slot_id, slot_duration_minutes, storage_location_url,
+            storage_key, source, uploaded_by_user_id, detected_mime_type, detected_extension,
+            width_px, height_px, duration_seconds, byte_size)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_INSERTION_MEDIA_CONTENT
+        sql: |
+          UPDATE insertion_media_contents
+          SET name = ?, insertion_line_id = ?, inventory_slot_id = ?, slot_duration_minutes = ?,
+              storage_location_url = ?, storage_key = ?, source = ?, uploaded_by_user_id = ?,
+              detected_mime_type = ?, detected_extension = ?, width_px = ?, height_px = ?,
+              duration_seconds = ?, byte_size = ?
+          WHERE id = ?
+      - name: DELETE_INSERTION_MEDIA_CONTENT
+        sql: |
+          DELETE FROM insertion_media_contents WHERE id = ?

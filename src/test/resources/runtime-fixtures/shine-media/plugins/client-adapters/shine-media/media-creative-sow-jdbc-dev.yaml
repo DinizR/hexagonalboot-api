@@ -1,0 +1,109 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: h2
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_MEDIA_CREATIVE_SOW
+        sql: |
+          SELECT id, creation_date, party_id, supplier_party_id, duration_from, duration_to, template_id, currency, payment_condition_id, tax_rate, sales_manager_id, signed_by_user_id, signature_reference, signed_sow_url, status, media_insertion_sow_id
+          FROM media_creative_sows
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_MEDIA_CREATIVE_SOW
+        sql: |
+          SELECT COUNT(*) FROM media_creative_sows
+      - name: READ_MEDIA_CREATIVE_SOW
+        sql: |
+          SELECT id, creation_date, party_id, supplier_party_id, duration_from, duration_to, template_id, currency, payment_condition_id, tax_rate, sales_manager_id, signed_by_user_id, signature_reference, signed_sow_url, status, media_insertion_sow_id
+          FROM media_creative_sows WHERE id = ?
+      - name: SEARCH_MEDIA_CREATIVE_SOW
+        sql: |
+          SELECT id, creation_date, party_id, supplier_party_id, duration_from, duration_to, template_id, currency, payment_condition_id, tax_rate, sales_manager_id, signed_by_user_id, signature_reference, signed_sow_url, status, media_insertion_sow_id
+          FROM media_creative_sows
+          WHERE (LOWER(CAST(currency AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(status AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(signature_reference AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_MEDIA_CREATIVE_SOW
+        sql: |
+          INSERT INTO media_creative_sows (creation_date, party_id, supplier_party_id, duration_from, duration_to, template_id, currency, payment_condition_id, tax_rate, sales_manager_id, signed_by_user_id, signature_reference, signed_sow_url, status, media_insertion_sow_id)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_MEDIA_CREATIVE_SOW
+        sql: |
+          UPDATE media_creative_sows
+          SET creation_date = ?, party_id = ?, supplier_party_id = ?, duration_from = ?, duration_to = ?, template_id = ?, currency = ?, payment_condition_id = ?, tax_rate = ?, sales_manager_id = ?, signed_by_user_id = ?, signature_reference = ?, signed_sow_url = ?, status = ?, media_insertion_sow_id = ?
+          WHERE id = ?
+      - name: DELETE_MEDIA_CREATIVE_SOW
+        sql: |
+          DELETE FROM media_creative_sows WHERE id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_MEDIA_CREATIVE_SOW
+        sql: |
+          SELECT id, creation_date, party_id, supplier_party_id, duration_from, duration_to, template_id, currency, payment_condition_id, tax_rate, sales_manager_id, signed_by_user_id, signature_reference, signed_sow_url, status, media_insertion_sow_id
+          FROM media_creative_sows
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_MEDIA_CREATIVE_SOW
+        sql: |
+          SELECT COUNT(*) FROM media_creative_sows
+      - name: READ_MEDIA_CREATIVE_SOW
+        sql: |
+          SELECT id, creation_date, party_id, supplier_party_id, duration_from, duration_to, template_id, currency, payment_condition_id, tax_rate, sales_manager_id, signed_by_user_id, signature_reference, signed_sow_url, status, media_insertion_sow_id
+          FROM media_creative_sows WHERE id = ?
+      - name: SEARCH_MEDIA_CREATIVE_SOW
+        sql: |
+          SELECT id, creation_date, party_id, supplier_party_id, duration_from, duration_to, template_id, currency, payment_condition_id, tax_rate, sales_manager_id, signed_by_user_id, signature_reference, signed_sow_url, status, media_insertion_sow_id
+          FROM media_creative_sows
+          WHERE (LOWER(CAST(currency AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(status AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(signature_reference AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_MEDIA_CREATIVE_SOW
+        sql: |
+          INSERT INTO media_creative_sows (creation_date, party_id, supplier_party_id, duration_from, duration_to, template_id, currency, payment_condition_id, tax_rate, sales_manager_id, signed_by_user_id, signature_reference, signed_sow_url, status, media_insertion_sow_id)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_MEDIA_CREATIVE_SOW
+        sql: |
+          UPDATE media_creative_sows
+          SET creation_date = ?, party_id = ?, supplier_party_id = ?, duration_from = ?, duration_to = ?, template_id = ?, currency = ?, payment_condition_id = ?, tax_rate = ?, sales_manager_id = ?, signed_by_user_id = ?, signature_reference = ?, signed_sow_url = ?, status = ?, media_insertion_sow_id = ?
+          WHERE id = ?
+      - name: DELETE_MEDIA_CREATIVE_SOW
+        sql: |
+          DELETE FROM media_creative_sows WHERE id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_MEDIA_CREATIVE_SOW
+        sql: |
+          SELECT id, creation_date, party_id, supplier_party_id, duration_from, duration_to, template_id, currency, payment_condition_id, tax_rate, sales_manager_id, signed_by_user_id, signature_reference, signed_sow_url, status, media_insertion_sow_id
+          FROM media_creative_sows
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_MEDIA_CREATIVE_SOW
+        sql: |
+          SELECT COUNT(*) FROM media_creative_sows
+      - name: READ_MEDIA_CREATIVE_SOW
+        sql: |
+          SELECT id, creation_date, party_id, supplier_party_id, duration_from, duration_to, template_id, currency, payment_condition_id, tax_rate, sales_manager_id, signed_by_user_id, signature_reference, signed_sow_url, status, media_insertion_sow_id
+          FROM media_creative_sows WHERE id = ?
+      - name: SEARCH_MEDIA_CREATIVE_SOW
+        sql: |
+          SELECT id, creation_date, party_id, supplier_party_id, duration_from, duration_to, template_id, currency, payment_condition_id, tax_rate, sales_manager_id, signed_by_user_id, signature_reference, signed_sow_url, status, media_insertion_sow_id
+          FROM media_creative_sows
+          WHERE (LOWER(CAST(currency AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(status AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(signature_reference AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_MEDIA_CREATIVE_SOW
+        sql: |
+          INSERT INTO media_creative_sows (creation_date, party_id, supplier_party_id, duration_from, duration_to, template_id, currency, payment_condition_id, tax_rate, sales_manager_id, signed_by_user_id, signature_reference, signed_sow_url, status, media_insertion_sow_id)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_MEDIA_CREATIVE_SOW
+        sql: |
+          UPDATE media_creative_sows
+          SET creation_date = ?, party_id = ?, supplier_party_id = ?, duration_from = ?, duration_to = ?, template_id = ?, currency = ?, payment_condition_id = ?, tax_rate = ?, sales_manager_id = ?, signed_by_user_id = ?, signature_reference = ?, signed_sow_url = ?, status = ?, media_insertion_sow_id = ?
+          WHERE id = ?
+      - name: DELETE_MEDIA_CREATIVE_SOW
+        sql: |
+          DELETE FROM media_creative_sows WHERE id = ?
+

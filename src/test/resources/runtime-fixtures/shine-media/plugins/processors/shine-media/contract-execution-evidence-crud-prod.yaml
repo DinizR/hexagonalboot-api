@@ -1,0 +1,6 @@
+connectors:
+  - id: DB
+    adapter: contract-execution-evidence-jdbc
+properties:
+  - key: page.default.size
+    value: "8"

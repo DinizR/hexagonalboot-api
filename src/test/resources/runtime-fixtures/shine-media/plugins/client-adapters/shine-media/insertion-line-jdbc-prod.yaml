@@ -1,0 +1,187 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: postgres
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_INSERTION_LINE
+        sql: |
+          SELECT id, media_insertion_sow_id, offering_media_id, number_of_insertions, duration_minutes, unit_price, discount
+          FROM insertion_lines
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_INSERTION_LINE
+        sql: |
+          SELECT COUNT(*) FROM insertion_lines
+      - name: READ_INSERTION_LINE
+        sql: |
+          SELECT id, media_insertion_sow_id, offering_media_id, number_of_insertions, duration_minutes, unit_price, discount
+          FROM insertion_lines WHERE id = ?
+      - name: SEARCH_INSERTION_LINE
+        sql: |
+          SELECT id, media_insertion_sow_id, offering_media_id, number_of_insertions, duration_minutes, unit_price, discount
+          FROM insertion_lines
+          WHERE 1 = 0
+          ORDER BY id
+      - name: INSERT_INSERTION_LINE
+        sql: |
+          INSERT INTO insertion_lines (media_insertion_sow_id, offering_media_id, number_of_insertions, duration_minutes, unit_price, discount)
+          VALUES (?, ?, ?, ?, ?, ?)
+      - name: UPDATE_INSERTION_LINE
+        sql: |
+          UPDATE insertion_lines
+          SET media_insertion_sow_id = ?, offering_media_id = ?, number_of_insertions = ?, duration_minutes = ?, unit_price = ?, discount = ?
+          WHERE id = ?
+      - name: DELETE_INSERTION_LINE
+        sql: |
+          DELETE FROM insertion_lines WHERE id = ?
+
+      - name: READ_RATE_FOR_OFFERING
+        sql: |
+          SELECT l.minute_price, l.slot_duration_minutes, l.slot_monthly_price
+          FROM offering_media o
+          INNER JOIN media_provider_sow_lines l ON l.id = o.media_provider_sow_line_id
+          WHERE o.id = ?
+
+      - name: VCG_LOCK_VEHICLE_BY_OFFERING
+        sql: |
+          SELECT mv.id, mv.name, mv.capacity_quantity, mv.capacity_type, mv.air_time, mv.recurrence
+          FROM offering_media om
+          INNER JOIN media_provider_sow_lines psl ON psl.id = om.media_provider_sow_line_id
+          INNER JOIN media_vehicles mv ON mv.id = psl.media_vehicle_id
+          WHERE om.id = ?
+          FOR UPDATE
+      - name: VCG_LOCK_VEHICLE_BY_ID
+        sql: |
+          SELECT mv.id, mv.name, mv.capacity_quantity, mv.capacity_type, mv.air_time, mv.recurrence
+          FROM media_vehicles mv
+          WHERE mv.id = ?
+          FOR UPDATE
+      - name: VCG_READ_INSERTION_SOW_WINDOW
+        sql: |
+          SELECT duration_from, duration_to, status
+          FROM media_insertion_sows
+          WHERE id = ?
+  - dialect: postgres
+    statements:
+      - name: LIST_INSERTION_LINE
+        sql: |
+          SELECT id, media_insertion_sow_id, offering_media_id, number_of_insertions, duration_minutes, unit_price, discount
+          FROM insertion_lines
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_INSERTION_LINE
+        sql: |
+          SELECT COUNT(*) FROM insertion_lines
+      - name: READ_INSERTION_LINE
+        sql: |
+          SELECT id, media_insertion_sow_id, offering_media_id, number_of_insertions, duration_minutes, unit_price, discount
+          FROM insertion_lines WHERE id = ?
+      - name: SEARCH_INSERTION_LINE
+        sql: |
+          SELECT id, media_insertion_sow_id, offering_media_id, number_of_insertions, duration_minutes, unit_price, discount
+          FROM insertion_lines
+          WHERE 1 = 0
+          ORDER BY id
+      - name: INSERT_INSERTION_LINE
+        sql: |
+          INSERT INTO insertion_lines (media_insertion_sow_id, offering_media_id, number_of_insertions, duration_minutes, unit_price, discount)
+          VALUES (?, ?, ?, ?, ?, ?)
+      - name: UPDATE_INSERTION_LINE
+        sql: |
+          UPDATE insertion_lines
+          SET media_insertion_sow_id = ?, offering_media_id = ?, number_of_insertions = ?, duration_minutes = ?, unit_price = ?, discount = ?
+          WHERE id = ?
+      - name: DELETE_INSERTION_LINE
+        sql: |
+          DELETE FROM insertion_lines WHERE id = ?
+
+      - name: READ_RATE_FOR_OFFERING
+        sql: |
+          SELECT l.minute_price, l.slot_duration_minutes, l.slot_monthly_price
+          FROM offering_media o
+          INNER JOIN media_provider_sow_lines l ON l.id = o.media_provider_sow_line_id
+          WHERE o.id = ?
+
+      - name: VCG_LOCK_VEHICLE_BY_OFFERING
+        sql: |
+          SELECT mv.id, mv.name, mv.capacity_quantity, mv.capacity_type, mv.air_time, mv.recurrence
+          FROM offering_media om
+          INNER JOIN media_provider_sow_lines psl ON psl.id = om.media_provider_sow_line_id
+          INNER JOIN media_vehicles mv ON mv.id = psl.media_vehicle_id
+          WHERE om.id = ?
+          FOR UPDATE
+      - name: VCG_LOCK_VEHICLE_BY_ID
+        sql: |
+          SELECT mv.id, mv.name, mv.capacity_quantity, mv.capacity_type, mv.air_time, mv.recurrence
+          FROM media_vehicles mv
+          WHERE mv.id = ?
+          FOR UPDATE
+      - name: VCG_READ_INSERTION_SOW_WINDOW
+        sql: |
+          SELECT duration_from, duration_to, status
+          FROM media_insertion_sows
+          WHERE id = ?
+  - dialect: mysql
+    statements:
+      - name: LIST_INSERTION_LINE
+        sql: |
+          SELECT id, media_insertion_sow_id, offering_media_id, number_of_insertions, duration_minutes, unit_price, discount
+          FROM insertion_lines
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_INSERTION_LINE
+        sql: |
+          SELECT COUNT(*) FROM insertion_lines
+      - name: READ_INSERTION_LINE
+        sql: |
+          SELECT id, media_insertion_sow_id, offering_media_id, number_of_insertions, duration_minutes, unit_price, discount
+          FROM insertion_lines WHERE id = ?
+      - name: SEARCH_INSERTION_LINE
+        sql: |
+          SELECT id, media_insertion_sow_id, offering_media_id, number_of_insertions, duration_minutes, unit_price, discount
+          FROM insertion_lines
+          WHERE 1 = 0
+          ORDER BY id
+      - name: INSERT_INSERTION_LINE
+        sql: |
+          INSERT INTO insertion_lines (media_insertion_sow_id, offering_media_id, number_of_insertions, duration_minutes, unit_price, discount)
+          VALUES (?, ?, ?, ?, ?, ?)
+      - name: UPDATE_INSERTION_LINE
+        sql: |
+          UPDATE insertion_lines
+          SET media_insertion_sow_id = ?, offering_media_id = ?, number_of_insertions = ?, duration_minutes = ?, unit_price = ?, discount = ?
+          WHERE id = ?
+      - name: DELETE_INSERTION_LINE
+        sql: |
+          DELETE FROM insertion_lines WHERE id = ?
+
+      - name: READ_RATE_FOR_OFFERING
+        sql: |
+          SELECT l.minute_price, l.slot_duration_minutes, l.slot_monthly_price
+          FROM offering_media o
+          INNER JOIN media_provider_sow_lines l ON l.id = o.media_provider_sow_line_id
+          WHERE o.id = ?
+
+      - name: VCG_LOCK_VEHICLE_BY_OFFERING
+        sql: |
+          SELECT mv.id, mv.name, mv.capacity_quantity, mv.capacity_type, mv.air_time, mv.recurrence
+          FROM offering_media om
+          INNER JOIN media_provider_sow_lines psl ON psl.id = om.media_provider_sow_line_id
+          INNER JOIN media_vehicles mv ON mv.id = psl.media_vehicle_id
+          WHERE om.id = ?
+          FOR UPDATE
+      - name: VCG_LOCK_VEHICLE_BY_ID
+        sql: |
+          SELECT mv.id, mv.name, mv.capacity_quantity, mv.capacity_type, mv.air_time, mv.recurrence
+          FROM media_vehicles mv
+          WHERE mv.id = ?
+          FOR UPDATE
+      - name: VCG_READ_INSERTION_SOW_WINDOW
+        sql: |
+          SELECT duration_from, duration_to, status
+          FROM media_insertion_sows
+          WHERE id = ?

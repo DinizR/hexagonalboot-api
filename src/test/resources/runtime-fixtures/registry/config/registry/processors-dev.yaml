@@ -1,0 +1,19 @@
+processors:
+  - id: product-crud
+    version: 1.0.0
+    label: Product CRUD Processor
+    description: Business logic for registry product operations.
+    className: systems.porto.registry.processor.ProductCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: registry-dtos-1.0.0.jar
+  - id: category-crud
+    version: 1.0.0
+    label: Category CRUD Processor
+    description: Business logic for registry category operations.
+    className: systems.porto.registry.processor.CategoryCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: registry-dtos-1.0.0.jar

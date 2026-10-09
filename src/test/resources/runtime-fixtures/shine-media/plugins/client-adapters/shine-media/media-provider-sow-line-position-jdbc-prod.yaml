@@ -1,0 +1,137 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: postgres
+
+queries:
+
+  - dialect: h2
+    statements:
+      - name: LIST_MEDIA_PROVIDER_SOW_LINE_POSITION
+        sql: |
+          SELECT id, media_provider_sow_line_id, position_code, position_label, sort_order, page_from, page_to, capacity, slot_monthly_price
+          FROM media_provider_sow_line_positions
+          ORDER BY media_provider_sow_line_id, sort_order, id
+          LIMIT ? OFFSET ?
+      - name: COUNT_MEDIA_PROVIDER_SOW_LINE_POSITION
+        sql: |
+          SELECT COUNT(*) FROM media_provider_sow_line_positions
+      - name: READ_MEDIA_PROVIDER_SOW_LINE_POSITION
+        sql: |
+          SELECT id, media_provider_sow_line_id, position_code, position_label, sort_order, page_from, page_to, capacity, slot_monthly_price
+          FROM media_provider_sow_line_positions WHERE id = ?
+      - name: SEARCH_MEDIA_PROVIDER_SOW_LINE_POSITION
+        sql: |
+          SELECT id, media_provider_sow_line_id, position_code, position_label, sort_order, page_from, page_to, capacity, slot_monthly_price
+          FROM media_provider_sow_line_positions
+          WHERE (LOWER(CAST(position_code AS VARCHAR(4000))) LIKE ?
+              OR LOWER(CAST(position_label AS VARCHAR(4000))) LIKE ?)
+          ORDER BY media_provider_sow_line_id, sort_order, id
+      - name: INSERT_MEDIA_PROVIDER_SOW_LINE_POSITION
+        sql: |
+          INSERT INTO media_provider_sow_line_positions (
+            media_provider_sow_line_id, position_code, position_label, sort_order, page_from, page_to, capacity, slot_monthly_price
+          )
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_MEDIA_PROVIDER_SOW_LINE_POSITION
+        sql: |
+          UPDATE media_provider_sow_line_positions
+          SET media_provider_sow_line_id = ?, position_code = ?, position_label = ?,
+              sort_order = ?, page_from = ?, page_to = ?, capacity = ?, slot_monthly_price = ?
+          WHERE id = ?
+      - name: DELETE_MEDIA_PROVIDER_SOW_LINE_POSITION
+        sql: |
+          DELETE FROM media_provider_sow_line_positions WHERE id = ?
+
+      - name: NEXT_MEDIA_PROVIDER_SOW_LINE_POSITION_SORT_ORDER
+        sql: |
+          SELECT COALESCE(MAX(sort_order), 0) + 1
+          FROM media_provider_sow_line_positions
+          WHERE media_provider_sow_line_id = ?
+  - dialect: postgres
+    statements:
+      - name: LIST_MEDIA_PROVIDER_SOW_LINE_POSITION
+        sql: |
+          SELECT id, media_provider_sow_line_id, position_code, position_label, sort_order, page_from, page_to, capacity, slot_monthly_price
+          FROM media_provider_sow_line_positions
+          ORDER BY media_provider_sow_line_id, sort_order, id
+          LIMIT ? OFFSET ?
+      - name: COUNT_MEDIA_PROVIDER_SOW_LINE_POSITION
+        sql: |
+          SELECT COUNT(*) FROM media_provider_sow_line_positions
+      - name: READ_MEDIA_PROVIDER_SOW_LINE_POSITION
+        sql: |
+          SELECT id, media_provider_sow_line_id, position_code, position_label, sort_order, page_from, page_to, capacity, slot_monthly_price
+          FROM media_provider_sow_line_positions WHERE id = ?
+      - name: SEARCH_MEDIA_PROVIDER_SOW_LINE_POSITION
+        sql: |
+          SELECT id, media_provider_sow_line_id, position_code, position_label, sort_order, page_from, page_to, capacity, slot_monthly_price
+          FROM media_provider_sow_line_positions
+          WHERE (LOWER(CAST(position_code AS VARCHAR(4000))) LIKE ?
+              OR LOWER(CAST(position_label AS VARCHAR(4000))) LIKE ?)
+          ORDER BY media_provider_sow_line_id, sort_order, id
+      - name: INSERT_MEDIA_PROVIDER_SOW_LINE_POSITION
+        sql: |
+          INSERT INTO media_provider_sow_line_positions (
+            media_provider_sow_line_id, position_code, position_label, sort_order, page_from, page_to, capacity, slot_monthly_price
+          )
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_MEDIA_PROVIDER_SOW_LINE_POSITION
+        sql: |
+          UPDATE media_provider_sow_line_positions
+          SET media_provider_sow_line_id = ?, position_code = ?, position_label = ?,
+              sort_order = ?, page_from = ?, page_to = ?, capacity = ?, slot_monthly_price = ?
+          WHERE id = ?
+      - name: DELETE_MEDIA_PROVIDER_SOW_LINE_POSITION
+        sql: |
+          DELETE FROM media_provider_sow_line_positions WHERE id = ?
+
+      - name: NEXT_MEDIA_PROVIDER_SOW_LINE_POSITION_SORT_ORDER
+        sql: |
+          SELECT COALESCE(MAX(sort_order), 0) + 1
+          FROM media_provider_sow_line_positions
+          WHERE media_provider_sow_line_id = ?
+  - dialect: mysql
+    statements:
+      - name: LIST_MEDIA_PROVIDER_SOW_LINE_POSITION
+        sql: |
+          SELECT id, media_provider_sow_line_id, position_code, position_label, sort_order, page_from, page_to, capacity, slot_monthly_price
+          FROM media_provider_sow_line_positions
+          ORDER BY media_provider_sow_line_id, sort_order, id
+          LIMIT ? OFFSET ?
+      - name: COUNT_MEDIA_PROVIDER_SOW_LINE_POSITION
+        sql: |
+          SELECT COUNT(*) FROM media_provider_sow_line_positions
+      - name: READ_MEDIA_PROVIDER_SOW_LINE_POSITION
+        sql: |
+          SELECT id, media_provider_sow_line_id, position_code, position_label, sort_order, page_from, page_to, capacity, slot_monthly_price
+          FROM media_provider_sow_line_positions WHERE id = ?
+      - name: SEARCH_MEDIA_PROVIDER_SOW_LINE_POSITION
+        sql: |
+          SELECT id, media_provider_sow_line_id, position_code, position_label, sort_order, page_from, page_to, capacity, slot_monthly_price
+          FROM media_provider_sow_line_positions
+          WHERE (LOWER(CAST(position_code AS VARCHAR(4000))) LIKE ?
+              OR LOWER(CAST(position_label AS VARCHAR(4000))) LIKE ?)
+          ORDER BY media_provider_sow_line_id, sort_order, id
+      - name: INSERT_MEDIA_PROVIDER_SOW_LINE_POSITION
+        sql: |
+          INSERT INTO media_provider_sow_line_positions (
+            media_provider_sow_line_id, position_code, position_label, sort_order, page_from, page_to, capacity, slot_monthly_price
+          )
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_MEDIA_PROVIDER_SOW_LINE_POSITION
+        sql: |
+          UPDATE media_provider_sow_line_positions
+          SET media_provider_sow_line_id = ?, position_code = ?, position_label = ?,
+              sort_order = ?, page_from = ?, page_to = ?, capacity = ?, slot_monthly_price = ?
+          WHERE id = ?
+      - name: DELETE_MEDIA_PROVIDER_SOW_LINE_POSITION
+        sql: |
+          DELETE FROM media_provider_sow_line_positions WHERE id = ?
+
+      - name: NEXT_MEDIA_PROVIDER_SOW_LINE_POSITION_SORT_ORDER
+        sql: |
+          SELECT COALESCE(MAX(sort_order), 0) + 1
+          FROM media_provider_sow_line_positions
+          WHERE media_provider_sow_line_id = ?

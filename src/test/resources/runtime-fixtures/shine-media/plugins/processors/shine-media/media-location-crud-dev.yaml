@@ -1,0 +1,6 @@
+connectors:
+  - id: DB
+    adapter: media-location-jdbc
+properties:
+  - key: page.default.size
+    value: "8"

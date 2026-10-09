@@ -1,0 +1,10 @@
+connectors:
+  - id: DB
+    adapter: slot-execution-alert-jdbc
+  - id: EMAIL
+    adapter: email-smtp
+properties:
+  - key: daysBefore
+    value: "15"
+  - key: administratorEmail
+    value: rodrigo.dinis@outlook.com

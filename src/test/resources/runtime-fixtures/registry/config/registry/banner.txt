@@ -1,0 +1,12 @@
+${AnsiColor.BRIGHT_GREEN}
+   ██████╗ ███████╗ ██████╗ ██╗███████╗████████╗██████╗ ██╗   ██╗
+   ██╔══██╗██╔════╝██╔════╝ ██║██╔════╝╚══██╔══╝██╔══██╗╚██╗ ██╔╝
+   ██████╔╝█████╗  ██║  ███╗██║███████╗   ██║   ██████╔╝ ╚████╔╝
+   ██╔══██╗██╔══╝  ██║   ██║██║╚════██║   ██║   ██╔══██╗  ╚██╔╝
+   ██║  ██║███████╗╚██████╔╝██║███████║   ██║   ██║  ██║   ██║
+   ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝
+${AnsiColor.DEFAULT}
+${AnsiColor.BRIGHT_BLACK}   ─────────────────────────────────────────────${AnsiColor.DEFAULT}
+${AnsiColor.BRIGHT_GREEN}   :: Registry API ::${AnsiColor.DEFAULT}  ${AnsiColor.BRIGHT_BLACK}products · categories${AnsiColor.DEFAULT}
+${AnsiColor.BRIGHT_BLACK}   Powered by Spring Boot ${spring-boot.version} · ${porto.api.environment:dev}${AnsiColor.DEFAULT}
+

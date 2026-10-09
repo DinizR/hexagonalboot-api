@@ -1,0 +1,6 @@
+connectors:
+  - id: DB
+    adapter: commission-allocation-jdbc
+properties:
+  - key: page.default.size
+    value: "8"

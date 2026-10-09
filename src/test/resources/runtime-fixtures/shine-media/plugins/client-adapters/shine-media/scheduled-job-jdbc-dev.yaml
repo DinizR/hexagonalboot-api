@@ -1,0 +1,169 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: h2
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_SCHEDULED_JOB
+        sql: |
+          SELECT id, job_id, cron_expression, enabled, created_at, updated_at
+          FROM scheduled_jobs
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: LIST_ENABLED_SCHEDULED_JOB
+        sql: |
+          SELECT id, job_id, cron_expression, enabled, created_at, updated_at
+          FROM scheduled_jobs
+          WHERE enabled = TRUE
+          ORDER BY id
+      - name: COUNT_SCHEDULED_JOB
+        sql: |
+          SELECT COUNT(*) FROM scheduled_jobs
+      - name: READ_SCHEDULED_JOB
+        sql: |
+          SELECT id, job_id, cron_expression, enabled, created_at, updated_at
+          FROM scheduled_jobs WHERE id = ?
+      - name: SEARCH_SCHEDULED_JOB
+        sql: |
+          SELECT id, job_id, cron_expression, enabled, created_at, updated_at
+          FROM scheduled_jobs
+          WHERE LOWER(CAST(job_id AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(cron_expression AS VARCHAR(4000))) LIKE ?
+          ORDER BY id
+      - name: INSERT_SCHEDULED_JOB
+        sql: |
+          INSERT INTO scheduled_jobs (job_id, cron_expression, enabled, created_at, updated_at)
+          VALUES (?, ?, ?, ?, ?)
+      - name: UPDATE_SCHEDULED_JOB
+        sql: |
+          UPDATE scheduled_jobs
+          SET job_id = ?, cron_expression = ?, enabled = ?, updated_at = ?
+          WHERE id = ?
+      - name: DELETE_SCHEDULED_JOB
+        sql: |
+          DELETE FROM scheduled_jobs WHERE id = ?
+      - name: LIST_SCHEDULED_JOB_PARAMETERS
+        sql: |
+          SELECT param_key, param_value
+          FROM scheduled_job_parameters
+          WHERE scheduled_job_id = ?
+          ORDER BY param_key
+      - name: INSERT_SCHEDULED_JOB_PARAMETER
+        sql: |
+          INSERT INTO scheduled_job_parameters (scheduled_job_id, param_key, param_value)
+          VALUES (?, ?, ?)
+      - name: DELETE_SCHEDULED_JOB_PARAMETERS
+        sql: |
+          DELETE FROM scheduled_job_parameters WHERE scheduled_job_id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_SCHEDULED_JOB
+        sql: |
+          SELECT id, job_id, cron_expression, enabled, created_at, updated_at
+          FROM scheduled_jobs
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: LIST_ENABLED_SCHEDULED_JOB
+        sql: |
+          SELECT id, job_id, cron_expression, enabled, created_at, updated_at
+          FROM scheduled_jobs
+          WHERE enabled = TRUE
+          ORDER BY id
+      - name: COUNT_SCHEDULED_JOB
+        sql: |
+          SELECT COUNT(*) FROM scheduled_jobs
+      - name: READ_SCHEDULED_JOB
+        sql: |
+          SELECT id, job_id, cron_expression, enabled, created_at, updated_at
+          FROM scheduled_jobs WHERE id = ?
+      - name: SEARCH_SCHEDULED_JOB
+        sql: |
+          SELECT id, job_id, cron_expression, enabled, created_at, updated_at
+          FROM scheduled_jobs
+          WHERE LOWER(CAST(job_id AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(cron_expression AS VARCHAR(4000))) LIKE ?
+          ORDER BY id
+      - name: INSERT_SCHEDULED_JOB
+        sql: |
+          INSERT INTO scheduled_jobs (job_id, cron_expression, enabled, created_at, updated_at)
+          VALUES (?, ?, ?, ?, ?)
+      - name: UPDATE_SCHEDULED_JOB
+        sql: |
+          UPDATE scheduled_jobs
+          SET job_id = ?, cron_expression = ?, enabled = ?, updated_at = ?
+          WHERE id = ?
+      - name: DELETE_SCHEDULED_JOB
+        sql: |
+          DELETE FROM scheduled_jobs WHERE id = ?
+      - name: LIST_SCHEDULED_JOB_PARAMETERS
+        sql: |
+          SELECT param_key, param_value
+          FROM scheduled_job_parameters
+          WHERE scheduled_job_id = ?
+          ORDER BY param_key
+      - name: INSERT_SCHEDULED_JOB_PARAMETER
+        sql: |
+          INSERT INTO scheduled_job_parameters (scheduled_job_id, param_key, param_value)
+          VALUES (?, ?, ?)
+      - name: DELETE_SCHEDULED_JOB_PARAMETERS
+        sql: |
+          DELETE FROM scheduled_job_parameters WHERE scheduled_job_id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_SCHEDULED_JOB
+        sql: |
+          SELECT id, job_id, cron_expression, enabled, created_at, updated_at
+          FROM scheduled_jobs
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: LIST_ENABLED_SCHEDULED_JOB
+        sql: |
+          SELECT id, job_id, cron_expression, enabled, created_at, updated_at
+          FROM scheduled_jobs
+          WHERE enabled = 1
+          ORDER BY id
+      - name: COUNT_SCHEDULED_JOB
+        sql: |
+          SELECT COUNT(*) FROM scheduled_jobs
+      - name: READ_SCHEDULED_JOB
+        sql: |
+          SELECT id, job_id, cron_expression, enabled, created_at, updated_at
+          FROM scheduled_jobs WHERE id = ?
+      - name: SEARCH_SCHEDULED_JOB
+        sql: |
+          SELECT id, job_id, cron_expression, enabled, created_at, updated_at
+          FROM scheduled_jobs
+          WHERE LOWER(CAST(job_id AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(cron_expression AS VARCHAR(4000))) LIKE ?
+          ORDER BY id
+      - name: INSERT_SCHEDULED_JOB
+        sql: |
+          INSERT INTO scheduled_jobs (job_id, cron_expression, enabled, created_at, updated_at)
+          VALUES (?, ?, ?, ?, ?)
+      - name: UPDATE_SCHEDULED_JOB
+        sql: |
+          UPDATE scheduled_jobs
+          SET job_id = ?, cron_expression = ?, enabled = ?, updated_at = ?
+          WHERE id = ?
+      - name: DELETE_SCHEDULED_JOB
+        sql: |
+          DELETE FROM scheduled_jobs WHERE id = ?
+      - name: LIST_SCHEDULED_JOB_PARAMETERS
+        sql: |
+          SELECT param_key, param_value
+          FROM scheduled_job_parameters
+          WHERE scheduled_job_id = ?
+          ORDER BY param_key
+      - name: INSERT_SCHEDULED_JOB_PARAMETER
+        sql: |
+          INSERT INTO scheduled_job_parameters (scheduled_job_id, param_key, param_value)
+          VALUES (?, ?, ?)
+      - name: DELETE_SCHEDULED_JOB_PARAMETERS
+        sql: |
+          DELETE FROM scheduled_job_parameters WHERE scheduled_job_id = ?
+

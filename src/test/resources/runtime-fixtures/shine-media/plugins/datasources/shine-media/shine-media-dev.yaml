@@ -1,0 +1,15 @@
+configs:
+  - key: datasource.id
+    value: shine-media
+  - key: datasource.source
+    value: spring
+  - key: liquibase.change-log
+    value: config/shine-media/db/shine-media/changelog/db.changelog-master.yaml
+  - key: jdbc.url
+    value: jdbc:h2:tcp://127.0.0.1:9092/shine-media
+  - key: jdbc.driver
+    value: org.h2.Driver
+  - key: jdbc.username
+    value: shine-media
+  - key: jdbc.password
+    value: shine-media

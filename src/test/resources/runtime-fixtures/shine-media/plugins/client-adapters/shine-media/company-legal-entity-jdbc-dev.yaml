@@ -1,0 +1,130 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: h2
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_COMPANY_LEGAL_ENTITY
+        sql: |
+          SELECT id, country_code, locale, legal_name, trading_name, address, tax_id_type, tax_number, governing_law, legislation_note, contact_email
+          FROM company_legal_entities ORDER BY id LIMIT ? OFFSET ?
+      - name: COUNT_COMPANY_LEGAL_ENTITY
+        sql: |
+          SELECT COUNT(*) FROM company_legal_entities
+      - name: READ_COMPANY_LEGAL_ENTITY
+        sql: |
+          SELECT id, country_code, locale, legal_name, trading_name, address, tax_id_type, tax_number, governing_law, legislation_note, contact_email
+          FROM company_legal_entities WHERE id = ?
+      - name: READ_COMPANY_LEGAL_ENTITY_BY_COUNTRY
+        sql: |
+          SELECT id, country_code, locale, legal_name, trading_name, address, tax_id_type, tax_number, governing_law, legislation_note, contact_email
+          FROM company_legal_entities WHERE country_code = ?
+      - name: SEARCH_COMPANY_LEGAL_ENTITY
+        sql: |
+          SELECT id, country_code, locale, legal_name, trading_name, address, tax_id_type, tax_number, governing_law, legislation_note, contact_email
+          FROM company_legal_entities
+          WHERE LOWER(CAST(country_code AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(legal_name AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(tax_number AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(trading_name AS VARCHAR(4000))) LIKE ?
+          ORDER BY id
+      - name: INSERT_COMPANY_LEGAL_ENTITY
+        sql: |
+          INSERT INTO company_legal_entities
+            (country_code, locale, legal_name, trading_name, address, tax_id_type, tax_number, governing_law, legislation_note, contact_email)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_COMPANY_LEGAL_ENTITY
+        sql: |
+          UPDATE company_legal_entities
+          SET country_code = ?, locale = ?, legal_name = ?, trading_name = ?, address = ?,
+              tax_id_type = ?, tax_number = ?, governing_law = ?, legislation_note = ?, contact_email = ?
+          WHERE id = ?
+      - name: DELETE_COMPANY_LEGAL_ENTITY
+        sql: |
+          DELETE FROM company_legal_entities WHERE id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_COMPANY_LEGAL_ENTITY
+        sql: |
+          SELECT id, country_code, locale, legal_name, trading_name, address, tax_id_type, tax_number, governing_law, legislation_note, contact_email
+          FROM company_legal_entities ORDER BY id LIMIT ? OFFSET ?
+      - name: COUNT_COMPANY_LEGAL_ENTITY
+        sql: |
+          SELECT COUNT(*) FROM company_legal_entities
+      - name: READ_COMPANY_LEGAL_ENTITY
+        sql: |
+          SELECT id, country_code, locale, legal_name, trading_name, address, tax_id_type, tax_number, governing_law, legislation_note, contact_email
+          FROM company_legal_entities WHERE id = ?
+      - name: READ_COMPANY_LEGAL_ENTITY_BY_COUNTRY
+        sql: |
+          SELECT id, country_code, locale, legal_name, trading_name, address, tax_id_type, tax_number, governing_law, legislation_note, contact_email
+          FROM company_legal_entities WHERE country_code = ?
+      - name: SEARCH_COMPANY_LEGAL_ENTITY
+        sql: |
+          SELECT id, country_code, locale, legal_name, trading_name, address, tax_id_type, tax_number, governing_law, legislation_note, contact_email
+          FROM company_legal_entities
+          WHERE LOWER(CAST(country_code AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(legal_name AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(tax_number AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(trading_name AS VARCHAR(4000))) LIKE ?
+          ORDER BY id
+      - name: INSERT_COMPANY_LEGAL_ENTITY
+        sql: |
+          INSERT INTO company_legal_entities
+            (country_code, locale, legal_name, trading_name, address, tax_id_type, tax_number, governing_law, legislation_note, contact_email)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_COMPANY_LEGAL_ENTITY
+        sql: |
+          UPDATE company_legal_entities
+          SET country_code = ?, locale = ?, legal_name = ?, trading_name = ?, address = ?,
+              tax_id_type = ?, tax_number = ?, governing_law = ?, legislation_note = ?, contact_email = ?
+          WHERE id = ?
+      - name: DELETE_COMPANY_LEGAL_ENTITY
+        sql: |
+          DELETE FROM company_legal_entities WHERE id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_COMPANY_LEGAL_ENTITY
+        sql: |
+          SELECT id, country_code, locale, legal_name, trading_name, address, tax_id_type, tax_number, governing_law, legislation_note, contact_email
+          FROM company_legal_entities ORDER BY id LIMIT ? OFFSET ?
+      - name: COUNT_COMPANY_LEGAL_ENTITY
+        sql: |
+          SELECT COUNT(*) FROM company_legal_entities
+      - name: READ_COMPANY_LEGAL_ENTITY
+        sql: |
+          SELECT id, country_code, locale, legal_name, trading_name, address, tax_id_type, tax_number, governing_law, legislation_note, contact_email
+          FROM company_legal_entities WHERE id = ?
+      - name: READ_COMPANY_LEGAL_ENTITY_BY_COUNTRY
+        sql: |
+          SELECT id, country_code, locale, legal_name, trading_name, address, tax_id_type, tax_number, governing_law, legislation_note, contact_email
+          FROM company_legal_entities WHERE country_code = ?
+      - name: SEARCH_COMPANY_LEGAL_ENTITY
+        sql: |
+          SELECT id, country_code, locale, legal_name, trading_name, address, tax_id_type, tax_number, governing_law, legislation_note, contact_email
+          FROM company_legal_entities
+          WHERE LOWER(CAST(country_code AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(legal_name AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(tax_number AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(trading_name AS VARCHAR(4000))) LIKE ?
+          ORDER BY id
+      - name: INSERT_COMPANY_LEGAL_ENTITY
+        sql: |
+          INSERT INTO company_legal_entities
+            (country_code, locale, legal_name, trading_name, address, tax_id_type, tax_number, governing_law, legislation_note, contact_email)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_COMPANY_LEGAL_ENTITY
+        sql: |
+          UPDATE company_legal_entities
+          SET country_code = ?, locale = ?, legal_name = ?, trading_name = ?, address = ?,
+              tax_id_type = ?, tax_number = ?, governing_law = ?, legislation_note = ?, contact_email = ?
+          WHERE id = ?
+      - name: DELETE_COMPANY_LEGAL_ENTITY
+        sql: |
+          DELETE FROM company_legal_entities WHERE id = ?
+

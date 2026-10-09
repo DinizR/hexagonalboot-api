@@ -1,0 +1,7 @@
+configs:
+  - key: datasource.id
+    value: registry
+  - key: datasource.source
+    value: spring
+  - key: liquibase.change-log
+    value: config/registry/db/registry/changelog/db.changelog-master.yaml

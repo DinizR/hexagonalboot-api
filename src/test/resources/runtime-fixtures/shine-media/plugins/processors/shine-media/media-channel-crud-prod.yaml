@@ -1,0 +1,36 @@
+connectors:
+  - id: DB
+    adapter: media-channel-jdbc
+  - id: STORAGE
+    adapter: document-storage-s3
+properties:
+  - key: page.default.size
+    value: "8"
+  # Same standard as dev: 128×128 square PNG/WebP (or sanitized SVG), ≤128 KiB, transparent sRGB.
+  # Uploads are sniffed by magic bytes; declared Content-Type must match.
+  - key: icon.contentTypes
+    value: "image/png,image/webp,image/svg+xml"
+  - key: icon.extensions
+    value: "png,webp,svg"
+  - key: icon.maxBytes
+    value: "131072"
+  - key: icon.widthPx
+    value: "128"
+  - key: icon.heightPx
+    value: "128"
+  - key: icon.minWidthPx
+    value: "128"
+  - key: icon.minHeightPx
+    value: "128"
+  - key: icon.maxWidthPx
+    value: "128"
+  - key: icon.maxHeightPx
+    value: "128"
+  - key: icon.requireSquare
+    value: "true"
+  - key: icon.requireExactPixels
+    value: "true"
+  - key: icon.background
+    value: "transparent"
+  - key: icon.colorSpace
+    value: "sRGB"

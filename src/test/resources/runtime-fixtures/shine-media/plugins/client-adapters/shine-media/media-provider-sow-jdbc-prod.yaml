@@ -1,0 +1,219 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: postgres
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_MEDIA_PROVIDER_SOW
+        sql: |
+          SELECT id, creation_date, party_id, duration_from, duration_to, template_id, currency, services_fee_rate, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, status, contract_type, envelope_id, draft_document_url, payment_day_of_month, provider_contact_user_id, proposal_document_url, late_payment_fine_rate
+          FROM media_provider_sows
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_MEDIA_PROVIDER_SOW
+        sql: |
+          SELECT COUNT(*) FROM media_provider_sows
+      - name: READ_MEDIA_PROVIDER_SOW
+        sql: |
+          SELECT id, creation_date, party_id, duration_from, duration_to, template_id, currency, services_fee_rate, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, status, contract_type, envelope_id, draft_document_url, payment_day_of_month, provider_contact_user_id, proposal_document_url, late_payment_fine_rate
+          FROM media_provider_sows WHERE id = ?
+      - name: SEARCH_MEDIA_PROVIDER_SOW
+        sql: |
+          SELECT id, creation_date, party_id, duration_from, duration_to, template_id, currency, services_fee_rate, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, status, contract_type, envelope_id, draft_document_url, payment_day_of_month, provider_contact_user_id, proposal_document_url, late_payment_fine_rate
+          FROM media_provider_sows
+          WHERE (LOWER(CAST(currency AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(status AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(signature_reference AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(contract_type AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_MEDIA_PROVIDER_SOW
+        sql: |
+          INSERT INTO media_provider_sows (creation_date, party_id, duration_from, duration_to, template_id, currency, services_fee_rate, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, status, contract_type, envelope_id, draft_document_url, payment_day_of_month, provider_contact_user_id, proposal_document_url, late_payment_fine_rate)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_MEDIA_PROVIDER_SOW
+        sql: |
+          UPDATE media_provider_sows
+          SET creation_date = ?, party_id = ?, duration_from = ?, duration_to = ?, template_id = ?, currency = ?, services_fee_rate = ?, signed_by_user_id = ?, signature_reference = ?, signed_sow_url = ?, sales_manager_id = ?, status = ?, contract_type = ?, envelope_id = ?, draft_document_url = ?, payment_day_of_month = ?, provider_contact_user_id = ?, proposal_document_url = ?, late_payment_fine_rate = ?
+          WHERE id = ?
+      - name: DELETE_MEDIA_PROVIDER_SOW
+        sql: |
+          DELETE FROM media_provider_sows WHERE id = ?
+      - name: INSERT_SOW_SIGNATURE
+        sql: |
+          INSERT INTO sow_signatures (media_provider_sow_id, side, user_id, signer_email, signer_name, status, signed_at, envelope_id)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      - name: LIST_SOW_SIGNATURES_BY_SOW
+        sql: |
+          SELECT id, media_provider_sow_id, side, user_id, signer_email, signer_name, status, signed_at, envelope_id
+          FROM sow_signatures WHERE media_provider_sow_id = ? ORDER BY id
+      - name: MARK_SOW_SIGNATURES_SIGNED
+        sql: |
+          UPDATE sow_signatures SET status = 'SIGNED', signed_at = CURRENT_TIMESTAMP
+          WHERE media_provider_sow_id = ? AND envelope_id = ?
+      - name: FIND_SOW_BY_ENVELOPE
+        sql: |
+          SELECT id, creation_date, party_id, duration_from, duration_to, template_id, currency, services_fee_rate, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, status, contract_type, envelope_id, draft_document_url, payment_day_of_month, provider_contact_user_id, proposal_document_url, late_payment_fine_rate
+          FROM media_provider_sows WHERE envelope_id = ?
+
+      - name: LIST_LINES_FOR_DOCUMENT
+        sql: |
+          SELECT l.id AS line_id, ch.name AS channel_name, loc.name AS location_name, mv.name AS vehicle_name,
+                 mv.capacity_type, mv.schedule_type, mv.recurrence, mv.duration_hint,
+                 l.slot_duration_minutes, l.number_of_insertions, l.exposure, l.slot_monthly_price, l.minute_price, l.monthly_price,
+                 o.audience_capacity, o.audience_capacity_unit,
+                 mv.audience_capacity AS vehicle_audience_capacity, mv.audience_capacity_unit AS vehicle_audience_capacity_unit,
+                 o.print_run, o.subscriber_count, o.view_count,
+                 spec.media_kind AS content_media_kind, spec.allowed_extensions, spec.width_px AS content_width_px,
+                 spec.height_px AS content_height_px, spec.duration_seconds, spec.duration_tolerance_seconds
+          FROM media_provider_sow_lines l
+          INNER JOIN media_channels ch ON ch.id = l.media_channel_id
+          LEFT JOIN media_locations loc ON loc.id = l.location_id
+          INNER JOIN media_vehicles mv ON mv.id = l.media_vehicle_id
+          LEFT JOIN offering_media o ON o.id = (
+            SELECT MIN(o2.id) FROM offering_media o2 WHERE o2.media_provider_sow_line_id = l.id
+          )
+          LEFT JOIN media_provider_sow_line_content_specs spec ON spec.media_provider_sow_line_id = l.id
+          WHERE l.media_provider_sow_id = ?
+          ORDER BY l.id
+
+  - dialect: postgres
+    statements:
+      - name: LIST_MEDIA_PROVIDER_SOW
+        sql: |
+          SELECT id, creation_date, party_id, duration_from, duration_to, template_id, currency, services_fee_rate, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, status, contract_type, envelope_id, draft_document_url, payment_day_of_month, provider_contact_user_id, proposal_document_url, late_payment_fine_rate
+          FROM media_provider_sows
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_MEDIA_PROVIDER_SOW
+        sql: |
+          SELECT COUNT(*) FROM media_provider_sows
+      - name: READ_MEDIA_PROVIDER_SOW
+        sql: |
+          SELECT id, creation_date, party_id, duration_from, duration_to, template_id, currency, services_fee_rate, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, status, contract_type, envelope_id, draft_document_url, payment_day_of_month, provider_contact_user_id, proposal_document_url, late_payment_fine_rate
+          FROM media_provider_sows WHERE id = ?
+      - name: SEARCH_MEDIA_PROVIDER_SOW
+        sql: |
+          SELECT id, creation_date, party_id, duration_from, duration_to, template_id, currency, services_fee_rate, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, status, contract_type, envelope_id, draft_document_url, payment_day_of_month, provider_contact_user_id, proposal_document_url, late_payment_fine_rate
+          FROM media_provider_sows
+          WHERE (LOWER(CAST(currency AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(status AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(signature_reference AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(contract_type AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_MEDIA_PROVIDER_SOW
+        sql: |
+          INSERT INTO media_provider_sows (creation_date, party_id, duration_from, duration_to, template_id, currency, services_fee_rate, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, status, contract_type, envelope_id, draft_document_url, payment_day_of_month, provider_contact_user_id, proposal_document_url, late_payment_fine_rate)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_MEDIA_PROVIDER_SOW
+        sql: |
+          UPDATE media_provider_sows
+          SET creation_date = ?, party_id = ?, duration_from = ?, duration_to = ?, template_id = ?, currency = ?, services_fee_rate = ?, signed_by_user_id = ?, signature_reference = ?, signed_sow_url = ?, sales_manager_id = ?, status = ?, contract_type = ?, envelope_id = ?, draft_document_url = ?, payment_day_of_month = ?, provider_contact_user_id = ?, proposal_document_url = ?, late_payment_fine_rate = ?
+          WHERE id = ?
+      - name: DELETE_MEDIA_PROVIDER_SOW
+        sql: |
+          DELETE FROM media_provider_sows WHERE id = ?
+      - name: INSERT_SOW_SIGNATURE
+        sql: |
+          INSERT INTO sow_signatures (media_provider_sow_id, side, user_id, signer_email, signer_name, status, signed_at, envelope_id)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      - name: LIST_SOW_SIGNATURES_BY_SOW
+        sql: |
+          SELECT id, media_provider_sow_id, side, user_id, signer_email, signer_name, status, signed_at, envelope_id
+          FROM sow_signatures WHERE media_provider_sow_id = ? ORDER BY id
+      - name: MARK_SOW_SIGNATURES_SIGNED
+        sql: |
+          UPDATE sow_signatures SET status = 'SIGNED', signed_at = CURRENT_TIMESTAMP
+          WHERE media_provider_sow_id = ? AND envelope_id = ?
+      - name: FIND_SOW_BY_ENVELOPE
+        sql: |
+          SELECT id, creation_date, party_id, duration_from, duration_to, template_id, currency, services_fee_rate, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, status, contract_type, envelope_id, draft_document_url, payment_day_of_month, provider_contact_user_id, proposal_document_url, late_payment_fine_rate
+          FROM media_provider_sows WHERE envelope_id = ?
+
+      - name: LIST_LINES_FOR_DOCUMENT
+        sql: |
+          SELECT l.id AS line_id, ch.name AS channel_name, loc.name AS location_name, mv.name AS vehicle_name,
+                 mv.capacity_type, mv.schedule_type, mv.recurrence, mv.duration_hint,
+                 l.slot_duration_minutes, l.number_of_insertions, l.exposure, l.slot_monthly_price, l.minute_price, l.monthly_price,
+                 o.audience_capacity, o.audience_capacity_unit,
+                 mv.audience_capacity AS vehicle_audience_capacity, mv.audience_capacity_unit AS vehicle_audience_capacity_unit,
+                 o.print_run, o.subscriber_count, o.view_count,
+                 spec.media_kind AS content_media_kind, spec.allowed_extensions, spec.width_px AS content_width_px,
+                 spec.height_px AS content_height_px, spec.duration_seconds, spec.duration_tolerance_seconds
+          FROM media_provider_sow_lines l
+          INNER JOIN media_channels ch ON ch.id = l.media_channel_id
+          LEFT JOIN media_locations loc ON loc.id = l.location_id
+          INNER JOIN media_vehicles mv ON mv.id = l.media_vehicle_id
+          LEFT JOIN offering_media o ON o.id = (
+            SELECT MIN(o2.id) FROM offering_media o2 WHERE o2.media_provider_sow_line_id = l.id
+          )
+          LEFT JOIN media_provider_sow_line_content_specs spec ON spec.media_provider_sow_line_id = l.id
+          WHERE l.media_provider_sow_id = ?
+          ORDER BY l.id
+
+  - dialect: mysql
+    statements:
+      - name: LIST_MEDIA_PROVIDER_SOW
+        sql: |
+          SELECT id, creation_date, party_id, duration_from, duration_to, template_id, currency, services_fee_rate, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, status, contract_type, envelope_id, draft_document_url, payment_day_of_month, provider_contact_user_id, proposal_document_url, late_payment_fine_rate
+          FROM media_provider_sows
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_MEDIA_PROVIDER_SOW
+        sql: |
+          SELECT COUNT(*) FROM media_provider_sows
+      - name: READ_MEDIA_PROVIDER_SOW
+        sql: |
+          SELECT id, creation_date, party_id, duration_from, duration_to, template_id, currency, services_fee_rate, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, status, contract_type, envelope_id, draft_document_url, payment_day_of_month, provider_contact_user_id, proposal_document_url, late_payment_fine_rate
+          FROM media_provider_sows WHERE id = ?
+      - name: SEARCH_MEDIA_PROVIDER_SOW
+        sql: |
+          SELECT id, creation_date, party_id, duration_from, duration_to, template_id, currency, services_fee_rate, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, status, contract_type, envelope_id, draft_document_url, payment_day_of_month, provider_contact_user_id, proposal_document_url, late_payment_fine_rate
+          FROM media_provider_sows
+          WHERE (LOWER(CAST(currency AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(status AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(signature_reference AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(contract_type AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_MEDIA_PROVIDER_SOW
+        sql: |
+          INSERT INTO media_provider_sows (creation_date, party_id, duration_from, duration_to, template_id, currency, services_fee_rate, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, status, contract_type, envelope_id, draft_document_url, payment_day_of_month, provider_contact_user_id, proposal_document_url, late_payment_fine_rate)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_MEDIA_PROVIDER_SOW
+        sql: |
+          UPDATE media_provider_sows
+          SET creation_date = ?, party_id = ?, duration_from = ?, duration_to = ?, template_id = ?, currency = ?, services_fee_rate = ?, signed_by_user_id = ?, signature_reference = ?, signed_sow_url = ?, sales_manager_id = ?, status = ?, contract_type = ?, envelope_id = ?, draft_document_url = ?, payment_day_of_month = ?, provider_contact_user_id = ?, proposal_document_url = ?, late_payment_fine_rate = ?
+          WHERE id = ?
+      - name: DELETE_MEDIA_PROVIDER_SOW
+        sql: |
+          DELETE FROM media_provider_sows WHERE id = ?
+      - name: INSERT_SOW_SIGNATURE
+        sql: |
+          INSERT INTO sow_signatures (media_provider_sow_id, side, user_id, signer_email, signer_name, status, signed_at, envelope_id)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      - name: LIST_SOW_SIGNATURES_BY_SOW
+        sql: |
+          SELECT id, media_provider_sow_id, side, user_id, signer_email, signer_name, status, signed_at, envelope_id
+          FROM sow_signatures WHERE media_provider_sow_id = ? ORDER BY id
+      - name: MARK_SOW_SIGNATURES_SIGNED
+        sql: |
+          UPDATE sow_signatures SET status = 'SIGNED', signed_at = CURRENT_TIMESTAMP
+          WHERE media_provider_sow_id = ? AND envelope_id = ?
+      - name: FIND_SOW_BY_ENVELOPE
+        sql: |
+          SELECT id, creation_date, party_id, duration_from, duration_to, template_id, currency, services_fee_rate, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, status, contract_type, envelope_id, draft_document_url, payment_day_of_month, provider_contact_user_id, proposal_document_url, late_payment_fine_rate
+          FROM media_provider_sows WHERE envelope_id = ?
+
+      - name: LIST_LINES_FOR_DOCUMENT
+        sql: |
+          SELECT l.id AS line_id, ch.name AS channel_name, loc.name AS location_name, mv.name AS vehicle_name,
+                 mv.capacity_type, mv.schedule_type, mv.recurrence, mv.duration_hint,
+                 l.slot_duration_minutes, l.number_of_insertions, l.exposure, l.slot_monthly_price, l.minute_price, l.monthly_price,
+                 o.audience_capacity, o.audience_capacity_unit,
+                 mv.audience_capacity AS vehicle_audience_capacity, mv.audience_capacity_unit AS vehicle_audience_capacity_unit,
+                 o.print_run, o.subscriber_count, o.view_count,
+                 spec.media_kind AS content_media_kind, spec.allowed_extensions, spec.width_px AS content_width_px,
+                 spec.height_px AS content_height_px, spec.duration_seconds, spec.duration_tolerance_seconds
+          FROM media_provider_sow_lines l
+          INNER JOIN media_channels ch ON ch.id = l.media_channel_id
+          LEFT JOIN media_locations loc ON loc.id = l.location_id
+          INNER JOIN media_vehicles mv ON mv.id = l.media_vehicle_id
+          LEFT JOIN offering_media o ON o.id = (
+            SELECT MIN(o2.id) FROM offering_media o2 WHERE o2.media_provider_sow_line_id = l.id
+          )
+          LEFT JOIN media_provider_sow_line_content_specs spec ON spec.media_provider_sow_line_id = l.id
+          WHERE l.media_provider_sow_id = ?
+          ORDER BY l.id

@@ -1,0 +1,12 @@
+# Shine Media application (prod) — overrides framework defaults from application.yml / api-prod.yml.
+
+spring:
+  application:
+    name: shine-media
+  datasource:
+    url: jdbc:postgresql://${SHINE_MEDIA_DB_HOST:localhost}:${SHINE_MEDIA_DB_PORT:5432}/shine-media
+    username: ${SHINE_MEDIA_DB_USER:shine-media}
+    password: ${SHINE_MEDIA_DB_PASSWORD:shine-media}
+  liquibase:
+    # Migrations run per database from the datasource plugin (liquibase.change-log).
+    enabled: false

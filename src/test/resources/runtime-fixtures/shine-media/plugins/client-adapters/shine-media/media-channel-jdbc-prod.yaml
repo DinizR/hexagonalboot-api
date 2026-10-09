@@ -1,0 +1,109 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: postgres
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_MEDIA_CHANNEL
+        sql: |
+          SELECT id, name, description, media_category_id, requires_location, icon_url
+          FROM media_channels
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_MEDIA_CHANNEL
+        sql: |
+          SELECT COUNT(*) FROM media_channels
+      - name: READ_MEDIA_CHANNEL
+        sql: |
+          SELECT id, name, description, media_category_id, requires_location, icon_url
+          FROM media_channels WHERE id = ?
+      - name: SEARCH_MEDIA_CHANNEL
+        sql: |
+          SELECT id, name, description, media_category_id, requires_location, icon_url
+          FROM media_channels
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(description AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_MEDIA_CHANNEL
+        sql: |
+          INSERT INTO media_channels (name, description, media_category_id, requires_location, icon_url)
+          VALUES (?, ?, ?, ?, ?)
+      - name: UPDATE_MEDIA_CHANNEL
+        sql: |
+          UPDATE media_channels
+          SET name = ?, description = ?, media_category_id = ?, requires_location = ?, icon_url = ?
+          WHERE id = ?
+      - name: DELETE_MEDIA_CHANNEL
+        sql: |
+          DELETE FROM media_channels WHERE id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_MEDIA_CHANNEL
+        sql: |
+          SELECT id, name, description, media_category_id, requires_location, icon_url
+          FROM media_channels
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_MEDIA_CHANNEL
+        sql: |
+          SELECT COUNT(*) FROM media_channels
+      - name: READ_MEDIA_CHANNEL
+        sql: |
+          SELECT id, name, description, media_category_id, requires_location, icon_url
+          FROM media_channels WHERE id = ?
+      - name: SEARCH_MEDIA_CHANNEL
+        sql: |
+          SELECT id, name, description, media_category_id, requires_location, icon_url
+          FROM media_channels
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(description AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_MEDIA_CHANNEL
+        sql: |
+          INSERT INTO media_channels (name, description, media_category_id, requires_location, icon_url)
+          VALUES (?, ?, ?, ?, ?)
+      - name: UPDATE_MEDIA_CHANNEL
+        sql: |
+          UPDATE media_channels
+          SET name = ?, description = ?, media_category_id = ?, requires_location = ?, icon_url = ?
+          WHERE id = ?
+      - name: DELETE_MEDIA_CHANNEL
+        sql: |
+          DELETE FROM media_channels WHERE id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_MEDIA_CHANNEL
+        sql: |
+          SELECT id, name, description, media_category_id, requires_location, icon_url
+          FROM media_channels
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_MEDIA_CHANNEL
+        sql: |
+          SELECT COUNT(*) FROM media_channels
+      - name: READ_MEDIA_CHANNEL
+        sql: |
+          SELECT id, name, description, media_category_id, requires_location, icon_url
+          FROM media_channels WHERE id = ?
+      - name: SEARCH_MEDIA_CHANNEL
+        sql: |
+          SELECT id, name, description, media_category_id, requires_location, icon_url
+          FROM media_channels
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(description AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_MEDIA_CHANNEL
+        sql: |
+          INSERT INTO media_channels (name, description, media_category_id, requires_location, icon_url)
+          VALUES (?, ?, ?, ?, ?)
+      - name: UPDATE_MEDIA_CHANNEL
+        sql: |
+          UPDATE media_channels
+          SET name = ?, description = ?, media_category_id = ?, requires_location = ?, icon_url = ?
+          WHERE id = ?
+      - name: DELETE_MEDIA_CHANNEL
+        sql: |
+          DELETE FROM media_channels WHERE id = ?
+

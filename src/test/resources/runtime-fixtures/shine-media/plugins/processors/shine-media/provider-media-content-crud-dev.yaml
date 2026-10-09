@@ -1,0 +1,10 @@
+connectors:
+  - id: DB
+    adapter: provider-media-content-jdbc
+  - id: LINE
+    adapter: media-provider-sow-line-jdbc
+properties:
+  - key: page.default.size
+    value: "8"
+  - key: media-content.allowed-hosts
+    value: "localhost,127.0.0.1,sows.shinemedia.local,cdn.shinemedia.local"

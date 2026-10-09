@@ -1,0 +1,112 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: h2
+
+queries:
+
+  - dialect: h2
+    statements:
+      - name: LIST_CREATIVE_SERVICE
+        sql: |
+          SELECT id, name
+          FROM creative_services
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CREATIVE_SERVICE
+        sql: |
+          SELECT COUNT(*) FROM creative_services
+      - name: READ_CREATIVE_SERVICE
+        sql: |
+          SELECT id, name
+          FROM creative_services WHERE id = ?
+      - name: SEARCH_CREATIVE_SERVICE
+        sql: |
+          SELECT id, name
+          FROM creative_services
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_CREATIVE_SERVICE
+        sql: |
+          INSERT INTO creative_services (name)
+          VALUES (?)
+      - name: UPDATE_CREATIVE_SERVICE
+        sql: |
+          UPDATE creative_services
+          SET name = ?
+          WHERE id = ?
+      - name: DELETE_CREATIVE_SERVICE
+        sql: |
+          DELETE FROM creative_services WHERE id = ?
+
+
+  - dialect: postgres
+    statements:
+      - name: LIST_CREATIVE_SERVICE
+        sql: |
+          SELECT id, name
+          FROM creative_services
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CREATIVE_SERVICE
+        sql: |
+          SELECT COUNT(*) FROM creative_services
+      - name: READ_CREATIVE_SERVICE
+        sql: |
+          SELECT id, name
+          FROM creative_services WHERE id = ?
+      - name: SEARCH_CREATIVE_SERVICE
+        sql: |
+          SELECT id, name
+          FROM creative_services
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_CREATIVE_SERVICE
+        sql: |
+          INSERT INTO creative_services (name)
+          VALUES (?)
+      - name: UPDATE_CREATIVE_SERVICE
+        sql: |
+          UPDATE creative_services
+          SET name = ?
+          WHERE id = ?
+      - name: DELETE_CREATIVE_SERVICE
+        sql: |
+          DELETE FROM creative_services WHERE id = ?
+
+
+  - dialect: mysql
+    statements:
+      - name: LIST_CREATIVE_SERVICE
+        sql: |
+          SELECT id, name
+          FROM creative_services
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CREATIVE_SERVICE
+        sql: |
+          SELECT COUNT(*) FROM creative_services
+      - name: READ_CREATIVE_SERVICE
+        sql: |
+          SELECT id, name
+          FROM creative_services WHERE id = ?
+      - name: SEARCH_CREATIVE_SERVICE
+        sql: |
+          SELECT id, name
+          FROM creative_services
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_CREATIVE_SERVICE
+        sql: |
+          INSERT INTO creative_services (name)
+          VALUES (?)
+      - name: UPDATE_CREATIVE_SERVICE
+        sql: |
+          UPDATE creative_services
+          SET name = ?
+          WHERE id = ?
+      - name: DELETE_CREATIVE_SERVICE
+        sql: |
+          DELETE FROM creative_services WHERE id = ?
+

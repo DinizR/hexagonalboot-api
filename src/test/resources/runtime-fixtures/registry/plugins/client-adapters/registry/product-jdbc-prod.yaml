@@ -1,0 +1,118 @@
+configs:
+  - key: datasource
+    value: registry
+  - key: sql.dialect
+    value: postgres
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_PRODUCT
+        sql: |
+          SELECT id, barcode, description, unit_price, discount, tax_rate, unit, image_url, category_id, enabled
+          FROM products
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_PRODUCT
+        sql: |
+          SELECT COUNT(*) FROM products
+      - name: READ_PRODUCT
+        sql: |
+          SELECT id, barcode, description, unit_price, discount, tax_rate, unit, image_url, category_id, enabled
+          FROM products WHERE id = ?
+      - name: SEARCH_PRODUCT
+        sql: |
+          SELECT id, barcode, description, unit_price, discount, tax_rate, unit, image_url, category_id, enabled
+          FROM products
+          WHERE enabled = TRUE AND (barcode = ? OR LOWER(description) LIKE ?)
+          ORDER BY id
+      - name: INSERT_PRODUCT
+        sql: |
+          INSERT INTO products (barcode, description, unit_price, discount, tax_rate, unit, image_url, category_id, enabled)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_PRODUCT
+        sql: |
+          UPDATE products
+          SET barcode = ?, description = ?, unit_price = ?, discount = ?, tax_rate = ?,
+          unit = ?, image_url = ?, category_id = ?, enabled = ?
+          WHERE id = ?
+      - name: DELETE_PRODUCT
+        sql: |
+          DELETE FROM products WHERE id = ?
+      - name: EXISTS_CATEGORY
+        sql: |
+          SELECT 1 FROM categories WHERE id = ?
+  - dialect: postgres
+    statements:
+      - name: LIST_PRODUCT
+        sql: |
+          SELECT id, barcode, description, unit_price, discount, tax_rate, unit, image_url, category_id, enabled
+          FROM products
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_PRODUCT
+        sql: |
+          SELECT COUNT(*) FROM products
+      - name: READ_PRODUCT
+        sql: |
+          SELECT id, barcode, description, unit_price, discount, tax_rate, unit, image_url, category_id, enabled
+          FROM products WHERE id = ?
+      - name: SEARCH_PRODUCT
+        sql: |
+          SELECT id, barcode, description, unit_price, discount, tax_rate, unit, image_url, category_id, enabled
+          FROM products
+          WHERE enabled = TRUE AND (barcode = ? OR LOWER(description) LIKE ?)
+          ORDER BY id
+      - name: INSERT_PRODUCT
+        sql: |
+          INSERT INTO products (barcode, description, unit_price, discount, tax_rate, unit, image_url, category_id, enabled)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_PRODUCT
+        sql: |
+          UPDATE products
+          SET barcode = ?, description = ?, unit_price = ?, discount = ?, tax_rate = ?,
+          unit = ?, image_url = ?, category_id = ?, enabled = ?
+          WHERE id = ?
+      - name: DELETE_PRODUCT
+        sql: |
+          DELETE FROM products WHERE id = ?
+      - name: EXISTS_CATEGORY
+        sql: |
+          SELECT 1 FROM categories WHERE id = ?
+  - dialect: mysql
+    statements:
+      - name: LIST_PRODUCT
+        sql: |
+          SELECT id, barcode, description, unit_price, discount, tax_rate, unit, image_url, category_id, enabled
+          FROM products
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_PRODUCT
+        sql: |
+          SELECT COUNT(*) FROM products
+      - name: READ_PRODUCT
+        sql: |
+          SELECT id, barcode, description, unit_price, discount, tax_rate, unit, image_url, category_id, enabled
+          FROM products WHERE id = ?
+      - name: SEARCH_PRODUCT
+        sql: |
+          SELECT id, barcode, description, unit_price, discount, tax_rate, unit, image_url, category_id, enabled
+          FROM products
+          WHERE enabled = TRUE AND (barcode = ? OR LOWER(description) LIKE ?)
+          ORDER BY id
+      - name: INSERT_PRODUCT
+        sql: |
+          INSERT INTO products (barcode, description, unit_price, discount, tax_rate, unit, image_url, category_id, enabled)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_PRODUCT
+        sql: |
+          UPDATE products
+          SET barcode = ?, description = ?, unit_price = ?, discount = ?, tax_rate = ?,
+          unit = ?, image_url = ?, category_id = ?, enabled = ?
+          WHERE id = ?
+      - name: DELETE_PRODUCT
+        sql: |
+          DELETE FROM products WHERE id = ?
+      - name: EXISTS_CATEGORY
+        sql: |
+          SELECT 1 FROM categories WHERE id = ?

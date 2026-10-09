@@ -1,0 +1,17 @@
+entry-adapters:
+  - id: product-rest
+    version: 1.0.0
+    label: Product REST Entry Adapter
+    description: REST routes for registry product APIs.
+    className: systems.porto.registry.entry.rest.ProductRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: category-rest
+    version: 1.0.0
+    label: Category REST Entry Adapter
+    description: REST routes for registry category APIs.
+    className: systems.porto.registry.entry.rest.CategoryRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar

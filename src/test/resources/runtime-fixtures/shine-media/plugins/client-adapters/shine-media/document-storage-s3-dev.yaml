@@ -1,0 +1,34 @@
+configs:
+  - key: storage.backend
+    value: filesystem
+    description: filesystem (local free) or s3
+  - key: storage.filesystem.root
+    value: data/shine-media/documents
+    description: Draft/signed PDFs and other documents (relative to PORTO_API_HOME)
+  - key: storage.filesystem.images-root
+    value: data/shine-media/images
+    description: Channel icons and other images; keys prefixed with images/
+  - key: storage.filesystem.templates-root
+    value: data/shine-media/templates
+    description: >
+      Latest SoW / proposal / email HTML (keys sow-templates/{key}.html) under PORTO_API_HOME.
+      One file per documentTemplateKey / emailTemplateKey. Production uses S3 with the same keys.
+  - key: storage.filesystem.artefacts-root
+    value: data/shine-media/media-artefacts
+    description: >
+      Insertion-slot media artefacts (keys media-artefacts/{slotId}/{contentId}.{ext})
+      under PORTO_API_HOME. Production uses S3 with the same keys.
+  - key: storage.publicBaseUrl
+    value: ""
+    description: Optional URL prefix returned on StoredDocument.url
+  - key: s3.region
+    value: ap-southeast-2
+  - key: s3.bucket
+    value: shine-media-docs-dev
+  - key: s3.endpoint
+    value: ""
+    description: Optional LocalStack / MinIO endpoint (path-style)
+  - key: s3.accessKeyId
+    value: ""
+  - key: s3.secretAccessKey
+    value: ""

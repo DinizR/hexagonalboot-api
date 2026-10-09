@@ -1,0 +1,109 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: postgres
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_CITY
+        sql: |
+          SELECT id, name, state, country, icon_url
+          FROM cities
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CITY
+        sql: |
+          SELECT COUNT(*) FROM cities
+      - name: READ_CITY
+        sql: |
+          SELECT id, name, state, country, icon_url
+          FROM cities WHERE id = ?
+      - name: SEARCH_CITY
+        sql: |
+          SELECT id, name, state, country, icon_url
+          FROM cities
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(state AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(country AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_CITY
+        sql: |
+          INSERT INTO cities (name, state, country, icon_url)
+          VALUES (?, ?, ?, ?)
+      - name: UPDATE_CITY
+        sql: |
+          UPDATE cities
+          SET name = ?, state = ?, country = ?, icon_url = ?
+          WHERE id = ?
+      - name: DELETE_CITY
+        sql: |
+          DELETE FROM cities WHERE id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_CITY
+        sql: |
+          SELECT id, name, state, country, icon_url
+          FROM cities
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CITY
+        sql: |
+          SELECT COUNT(*) FROM cities
+      - name: READ_CITY
+        sql: |
+          SELECT id, name, state, country, icon_url
+          FROM cities WHERE id = ?
+      - name: SEARCH_CITY
+        sql: |
+          SELECT id, name, state, country, icon_url
+          FROM cities
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(state AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(country AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_CITY
+        sql: |
+          INSERT INTO cities (name, state, country, icon_url)
+          VALUES (?, ?, ?, ?)
+      - name: UPDATE_CITY
+        sql: |
+          UPDATE cities
+          SET name = ?, state = ?, country = ?, icon_url = ?
+          WHERE id = ?
+      - name: DELETE_CITY
+        sql: |
+          DELETE FROM cities WHERE id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_CITY
+        sql: |
+          SELECT id, name, state, country, icon_url
+          FROM cities
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CITY
+        sql: |
+          SELECT COUNT(*) FROM cities
+      - name: READ_CITY
+        sql: |
+          SELECT id, name, state, country, icon_url
+          FROM cities WHERE id = ?
+      - name: SEARCH_CITY
+        sql: |
+          SELECT id, name, state, country, icon_url
+          FROM cities
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(state AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(country AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_CITY
+        sql: |
+          INSERT INTO cities (name, state, country, icon_url)
+          VALUES (?, ?, ?, ?)
+      - name: UPDATE_CITY
+        sql: |
+          UPDATE cities
+          SET name = ?, state = ?, country = ?, icon_url = ?
+          WHERE id = ?
+      - name: DELETE_CITY
+        sql: |
+          DELETE FROM cities WHERE id = ?
+

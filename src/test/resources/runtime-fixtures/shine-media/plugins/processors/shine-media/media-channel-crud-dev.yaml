@@ -1,0 +1,38 @@
+connectors:
+  - id: DB
+    adapter: media-channel-jdbc
+  - id: STORAGE
+    adapter: document-storage-s3
+properties:
+  - key: page.default.size
+    value: "8"
+  # Standard channel tile icon (YouTube, DOOH, digital display, …). Raster must match
+  # Raster must match width/height exactly and be square. SVG skips pixel checks
+  # but is XML-sanitized (no script/DTD/external href). Magic bytes must match
+  # declared Content-Type. Change these to retarget the future client UI without a code change.
+  - key: icon.contentTypes
+    value: "image/png,image/webp,image/svg+xml"
+  - key: icon.extensions
+    value: "png,webp,svg"
+  - key: icon.maxBytes
+    value: "131072"
+  - key: icon.widthPx
+    value: "128"
+  - key: icon.heightPx
+    value: "128"
+  - key: icon.minWidthPx
+    value: "128"
+  - key: icon.minHeightPx
+    value: "128"
+  - key: icon.maxWidthPx
+    value: "128"
+  - key: icon.maxHeightPx
+    value: "128"
+  - key: icon.requireSquare
+    value: "true"
+  - key: icon.requireExactPixels
+    value: "true"
+  - key: icon.background
+    value: "transparent"
+  - key: icon.colorSpace
+    value: "sRGB"

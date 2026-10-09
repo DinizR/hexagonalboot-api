@@ -1,0 +1,17 @@
+# Shine Media API framework defaults (dev).
+# This deploy is a single product — not a switch between apps.
+
+porto:
+  api:
+    application-path: ${porto.api.home-directory}/config/shine-media
+    api-base-path: /api/v1.0.0
+
+plugins:
+  path: ${porto.api.plugins-path}
+
+spring:
+  banner:
+    location: file:${porto.api.application-path}/banner.txt
+  config:
+    import:
+      - optional:file:${porto.api.application-path}/shine-media-dev.yml

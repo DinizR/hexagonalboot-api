@@ -1,0 +1,100 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: postgres
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_INCOMPLETE_INSERTION_SLOTS
+        sql: |
+          SELECT
+            s.id AS slot_id,
+            s.slot_date,
+            s.status,
+            s.position_code,
+            s.slot_index,
+            sow.id AS insertion_sow_id,
+            sow.status AS insertion_sow_status,
+            p.name AS client_name,
+            v.name AS vehicle_name,
+            o.name AS offering_name
+          FROM inventory_slots s
+          INNER JOIN insertion_lines il ON il.id = s.insertion_line_id
+          INNER JOIN media_insertion_sows sow ON sow.id = il.media_insertion_sow_id
+          INNER JOIN parties p ON p.id = sow.party_id
+          INNER JOIN media_vehicles v ON v.id = s.media_vehicle_id
+          INNER JOIN offering_media o ON o.id = s.offering_media_id
+          WHERE s.held_by = 'INSERTION'
+            AND s.status IN (
+              'SOLD',
+              'WAITING_FOR_PARTNER_MEDIA',
+              'MEDIA_INSERTED',
+              'MEDIA_APPROVED',
+              'MEDIA_DEPLOYED'
+            )
+            AND s.slot_date <= ?
+          ORDER BY s.slot_date, sow.id, s.id
+  - dialect: postgres
+    statements:
+      - name: LIST_INCOMPLETE_INSERTION_SLOTS
+        sql: |
+          SELECT
+            s.id AS slot_id,
+            s.slot_date,
+            s.status,
+            s.position_code,
+            s.slot_index,
+            sow.id AS insertion_sow_id,
+            sow.status AS insertion_sow_status,
+            p.name AS client_name,
+            v.name AS vehicle_name,
+            o.name AS offering_name
+          FROM inventory_slots s
+          INNER JOIN insertion_lines il ON il.id = s.insertion_line_id
+          INNER JOIN media_insertion_sows sow ON sow.id = il.media_insertion_sow_id
+          INNER JOIN parties p ON p.id = sow.party_id
+          INNER JOIN media_vehicles v ON v.id = s.media_vehicle_id
+          INNER JOIN offering_media o ON o.id = s.offering_media_id
+          WHERE s.held_by = 'INSERTION'
+            AND s.status IN (
+              'SOLD',
+              'WAITING_FOR_PARTNER_MEDIA',
+              'MEDIA_INSERTED',
+              'MEDIA_APPROVED',
+              'MEDIA_DEPLOYED'
+            )
+            AND s.slot_date <= ?
+          ORDER BY s.slot_date, sow.id, s.id
+  - dialect: mysql
+    statements:
+      - name: LIST_INCOMPLETE_INSERTION_SLOTS
+        sql: |
+          SELECT
+            s.id AS slot_id,
+            s.slot_date,
+            s.status,
+            s.position_code,
+            s.slot_index,
+            sow.id AS insertion_sow_id,
+            sow.status AS insertion_sow_status,
+            p.name AS client_name,
+            v.name AS vehicle_name,
+            o.name AS offering_name
+          FROM inventory_slots s
+          INNER JOIN insertion_lines il ON il.id = s.insertion_line_id
+          INNER JOIN media_insertion_sows sow ON sow.id = il.media_insertion_sow_id
+          INNER JOIN parties p ON p.id = sow.party_id
+          INNER JOIN media_vehicles v ON v.id = s.media_vehicle_id
+          INNER JOIN offering_media o ON o.id = s.offering_media_id
+          WHERE s.held_by = 'INSERTION'
+            AND s.status IN (
+              'SOLD',
+              'WAITING_FOR_PARTNER_MEDIA',
+              'MEDIA_INSERTED',
+              'MEDIA_APPROVED',
+              'MEDIA_DEPLOYED'
+            )
+            AND s.slot_date <= ?
+          ORDER BY s.slot_date, sow.id, s.id

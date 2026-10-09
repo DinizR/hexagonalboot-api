@@ -1,0 +1,42 @@
+spring:
+  application:
+    # Host product name; overridden per app in the deploy’s {app}-{env}.yml.
+    name: porto-api
+  profiles:
+    active: ${API_ENV:dev}
+
+server:
+  port: 9091
+  max-http-header-size: 32KB
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  show-actuator: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when_authorized
+
+logging:
+  level:
+    root: ${LOG_LEVEL:${LOGGING_LEVEL_ROOT:INFO}}
+
+
+porto:
+  api:
+    # Runtime home is a product deploy (PORTO_API_HOME). Tests override this property.
+    home-directory: ${PORTO_API_HOME:${API_HOME:${user.dir}}}
+    environment: ${API_ENV:dev}
+    config-path: ${porto.api.home-directory}/config
+    plugins-path: ${porto.api.home-directory}/plugins
+    api-base-path: /api/v1.0.0

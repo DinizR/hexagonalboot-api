@@ -1,0 +1,109 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: postgres
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_CITY_REGULATION
+        sql: |
+          SELECT id, city_id, media_channel_id, regulations, effective_date, document_url
+          FROM city_regulations
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CITY_REGULATION
+        sql: |
+          SELECT COUNT(*) FROM city_regulations
+      - name: READ_CITY_REGULATION
+        sql: |
+          SELECT id, city_id, media_channel_id, regulations, effective_date, document_url
+          FROM city_regulations WHERE id = ?
+      - name: SEARCH_CITY_REGULATION
+        sql: |
+          SELECT id, city_id, media_channel_id, regulations, effective_date, document_url
+          FROM city_regulations
+          WHERE (LOWER(CAST(regulations AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_CITY_REGULATION
+        sql: |
+          INSERT INTO city_regulations (city_id, media_channel_id, regulations, effective_date, document_url)
+          VALUES (?, ?, ?, ?, ?)
+      - name: UPDATE_CITY_REGULATION
+        sql: |
+          UPDATE city_regulations
+          SET city_id = ?, media_channel_id = ?, regulations = ?, effective_date = ?, document_url = ?
+          WHERE id = ?
+      - name: DELETE_CITY_REGULATION
+        sql: |
+          DELETE FROM city_regulations WHERE id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_CITY_REGULATION
+        sql: |
+          SELECT id, city_id, media_channel_id, regulations, effective_date, document_url
+          FROM city_regulations
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CITY_REGULATION
+        sql: |
+          SELECT COUNT(*) FROM city_regulations
+      - name: READ_CITY_REGULATION
+        sql: |
+          SELECT id, city_id, media_channel_id, regulations, effective_date, document_url
+          FROM city_regulations WHERE id = ?
+      - name: SEARCH_CITY_REGULATION
+        sql: |
+          SELECT id, city_id, media_channel_id, regulations, effective_date, document_url
+          FROM city_regulations
+          WHERE (LOWER(CAST(regulations AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_CITY_REGULATION
+        sql: |
+          INSERT INTO city_regulations (city_id, media_channel_id, regulations, effective_date, document_url)
+          VALUES (?, ?, ?, ?, ?)
+      - name: UPDATE_CITY_REGULATION
+        sql: |
+          UPDATE city_regulations
+          SET city_id = ?, media_channel_id = ?, regulations = ?, effective_date = ?, document_url = ?
+          WHERE id = ?
+      - name: DELETE_CITY_REGULATION
+        sql: |
+          DELETE FROM city_regulations WHERE id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_CITY_REGULATION
+        sql: |
+          SELECT id, city_id, media_channel_id, regulations, effective_date, document_url
+          FROM city_regulations
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CITY_REGULATION
+        sql: |
+          SELECT COUNT(*) FROM city_regulations
+      - name: READ_CITY_REGULATION
+        sql: |
+          SELECT id, city_id, media_channel_id, regulations, effective_date, document_url
+          FROM city_regulations WHERE id = ?
+      - name: SEARCH_CITY_REGULATION
+        sql: |
+          SELECT id, city_id, media_channel_id, regulations, effective_date, document_url
+          FROM city_regulations
+          WHERE (LOWER(CAST(regulations AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_CITY_REGULATION
+        sql: |
+          INSERT INTO city_regulations (city_id, media_channel_id, regulations, effective_date, document_url)
+          VALUES (?, ?, ?, ?, ?)
+      - name: UPDATE_CITY_REGULATION
+        sql: |
+          UPDATE city_regulations
+          SET city_id = ?, media_channel_id = ?, regulations = ?, effective_date = ?, document_url = ?
+          WHERE id = ?
+      - name: DELETE_CITY_REGULATION
+        sql: |
+          DELETE FROM city_regulations WHERE id = ?
+

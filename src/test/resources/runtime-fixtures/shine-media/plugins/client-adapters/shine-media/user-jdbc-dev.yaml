@@ -1,0 +1,119 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: h2
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_USER
+        sql: |
+          SELECT id, first_name, last_name, username, address, city, state, country, phone, email, party_id, photo_url, status
+          FROM users
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_USER
+        sql: |
+          SELECT COUNT(*) FROM users
+      - name: READ_USER
+        sql: |
+          SELECT id, first_name, last_name, username, address, city, state, country, phone, email, party_id, photo_url, status
+          FROM users WHERE id = ?
+      - name: SEARCH_USER
+        sql: |
+          SELECT id, first_name, last_name, username, address, city, state, country, phone, email, party_id, photo_url, status
+          FROM users
+          WHERE (LOWER(CAST(first_name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(last_name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(username AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(email AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(phone AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_USER
+        sql: |
+          INSERT INTO users (first_name, last_name, username, address, city, state, country, phone, email, party_id, photo_url, status)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_USER
+        sql: |
+          UPDATE users
+          SET first_name = ?, last_name = ?, username = ?, address = ?, city = ?, state = ?, country = ?, phone = ?, email = ?, party_id = ?, photo_url = ?, status = ?
+          WHERE id = ?
+      - name: DELETE_USER
+        sql: |
+          DELETE FROM users WHERE id = ?
+      - name: SET_PASSWORD_HASH
+        sql: |
+          UPDATE users SET password_hash = ?, password_expires_at = CURRENT_TIMESTAMP WHERE id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_USER
+        sql: |
+          SELECT id, first_name, last_name, username, address, city, state, country, phone, email, party_id, photo_url, status
+          FROM users
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_USER
+        sql: |
+          SELECT COUNT(*) FROM users
+      - name: READ_USER
+        sql: |
+          SELECT id, first_name, last_name, username, address, city, state, country, phone, email, party_id, photo_url, status
+          FROM users WHERE id = ?
+      - name: SEARCH_USER
+        sql: |
+          SELECT id, first_name, last_name, username, address, city, state, country, phone, email, party_id, photo_url, status
+          FROM users
+          WHERE (LOWER(CAST(first_name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(last_name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(username AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(email AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(phone AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_USER
+        sql: |
+          INSERT INTO users (first_name, last_name, username, address, city, state, country, phone, email, party_id, photo_url, status)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_USER
+        sql: |
+          UPDATE users
+          SET first_name = ?, last_name = ?, username = ?, address = ?, city = ?, state = ?, country = ?, phone = ?, email = ?, party_id = ?, photo_url = ?, status = ?
+          WHERE id = ?
+      - name: DELETE_USER
+        sql: |
+          DELETE FROM users WHERE id = ?
+      - name: SET_PASSWORD_HASH
+        sql: |
+          UPDATE users SET password_hash = ?, password_expires_at = CURRENT_TIMESTAMP WHERE id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_USER
+        sql: |
+          SELECT id, first_name, last_name, username, address, city, state, country, phone, email, party_id, photo_url, status
+          FROM users
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_USER
+        sql: |
+          SELECT COUNT(*) FROM users
+      - name: READ_USER
+        sql: |
+          SELECT id, first_name, last_name, username, address, city, state, country, phone, email, party_id, photo_url, status
+          FROM users WHERE id = ?
+      - name: SEARCH_USER
+        sql: |
+          SELECT id, first_name, last_name, username, address, city, state, country, phone, email, party_id, photo_url, status
+          FROM users
+          WHERE (LOWER(CAST(first_name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(last_name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(username AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(email AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(phone AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_USER
+        sql: |
+          INSERT INTO users (first_name, last_name, username, address, city, state, country, phone, email, party_id, photo_url, status)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_USER
+        sql: |
+          UPDATE users
+          SET first_name = ?, last_name = ?, username = ?, address = ?, city = ?, state = ?, country = ?, phone = ?, email = ?, party_id = ?, photo_url = ?, status = ?
+          WHERE id = ?
+      - name: DELETE_USER
+        sql: |
+          DELETE FROM users WHERE id = ?
+
+
+      - name: SET_PASSWORD_HASH
+        sql: |
+          UPDATE users SET password_hash = ?, password_expires_at = CURRENT_TIMESTAMP WHERE id = ?

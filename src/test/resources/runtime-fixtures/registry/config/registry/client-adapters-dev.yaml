@@ -1,0 +1,19 @@
+client-adapters:
+  - id: product-jdbc
+    version: 1.0.0
+    label: Product JDBC Adapter
+    description: Persists registry products to the application database.
+    className: systems.porto.registry.adapter.jdbc.ProductJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: registry-dtos-1.0.0.jar
+  - id: category-jdbc
+    version: 1.0.0
+    label: Category JDBC Adapter
+    description: Persists registry categories to the application database.
+    className: systems.porto.registry.adapter.jdbc.CategoryJdbcAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: registry-dtos-1.0.0.jar

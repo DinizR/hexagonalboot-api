@@ -1,0 +1,14 @@
+dtos:
+  - id: porto-api-common
+    version: 1.0.0
+    label: Porto API Common
+    description: Shared SPI, persistence helpers, and SQL/Liquibase utilities for porto-api applications.
+    jarFile: porto-api-common-1.0.0.jar
+  - id: shine-media-dtos
+    version: 1.0.0
+    label: Shine Media API DTOs
+    description: Shine Media request/response types and client-adapter capability interfaces.
+    jarFile: shine-media-dtos-1.0.0.jar
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar

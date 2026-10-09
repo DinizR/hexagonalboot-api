@@ -1,0 +1,213 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: h2
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_CASH_FLOW
+        sql: |
+          SELECT id, type, account_id, sow_type, sow_id, creation_date, reason_code, transaction_description, party_id, due_date, effective_date, original_value, effective_value, fine_value, user_id, status, series_id, recurrence
+          FROM cash_flows
+          WHERE (? = 0 OR account_id = ?)
+            AND (? = '' OR sow_type = ?)
+            AND (? = 0 OR sow_id = ?)
+            AND (? = '' OR type = ?)
+            AND (? = '' OR status = ?)
+            AND (? = '' OR series_id = ?)
+            AND (? = '0' OR due_date >= CAST(? AS DATE))
+            AND (? = '0' OR due_date <= CAST(? AS DATE))
+          ORDER BY due_date, id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CASH_FLOW
+        sql: |
+          SELECT COUNT(*) FROM cash_flows
+          WHERE (? = 0 OR account_id = ?)
+            AND (? = '' OR sow_type = ?)
+            AND (? = 0 OR sow_id = ?)
+            AND (? = '' OR type = ?)
+            AND (? = '' OR status = ?)
+            AND (? = '' OR series_id = ?)
+            AND (? = '0' OR due_date >= CAST(? AS DATE))
+            AND (? = '0' OR due_date <= CAST(? AS DATE))
+      - name: READ_CASH_FLOW
+        sql: |
+          SELECT id, type, account_id, sow_type, sow_id, creation_date, reason_code, transaction_description, party_id, due_date, effective_date, original_value, effective_value, fine_value, user_id, status, series_id, recurrence
+          FROM cash_flows WHERE id = ?
+      - name: SEARCH_CASH_FLOW
+        sql: |
+          SELECT cf.id, cf.type, cf.account_id, cf.sow_type, cf.sow_id, cf.creation_date, cf.reason_code, cf.transaction_description, cf.party_id, cf.due_date, cf.effective_date, cf.original_value, cf.effective_value, cf.fine_value, cf.user_id, cf.status, cf.series_id, cf.recurrence
+          FROM cash_flows cf
+          LEFT JOIN accounts a ON a.id = cf.account_id
+          WHERE (LOWER(CAST(cf.reason_code AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(cf.transaction_description AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(cf.type AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(cf.sow_type AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(a.code AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(a.name AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(cf.status AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(cf.series_id AS VARCHAR(4000))) LIKE ?)
+          ORDER BY cf.id
+      - name: INSERT_CASH_FLOW
+        sql: |
+          INSERT INTO cash_flows (type, account_id, sow_type, sow_id, creation_date, reason_code, transaction_description, party_id, due_date, effective_date, original_value, effective_value, fine_value, user_id, status, series_id, recurrence)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_CASH_FLOW
+        sql: |
+          UPDATE cash_flows
+          SET type = ?, account_id = ?, sow_type = ?, sow_id = ?, creation_date = ?, reason_code = ?, transaction_description = ?, party_id = ?, due_date = ?, effective_date = ?, original_value = ?, effective_value = ?, fine_value = ?, user_id = ?, status = ?, series_id = ?, recurrence = ?
+          WHERE id = ?
+      - name: DELETE_CASH_FLOW
+        sql: |
+          DELETE FROM cash_flows WHERE id = ?
+
+      - name: DELETE_FORECAST_BY_SOW
+        sql: |
+          DELETE FROM cash_flows
+          WHERE sow_type = ? AND sow_id = ? AND status = 'FORECAST'
+
+      - name: PROMOTE_FORECAST_TO_ACTUAL
+        sql: |
+          UPDATE cash_flows
+          SET status = 'ACTUAL'
+          WHERE sow_type = ? AND sow_id = ? AND status = 'FORECAST'
+
+  - dialect: postgres
+    statements:
+      - name: LIST_CASH_FLOW
+        sql: |
+          SELECT id, type, account_id, sow_type, sow_id, creation_date, reason_code, transaction_description, party_id, due_date, effective_date, original_value, effective_value, fine_value, user_id, status, series_id, recurrence
+          FROM cash_flows
+          WHERE (? = 0 OR account_id = ?)
+            AND (? = '' OR sow_type = ?)
+            AND (? = 0 OR sow_id = ?)
+            AND (? = '' OR type = ?)
+            AND (? = '' OR status = ?)
+            AND (? = '' OR series_id = ?)
+            AND (? = '0' OR due_date >= CAST(? AS DATE))
+            AND (? = '0' OR due_date <= CAST(? AS DATE))
+          ORDER BY due_date, id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CASH_FLOW
+        sql: |
+          SELECT COUNT(*) FROM cash_flows
+          WHERE (? = 0 OR account_id = ?)
+            AND (? = '' OR sow_type = ?)
+            AND (? = 0 OR sow_id = ?)
+            AND (? = '' OR type = ?)
+            AND (? = '' OR status = ?)
+            AND (? = '' OR series_id = ?)
+            AND (? = '0' OR due_date >= CAST(? AS DATE))
+            AND (? = '0' OR due_date <= CAST(? AS DATE))
+      - name: READ_CASH_FLOW
+        sql: |
+          SELECT id, type, account_id, sow_type, sow_id, creation_date, reason_code, transaction_description, party_id, due_date, effective_date, original_value, effective_value, fine_value, user_id, status, series_id, recurrence
+          FROM cash_flows WHERE id = ?
+      - name: SEARCH_CASH_FLOW
+        sql: |
+          SELECT cf.id, cf.type, cf.account_id, cf.sow_type, cf.sow_id, cf.creation_date, cf.reason_code, cf.transaction_description, cf.party_id, cf.due_date, cf.effective_date, cf.original_value, cf.effective_value, cf.fine_value, cf.user_id, cf.status, cf.series_id, cf.recurrence
+          FROM cash_flows cf
+          LEFT JOIN accounts a ON a.id = cf.account_id
+          WHERE (LOWER(CAST(cf.reason_code AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(cf.transaction_description AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(cf.type AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(cf.sow_type AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(a.code AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(a.name AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(cf.status AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(cf.series_id AS VARCHAR(4000))) LIKE ?)
+          ORDER BY cf.id
+      - name: INSERT_CASH_FLOW
+        sql: |
+          INSERT INTO cash_flows (type, account_id, sow_type, sow_id, creation_date, reason_code, transaction_description, party_id, due_date, effective_date, original_value, effective_value, fine_value, user_id, status, series_id, recurrence)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_CASH_FLOW
+        sql: |
+          UPDATE cash_flows
+          SET type = ?, account_id = ?, sow_type = ?, sow_id = ?, creation_date = ?, reason_code = ?, transaction_description = ?, party_id = ?, due_date = ?, effective_date = ?, original_value = ?, effective_value = ?, fine_value = ?, user_id = ?, status = ?, series_id = ?, recurrence = ?
+          WHERE id = ?
+      - name: DELETE_CASH_FLOW
+        sql: |
+          DELETE FROM cash_flows WHERE id = ?
+
+      - name: DELETE_FORECAST_BY_SOW
+        sql: |
+          DELETE FROM cash_flows
+          WHERE sow_type = ? AND sow_id = ? AND status = 'FORECAST'
+
+      - name: PROMOTE_FORECAST_TO_ACTUAL
+        sql: |
+          UPDATE cash_flows
+          SET status = 'ACTUAL'
+          WHERE sow_type = ? AND sow_id = ? AND status = 'FORECAST'
+
+  - dialect: mysql
+    statements:
+      - name: LIST_CASH_FLOW
+        sql: |
+          SELECT id, type, account_id, sow_type, sow_id, creation_date, reason_code, transaction_description, party_id, due_date, effective_date, original_value, effective_value, fine_value, user_id, status, series_id, recurrence
+          FROM cash_flows
+          WHERE (? = 0 OR account_id = ?)
+            AND (? = '' OR sow_type = ?)
+            AND (? = 0 OR sow_id = ?)
+            AND (? = '' OR type = ?)
+            AND (? = '' OR status = ?)
+            AND (? = '' OR series_id = ?)
+            AND (? = '0' OR due_date >= CAST(? AS DATE))
+            AND (? = '0' OR due_date <= CAST(? AS DATE))
+          ORDER BY due_date, id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CASH_FLOW
+        sql: |
+          SELECT COUNT(*) FROM cash_flows
+          WHERE (? = 0 OR account_id = ?)
+            AND (? = '' OR sow_type = ?)
+            AND (? = 0 OR sow_id = ?)
+            AND (? = '' OR type = ?)
+            AND (? = '' OR status = ?)
+            AND (? = '' OR series_id = ?)
+            AND (? = '0' OR due_date >= CAST(? AS DATE))
+            AND (? = '0' OR due_date <= CAST(? AS DATE))
+      - name: READ_CASH_FLOW
+        sql: |
+          SELECT id, type, account_id, sow_type, sow_id, creation_date, reason_code, transaction_description, party_id, due_date, effective_date, original_value, effective_value, fine_value, user_id, status, series_id, recurrence
+          FROM cash_flows WHERE id = ?
+      - name: SEARCH_CASH_FLOW
+        sql: |
+          SELECT cf.id, cf.type, cf.account_id, cf.sow_type, cf.sow_id, cf.creation_date, cf.reason_code, cf.transaction_description, cf.party_id, cf.due_date, cf.effective_date, cf.original_value, cf.effective_value, cf.fine_value, cf.user_id, cf.status, cf.series_id, cf.recurrence
+          FROM cash_flows cf
+          LEFT JOIN accounts a ON a.id = cf.account_id
+          WHERE (LOWER(CAST(cf.reason_code AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(cf.transaction_description AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(cf.type AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(cf.sow_type AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(a.code AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(a.name AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(cf.status AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(cf.series_id AS VARCHAR(4000))) LIKE ?)
+          ORDER BY cf.id
+      - name: INSERT_CASH_FLOW
+        sql: |
+          INSERT INTO cash_flows (type, account_id, sow_type, sow_id, creation_date, reason_code, transaction_description, party_id, due_date, effective_date, original_value, effective_value, fine_value, user_id, status, series_id, recurrence)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_CASH_FLOW
+        sql: |
+          UPDATE cash_flows
+          SET type = ?, account_id = ?, sow_type = ?, sow_id = ?, creation_date = ?, reason_code = ?, transaction_description = ?, party_id = ?, due_date = ?, effective_date = ?, original_value = ?, effective_value = ?, fine_value = ?, user_id = ?, status = ?, series_id = ?, recurrence = ?
+          WHERE id = ?
+      - name: DELETE_CASH_FLOW
+        sql: |
+          DELETE FROM cash_flows WHERE id = ?
+
+      - name: DELETE_FORECAST_BY_SOW
+        sql: |
+          DELETE FROM cash_flows
+          WHERE sow_type = ? AND sow_id = ? AND status = 'FORECAST'
+
+      - name: PROMOTE_FORECAST_TO_ACTUAL
+        sql: |
+          UPDATE cash_flows
+          SET status = 'ACTUAL'
+          WHERE sow_type = ? AND sow_id = ? AND status = 'FORECAST'

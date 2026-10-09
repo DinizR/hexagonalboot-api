@@ -1,0 +1,18 @@
+scheduled-jobs:
+  - id: heartbeat
+    version: 1.0.0
+    label: Heartbeat scheduled job
+    description: Example scheduled-jobs plugin. Logs fire + key/value parameters. No Quartz types.
+    className: systems.porto.shinemedia.schedule.HeartbeatScheduledJob
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: slot-execution-alert
+    version: 1.0.0
+    label: Slot execution alert
+    description: Emails insertion slots that are not MEDIA_EXECUTED within daysBefore of the slot date.
+    className: systems.porto.shinemedia.schedule.SlotExecutionAlertJob
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar

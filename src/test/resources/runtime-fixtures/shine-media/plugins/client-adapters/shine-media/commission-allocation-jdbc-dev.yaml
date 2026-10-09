@@ -1,0 +1,124 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: h2
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_COMMISSION_ALLOCATION
+        sql: |
+          SELECT id, user_id, commission_id
+          FROM commission_allocations
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_COMMISSION_ALLOCATION
+        sql: |
+          SELECT COUNT(*) FROM commission_allocations
+      - name: READ_COMMISSION_ALLOCATION
+        sql: |
+          SELECT id, user_id, commission_id
+          FROM commission_allocations WHERE id = ?
+
+      - name: FIND_COMMISSION_ALLOCATION_BY_USER
+        sql: |
+          SELECT id, user_id, commission_id
+          FROM commission_allocations WHERE user_id = ?
+      - name: SEARCH_COMMISSION_ALLOCATION
+        sql: |
+          SELECT id, user_id, commission_id
+          FROM commission_allocations
+          WHERE 1 = 0
+          ORDER BY id
+      - name: INSERT_COMMISSION_ALLOCATION
+        sql: |
+          INSERT INTO commission_allocations (user_id, commission_id)
+          VALUES (?, ?)
+      - name: UPDATE_COMMISSION_ALLOCATION
+        sql: |
+          UPDATE commission_allocations
+          SET user_id = ?, commission_id = ?
+          WHERE id = ?
+      - name: DELETE_COMMISSION_ALLOCATION
+        sql: |
+          DELETE FROM commission_allocations WHERE id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_COMMISSION_ALLOCATION
+        sql: |
+          SELECT id, user_id, commission_id
+          FROM commission_allocations
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_COMMISSION_ALLOCATION
+        sql: |
+          SELECT COUNT(*) FROM commission_allocations
+      - name: READ_COMMISSION_ALLOCATION
+        sql: |
+          SELECT id, user_id, commission_id
+          FROM commission_allocations WHERE id = ?
+
+      - name: FIND_COMMISSION_ALLOCATION_BY_USER
+        sql: |
+          SELECT id, user_id, commission_id
+          FROM commission_allocations WHERE user_id = ?
+      - name: SEARCH_COMMISSION_ALLOCATION
+        sql: |
+          SELECT id, user_id, commission_id
+          FROM commission_allocations
+          WHERE 1 = 0
+          ORDER BY id
+      - name: INSERT_COMMISSION_ALLOCATION
+        sql: |
+          INSERT INTO commission_allocations (user_id, commission_id)
+          VALUES (?, ?)
+      - name: UPDATE_COMMISSION_ALLOCATION
+        sql: |
+          UPDATE commission_allocations
+          SET user_id = ?, commission_id = ?
+          WHERE id = ?
+      - name: DELETE_COMMISSION_ALLOCATION
+        sql: |
+          DELETE FROM commission_allocations WHERE id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_COMMISSION_ALLOCATION
+        sql: |
+          SELECT id, user_id, commission_id
+          FROM commission_allocations
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_COMMISSION_ALLOCATION
+        sql: |
+          SELECT COUNT(*) FROM commission_allocations
+      - name: READ_COMMISSION_ALLOCATION
+        sql: |
+          SELECT id, user_id, commission_id
+          FROM commission_allocations WHERE id = ?
+
+      - name: FIND_COMMISSION_ALLOCATION_BY_USER
+        sql: |
+          SELECT id, user_id, commission_id
+          FROM commission_allocations WHERE user_id = ?
+      - name: SEARCH_COMMISSION_ALLOCATION
+        sql: |
+          SELECT id, user_id, commission_id
+          FROM commission_allocations
+          WHERE 1 = 0
+          ORDER BY id
+      - name: INSERT_COMMISSION_ALLOCATION
+        sql: |
+          INSERT INTO commission_allocations (user_id, commission_id)
+          VALUES (?, ?)
+      - name: UPDATE_COMMISSION_ALLOCATION
+        sql: |
+          UPDATE commission_allocations
+          SET user_id = ?, commission_id = ?
+          WHERE id = ?
+      - name: DELETE_COMMISSION_ALLOCATION
+        sql: |
+          DELETE FROM commission_allocations WHERE id = ?
+

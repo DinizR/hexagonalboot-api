@@ -1,0 +1,109 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: postgres
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_USER_ROLE
+        sql: |
+          SELECT id, user_id, role_id
+          FROM user_roles
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_USER_ROLE
+        sql: |
+          SELECT COUNT(*) FROM user_roles
+      - name: READ_USER_ROLE
+        sql: |
+          SELECT id, user_id, role_id
+          FROM user_roles WHERE id = ?
+      - name: SEARCH_USER_ROLE
+        sql: |
+          SELECT id, user_id, role_id
+          FROM user_roles
+          WHERE 1 = 0
+          ORDER BY id
+      - name: INSERT_USER_ROLE
+        sql: |
+          INSERT INTO user_roles (user_id, role_id)
+          VALUES (?, ?)
+      - name: UPDATE_USER_ROLE
+        sql: |
+          UPDATE user_roles
+          SET user_id = ?, role_id = ?
+          WHERE id = ?
+      - name: DELETE_USER_ROLE
+        sql: |
+          DELETE FROM user_roles WHERE id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_USER_ROLE
+        sql: |
+          SELECT id, user_id, role_id
+          FROM user_roles
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_USER_ROLE
+        sql: |
+          SELECT COUNT(*) FROM user_roles
+      - name: READ_USER_ROLE
+        sql: |
+          SELECT id, user_id, role_id
+          FROM user_roles WHERE id = ?
+      - name: SEARCH_USER_ROLE
+        sql: |
+          SELECT id, user_id, role_id
+          FROM user_roles
+          WHERE 1 = 0
+          ORDER BY id
+      - name: INSERT_USER_ROLE
+        sql: |
+          INSERT INTO user_roles (user_id, role_id)
+          VALUES (?, ?)
+      - name: UPDATE_USER_ROLE
+        sql: |
+          UPDATE user_roles
+          SET user_id = ?, role_id = ?
+          WHERE id = ?
+      - name: DELETE_USER_ROLE
+        sql: |
+          DELETE FROM user_roles WHERE id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_USER_ROLE
+        sql: |
+          SELECT id, user_id, role_id
+          FROM user_roles
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_USER_ROLE
+        sql: |
+          SELECT COUNT(*) FROM user_roles
+      - name: READ_USER_ROLE
+        sql: |
+          SELECT id, user_id, role_id
+          FROM user_roles WHERE id = ?
+      - name: SEARCH_USER_ROLE
+        sql: |
+          SELECT id, user_id, role_id
+          FROM user_roles
+          WHERE 1 = 0
+          ORDER BY id
+      - name: INSERT_USER_ROLE
+        sql: |
+          INSERT INTO user_roles (user_id, role_id)
+          VALUES (?, ?)
+      - name: UPDATE_USER_ROLE
+        sql: |
+          UPDATE user_roles
+          SET user_id = ?, role_id = ?
+          WHERE id = ?
+      - name: DELETE_USER_ROLE
+        sql: |
+          DELETE FROM user_roles WHERE id = ?
+

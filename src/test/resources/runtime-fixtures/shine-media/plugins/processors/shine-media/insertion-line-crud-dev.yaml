@@ -1,0 +1,20 @@
+connectors:
+  - id: DB
+    adapter: insertion-line-jdbc
+  - id: INSERTION_SOW
+    adapter: media-insertion-sow-jdbc
+  - id: CASH_FLOW
+    adapter: cash-flow-jdbc
+  - id: ACCOUNT
+    adapter: account-jdbc
+  - id: PAYMENT
+    adapter: payment-condition-jdbc
+  - id: COMMISSION
+    adapter: sales-commission-jdbc
+  - id: COMMISSION_ALLOCATION
+    adapter: commission-allocation-jdbc
+  - id: USER
+    adapter: user-jdbc
+properties:
+  - key: page.default.size
+    value: "8"

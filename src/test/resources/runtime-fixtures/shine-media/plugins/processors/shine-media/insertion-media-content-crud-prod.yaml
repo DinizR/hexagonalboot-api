@@ -1,0 +1,14 @@
+connectors:
+  - id: DB
+    adapter: insertion-media-content-jdbc
+  - id: LINE
+    adapter: media-provider-sow-line-jdbc
+  - id: SLOTS
+    adapter: inventory-slot-jdbc
+  - id: STORAGE
+    adapter: document-storage-s3
+properties:
+  - key: page.default.size
+    value: "8"
+  - key: media-content.allowed-hosts
+    value: "cdn.shinemedia.local,sows.shinemedia.local"

@@ -1,0 +1,12 @@
+# Registry application (prod) — overrides framework defaults from application.yml / api-prod.yml.
+
+spring:
+  application:
+    name: registry
+  datasource:
+    url: jdbc:postgresql://${REGISTRY_DB_HOST:localhost}:${REGISTRY_DB_PORT:5432}/registry
+    username: ${REGISTRY_DB_USER:registry}
+    password: ${REGISTRY_DB_PASSWORD:registry}
+  liquibase:
+    # Migrations run per database from the datasource plugin (liquibase.change-log).
+    enabled: false

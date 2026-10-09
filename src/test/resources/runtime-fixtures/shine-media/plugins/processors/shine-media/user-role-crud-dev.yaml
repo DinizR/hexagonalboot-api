@@ -1,0 +1,6 @@
+connectors:
+  - id: DB
+    adapter: user-role-jdbc
+properties:
+  - key: page.default.size
+    value: "8"

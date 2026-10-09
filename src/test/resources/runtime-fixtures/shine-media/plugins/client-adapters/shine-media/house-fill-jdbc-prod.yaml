@@ -1,0 +1,184 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: postgres
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_HOUSE_FILL
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, reason, storage_location_url, slot_quantity, effective_from, effective_to, status, created_by_user_id
+          FROM house_fills
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_HOUSE_FILL
+        sql: |
+          SELECT COUNT(*) FROM house_fills
+      - name: READ_HOUSE_FILL
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, reason, storage_location_url, slot_quantity, effective_from, effective_to, status, created_by_user_id
+          FROM house_fills WHERE id = ?
+      - name: SEARCH_HOUSE_FILL
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, reason, storage_location_url, slot_quantity, effective_from, effective_to, status, created_by_user_id
+          FROM house_fills
+          WHERE (LOWER(CAST(reason AS VARCHAR(4000))) LIKE ?
+              OR LOWER(CAST(status AS VARCHAR(4000))) LIKE ?
+              OR LOWER(CAST(storage_location_url AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_HOUSE_FILL
+        sql: |
+          INSERT INTO house_fills (
+            offering_media_id, media_vehicle_id, reason, storage_location_url,
+            slot_quantity, effective_from, effective_to, status, created_by_user_id
+          )
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_HOUSE_FILL
+        sql: |
+          UPDATE house_fills
+          SET offering_media_id = ?, media_vehicle_id = ?, reason = ?, storage_location_url = ?,
+              slot_quantity = ?, effective_from = ?, effective_to = ?, status = ?, created_by_user_id = ?
+          WHERE id = ?
+      - name: DELETE_HOUSE_FILL
+        sql: |
+          DELETE FROM house_fills WHERE id = ?
+
+      - name: VCG_LOCK_VEHICLE_BY_OFFERING
+        sql: |
+          SELECT mv.id, mv.name, mv.capacity_quantity, mv.capacity_type, mv.air_time, mv.recurrence
+          FROM offering_media om
+          INNER JOIN media_provider_sow_lines psl ON psl.id = om.media_provider_sow_line_id
+          INNER JOIN media_vehicles mv ON mv.id = psl.media_vehicle_id
+          WHERE om.id = ?
+          FOR UPDATE
+      - name: VCG_LOCK_VEHICLE_BY_ID
+        sql: |
+          SELECT mv.id, mv.name, mv.capacity_quantity, mv.capacity_type, mv.air_time, mv.recurrence
+          FROM media_vehicles mv
+          WHERE mv.id = ?
+          FOR UPDATE
+      - name: VCG_READ_INSERTION_SOW_WINDOW
+        sql: |
+          SELECT duration_from, duration_to, status
+          FROM media_insertion_sows
+          WHERE id = ?
+  - dialect: postgres
+    statements:
+      - name: LIST_HOUSE_FILL
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, reason, storage_location_url, slot_quantity, effective_from, effective_to, status, created_by_user_id
+          FROM house_fills
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_HOUSE_FILL
+        sql: |
+          SELECT COUNT(*) FROM house_fills
+      - name: READ_HOUSE_FILL
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, reason, storage_location_url, slot_quantity, effective_from, effective_to, status, created_by_user_id
+          FROM house_fills WHERE id = ?
+      - name: SEARCH_HOUSE_FILL
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, reason, storage_location_url, slot_quantity, effective_from, effective_to, status, created_by_user_id
+          FROM house_fills
+          WHERE (LOWER(CAST(reason AS VARCHAR(4000))) LIKE ?
+              OR LOWER(CAST(status AS VARCHAR(4000))) LIKE ?
+              OR LOWER(CAST(storage_location_url AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_HOUSE_FILL
+        sql: |
+          INSERT INTO house_fills (
+            offering_media_id, media_vehicle_id, reason, storage_location_url,
+            slot_quantity, effective_from, effective_to, status, created_by_user_id
+          )
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_HOUSE_FILL
+        sql: |
+          UPDATE house_fills
+          SET offering_media_id = ?, media_vehicle_id = ?, reason = ?, storage_location_url = ?,
+              slot_quantity = ?, effective_from = ?, effective_to = ?, status = ?, created_by_user_id = ?
+          WHERE id = ?
+      - name: DELETE_HOUSE_FILL
+        sql: |
+          DELETE FROM house_fills WHERE id = ?
+
+      - name: VCG_LOCK_VEHICLE_BY_OFFERING
+        sql: |
+          SELECT mv.id, mv.name, mv.capacity_quantity, mv.capacity_type, mv.air_time, mv.recurrence
+          FROM offering_media om
+          INNER JOIN media_provider_sow_lines psl ON psl.id = om.media_provider_sow_line_id
+          INNER JOIN media_vehicles mv ON mv.id = psl.media_vehicle_id
+          WHERE om.id = ?
+          FOR UPDATE
+      - name: VCG_LOCK_VEHICLE_BY_ID
+        sql: |
+          SELECT mv.id, mv.name, mv.capacity_quantity, mv.capacity_type, mv.air_time, mv.recurrence
+          FROM media_vehicles mv
+          WHERE mv.id = ?
+          FOR UPDATE
+      - name: VCG_READ_INSERTION_SOW_WINDOW
+        sql: |
+          SELECT duration_from, duration_to, status
+          FROM media_insertion_sows
+          WHERE id = ?
+  - dialect: mysql
+    statements:
+      - name: LIST_HOUSE_FILL
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, reason, storage_location_url, slot_quantity, effective_from, effective_to, status, created_by_user_id
+          FROM house_fills
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_HOUSE_FILL
+        sql: |
+          SELECT COUNT(*) FROM house_fills
+      - name: READ_HOUSE_FILL
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, reason, storage_location_url, slot_quantity, effective_from, effective_to, status, created_by_user_id
+          FROM house_fills WHERE id = ?
+      - name: SEARCH_HOUSE_FILL
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, reason, storage_location_url, slot_quantity, effective_from, effective_to, status, created_by_user_id
+          FROM house_fills
+          WHERE (LOWER(CAST(reason AS VARCHAR(4000))) LIKE ?
+              OR LOWER(CAST(status AS VARCHAR(4000))) LIKE ?
+              OR LOWER(CAST(storage_location_url AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_HOUSE_FILL
+        sql: |
+          INSERT INTO house_fills (
+            offering_media_id, media_vehicle_id, reason, storage_location_url,
+            slot_quantity, effective_from, effective_to, status, created_by_user_id
+          )
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_HOUSE_FILL
+        sql: |
+          UPDATE house_fills
+          SET offering_media_id = ?, media_vehicle_id = ?, reason = ?, storage_location_url = ?,
+              slot_quantity = ?, effective_from = ?, effective_to = ?, status = ?, created_by_user_id = ?
+          WHERE id = ?
+      - name: DELETE_HOUSE_FILL
+        sql: |
+          DELETE FROM house_fills WHERE id = ?
+
+      - name: VCG_LOCK_VEHICLE_BY_OFFERING
+        sql: |
+          SELECT mv.id, mv.name, mv.capacity_quantity, mv.capacity_type, mv.air_time, mv.recurrence
+          FROM offering_media om
+          INNER JOIN media_provider_sow_lines psl ON psl.id = om.media_provider_sow_line_id
+          INNER JOIN media_vehicles mv ON mv.id = psl.media_vehicle_id
+          WHERE om.id = ?
+          FOR UPDATE
+      - name: VCG_LOCK_VEHICLE_BY_ID
+        sql: |
+          SELECT mv.id, mv.name, mv.capacity_quantity, mv.capacity_type, mv.air_time, mv.recurrence
+          FROM media_vehicles mv
+          WHERE mv.id = ?
+          FOR UPDATE
+      - name: VCG_READ_INSERTION_SOW_WINDOW
+        sql: |
+          SELECT duration_from, duration_to, status
+          FROM media_insertion_sows
+          WHERE id = ?

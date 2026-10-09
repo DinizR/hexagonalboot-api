@@ -1,0 +1,109 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: h2
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_PAYMENT_CONDITION
+        sql: |
+          SELECT id, name, number_installments
+          FROM payment_conditions
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_PAYMENT_CONDITION
+        sql: |
+          SELECT COUNT(*) FROM payment_conditions
+      - name: READ_PAYMENT_CONDITION
+        sql: |
+          SELECT id, name, number_installments
+          FROM payment_conditions WHERE id = ?
+      - name: SEARCH_PAYMENT_CONDITION
+        sql: |
+          SELECT id, name, number_installments
+          FROM payment_conditions
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_PAYMENT_CONDITION
+        sql: |
+          INSERT INTO payment_conditions (name, number_installments)
+          VALUES (?, ?)
+      - name: UPDATE_PAYMENT_CONDITION
+        sql: |
+          UPDATE payment_conditions
+          SET name = ?, number_installments = ?
+          WHERE id = ?
+      - name: DELETE_PAYMENT_CONDITION
+        sql: |
+          DELETE FROM payment_conditions WHERE id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_PAYMENT_CONDITION
+        sql: |
+          SELECT id, name, number_installments
+          FROM payment_conditions
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_PAYMENT_CONDITION
+        sql: |
+          SELECT COUNT(*) FROM payment_conditions
+      - name: READ_PAYMENT_CONDITION
+        sql: |
+          SELECT id, name, number_installments
+          FROM payment_conditions WHERE id = ?
+      - name: SEARCH_PAYMENT_CONDITION
+        sql: |
+          SELECT id, name, number_installments
+          FROM payment_conditions
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_PAYMENT_CONDITION
+        sql: |
+          INSERT INTO payment_conditions (name, number_installments)
+          VALUES (?, ?)
+      - name: UPDATE_PAYMENT_CONDITION
+        sql: |
+          UPDATE payment_conditions
+          SET name = ?, number_installments = ?
+          WHERE id = ?
+      - name: DELETE_PAYMENT_CONDITION
+        sql: |
+          DELETE FROM payment_conditions WHERE id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_PAYMENT_CONDITION
+        sql: |
+          SELECT id, name, number_installments
+          FROM payment_conditions
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_PAYMENT_CONDITION
+        sql: |
+          SELECT COUNT(*) FROM payment_conditions
+      - name: READ_PAYMENT_CONDITION
+        sql: |
+          SELECT id, name, number_installments
+          FROM payment_conditions WHERE id = ?
+      - name: SEARCH_PAYMENT_CONDITION
+        sql: |
+          SELECT id, name, number_installments
+          FROM payment_conditions
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_PAYMENT_CONDITION
+        sql: |
+          INSERT INTO payment_conditions (name, number_installments)
+          VALUES (?, ?)
+      - name: UPDATE_PAYMENT_CONDITION
+        sql: |
+          UPDATE payment_conditions
+          SET name = ?, number_installments = ?
+          WHERE id = ?
+      - name: DELETE_PAYMENT_CONDITION
+        sql: |
+          DELETE FROM payment_conditions WHERE id = ?
+

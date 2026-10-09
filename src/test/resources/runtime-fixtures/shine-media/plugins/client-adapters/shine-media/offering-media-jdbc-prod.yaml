@@ -1,0 +1,151 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: postgres
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_OFFERING_MEDIA
+        sql: |
+          SELECT o.id, o.name, o.media_provider_sow_line_id, o.tax_rate, o.icon_url, o.audience_capacity, o.audience_capacity_unit, o.print_run, o.subscriber_count, o.view_count,
+                 l.minute_price, l.slot_duration_minutes, l.slot_monthly_price, l.number_of_insertions
+          FROM offering_media o
+          INNER JOIN media_provider_sow_lines l ON l.id = o.media_provider_sow_line_id
+          ORDER BY o.id
+          LIMIT ? OFFSET ?
+      - name: COUNT_OFFERING_MEDIA
+        sql: |
+          SELECT COUNT(*) FROM offering_media
+      - name: READ_OFFERING_MEDIA
+        sql: |
+          SELECT o.id, o.name, o.media_provider_sow_line_id, o.tax_rate, o.icon_url, o.audience_capacity, o.audience_capacity_unit, o.print_run, o.subscriber_count, o.view_count,
+                 l.minute_price, l.slot_duration_minutes, l.slot_monthly_price, l.number_of_insertions
+          FROM offering_media o
+          INNER JOIN media_provider_sow_lines l ON l.id = o.media_provider_sow_line_id
+          WHERE o.id = ?
+      - name: SEARCH_OFFERING_MEDIA
+        sql: |
+          SELECT o.id, o.name, o.media_provider_sow_line_id, o.tax_rate, o.icon_url, o.audience_capacity, o.audience_capacity_unit, o.print_run, o.subscriber_count, o.view_count,
+                 l.minute_price, l.slot_duration_minutes, l.slot_monthly_price, l.number_of_insertions
+          FROM offering_media o
+          INNER JOIN media_provider_sow_lines l ON l.id = o.media_provider_sow_line_id
+          WHERE (LOWER(CAST(o.name AS VARCHAR(4000))) LIKE ?)
+          ORDER BY o.id
+      - name: INSERT_OFFERING_MEDIA
+        sql: |
+          INSERT INTO offering_media (name, media_provider_sow_line_id, tax_rate, icon_url, audience_capacity, audience_capacity_unit, print_run, subscriber_count, view_count)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_OFFERING_MEDIA
+        sql: |
+          UPDATE offering_media
+          SET name = ?, media_provider_sow_line_id = ?, tax_rate = ?, icon_url = ?, audience_capacity = ?, audience_capacity_unit = ?, print_run = ?, subscriber_count = ?, view_count = ?
+          WHERE id = ?
+      - name: DELETE_OFFERING_MEDIA
+        sql: |
+          DELETE FROM offering_media WHERE id = ?
+
+      - name: READ_AUDIENCE_FOR_LINE
+        sql: |
+          SELECT mv.audience_capacity, mv.audience_capacity_unit, psl.exposure
+          FROM media_provider_sow_lines psl
+          LEFT JOIN media_vehicles mv ON mv.id = psl.media_vehicle_id
+          WHERE psl.id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_OFFERING_MEDIA
+        sql: |
+          SELECT o.id, o.name, o.media_provider_sow_line_id, o.tax_rate, o.icon_url, o.audience_capacity, o.audience_capacity_unit, o.print_run, o.subscriber_count, o.view_count,
+                 l.minute_price, l.slot_duration_minutes, l.slot_monthly_price, l.number_of_insertions
+          FROM offering_media o
+          INNER JOIN media_provider_sow_lines l ON l.id = o.media_provider_sow_line_id
+          ORDER BY o.id
+          LIMIT ? OFFSET ?
+      - name: COUNT_OFFERING_MEDIA
+        sql: |
+          SELECT COUNT(*) FROM offering_media
+      - name: READ_OFFERING_MEDIA
+        sql: |
+          SELECT o.id, o.name, o.media_provider_sow_line_id, o.tax_rate, o.icon_url, o.audience_capacity, o.audience_capacity_unit, o.print_run, o.subscriber_count, o.view_count,
+                 l.minute_price, l.slot_duration_minutes, l.slot_monthly_price, l.number_of_insertions
+          FROM offering_media o
+          INNER JOIN media_provider_sow_lines l ON l.id = o.media_provider_sow_line_id
+          WHERE o.id = ?
+      - name: SEARCH_OFFERING_MEDIA
+        sql: |
+          SELECT o.id, o.name, o.media_provider_sow_line_id, o.tax_rate, o.icon_url, o.audience_capacity, o.audience_capacity_unit, o.print_run, o.subscriber_count, o.view_count,
+                 l.minute_price, l.slot_duration_minutes, l.slot_monthly_price, l.number_of_insertions
+          FROM offering_media o
+          INNER JOIN media_provider_sow_lines l ON l.id = o.media_provider_sow_line_id
+          WHERE (LOWER(CAST(o.name AS VARCHAR(4000))) LIKE ?)
+          ORDER BY o.id
+      - name: INSERT_OFFERING_MEDIA
+        sql: |
+          INSERT INTO offering_media (name, media_provider_sow_line_id, tax_rate, icon_url, audience_capacity, audience_capacity_unit, print_run, subscriber_count, view_count)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_OFFERING_MEDIA
+        sql: |
+          UPDATE offering_media
+          SET name = ?, media_provider_sow_line_id = ?, tax_rate = ?, icon_url = ?, audience_capacity = ?, audience_capacity_unit = ?, print_run = ?, subscriber_count = ?, view_count = ?
+          WHERE id = ?
+      - name: DELETE_OFFERING_MEDIA
+        sql: |
+          DELETE FROM offering_media WHERE id = ?
+
+      - name: READ_AUDIENCE_FOR_LINE
+        sql: |
+          SELECT mv.audience_capacity, mv.audience_capacity_unit, psl.exposure
+          FROM media_provider_sow_lines psl
+          LEFT JOIN media_vehicles mv ON mv.id = psl.media_vehicle_id
+          WHERE psl.id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_OFFERING_MEDIA
+        sql: |
+          SELECT o.id, o.name, o.media_provider_sow_line_id, o.tax_rate, o.icon_url, o.audience_capacity, o.audience_capacity_unit, o.print_run, o.subscriber_count, o.view_count,
+                 l.minute_price, l.slot_duration_minutes, l.slot_monthly_price, l.number_of_insertions
+          FROM offering_media o
+          INNER JOIN media_provider_sow_lines l ON l.id = o.media_provider_sow_line_id
+          ORDER BY o.id
+          LIMIT ? OFFSET ?
+      - name: COUNT_OFFERING_MEDIA
+        sql: |
+          SELECT COUNT(*) FROM offering_media
+      - name: READ_OFFERING_MEDIA
+        sql: |
+          SELECT o.id, o.name, o.media_provider_sow_line_id, o.tax_rate, o.icon_url, o.audience_capacity, o.audience_capacity_unit, o.print_run, o.subscriber_count, o.view_count,
+                 l.minute_price, l.slot_duration_minutes, l.slot_monthly_price, l.number_of_insertions
+          FROM offering_media o
+          INNER JOIN media_provider_sow_lines l ON l.id = o.media_provider_sow_line_id
+          WHERE o.id = ?
+      - name: SEARCH_OFFERING_MEDIA
+        sql: |
+          SELECT o.id, o.name, o.media_provider_sow_line_id, o.tax_rate, o.icon_url, o.audience_capacity, o.audience_capacity_unit, o.print_run, o.subscriber_count, o.view_count,
+                 l.minute_price, l.slot_duration_minutes, l.slot_monthly_price, l.number_of_insertions
+          FROM offering_media o
+          INNER JOIN media_provider_sow_lines l ON l.id = o.media_provider_sow_line_id
+          WHERE (LOWER(CAST(o.name AS VARCHAR(4000))) LIKE ?)
+          ORDER BY o.id
+      - name: INSERT_OFFERING_MEDIA
+        sql: |
+          INSERT INTO offering_media (name, media_provider_sow_line_id, tax_rate, icon_url, audience_capacity, audience_capacity_unit, print_run, subscriber_count, view_count)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_OFFERING_MEDIA
+        sql: |
+          UPDATE offering_media
+          SET name = ?, media_provider_sow_line_id = ?, tax_rate = ?, icon_url = ?, audience_capacity = ?, audience_capacity_unit = ?, print_run = ?, subscriber_count = ?, view_count = ?
+          WHERE id = ?
+      - name: DELETE_OFFERING_MEDIA
+        sql: |
+          DELETE FROM offering_media WHERE id = ?
+
+      - name: READ_AUDIENCE_FOR_LINE
+        sql: |
+          SELECT mv.audience_capacity, mv.audience_capacity_unit, psl.exposure
+          FROM media_provider_sow_lines psl
+          LEFT JOIN media_vehicles mv ON mv.id = psl.media_vehicle_id
+          WHERE psl.id = ?
+

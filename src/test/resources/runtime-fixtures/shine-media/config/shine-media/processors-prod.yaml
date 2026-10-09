@@ -1,0 +1,334 @@
+processors:
+  - id: business-area-crud
+    version: 1.0.0
+    label: BusinessArea CRUD Processor
+    description: Business logic for business-areas operations.
+    className: systems.porto.shinemedia.processor.BusinessAreaCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: city-crud
+    version: 1.0.0
+    label: City CRUD Processor
+    description: Business logic for cities operations.
+    className: systems.porto.shinemedia.processor.CityCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: city-regulation-crud
+    version: 1.0.0
+    label: CityRegulation CRUD Processor
+    description: Business logic for city-regulations operations.
+    className: systems.porto.shinemedia.processor.CityRegulationCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: sales-commission-crud
+    version: 1.0.0
+    label: SalesCommission CRUD Processor
+    description: Business logic for sales-commissions operations.
+    className: systems.porto.shinemedia.processor.SalesCommissionCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: commission-allocation-crud
+    version: 1.0.0
+    label: CommissionAllocation CRUD Processor
+    description: Business logic for commission-allocations operations.
+    className: systems.porto.shinemedia.processor.CommissionAllocationCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: media-category-crud
+    version: 1.0.0
+    label: MediaCategory CRUD Processor
+    description: Business logic for media-categories operations.
+    className: systems.porto.shinemedia.processor.MediaCategoryCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: media-channel-crud
+    version: 1.0.0
+    label: MediaChannel CRUD Processor
+    description: Business logic for media-channels operations.
+    className: systems.porto.shinemedia.processor.MediaChannelCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: media-vehicle-crud
+    version: 1.0.0
+    label: MediaVehicle CRUD Processor
+    description: Business logic for media-vehicles operations.
+    className: systems.porto.shinemedia.processor.MediaVehicleCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: media-location-crud
+    version: 1.0.0
+    label: MediaLocation CRUD Processor
+    description: Business logic for media-locations operations.
+    className: systems.porto.shinemedia.processor.MediaLocationCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: offering-media-crud
+    version: 1.0.0
+    label: OfferingMedia CRUD Processor
+    description: Business logic for offering-media operations.
+    className: systems.porto.shinemedia.processor.OfferingMediaCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: inventory-slot-crud
+    version: 1.0.0
+    label: InventorySlot CRUD Processor
+    description: Business logic for inventory-slot list, summary, and generate operations.
+    className: systems.porto.shinemedia.processor.InventorySlotCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: house-fill-crud
+    version: 1.0.0
+    label: HouseFill CRUD Processor
+    description: Business logic for unsold-slot house-fill operations.
+    className: systems.porto.shinemedia.processor.HouseFillCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: creative-service-crud
+    version: 1.0.0
+    label: CreativeService CRUD Processor
+    description: Business logic for creative-services operations.
+    className: systems.porto.shinemedia.processor.CreativeServiceCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: creative-service-rate-crud
+    version: 1.0.0
+    label: CreativeServiceRate CRUD Processor
+    description: Business logic for city-localized creative-service-rate operations.
+    className: systems.porto.shinemedia.processor.CreativeServiceRateCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: party-crud
+    version: 1.0.0
+    label: Party CRUD Processor
+    description: Business logic for parties operations.
+    className: systems.porto.shinemedia.processor.PartyCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: template-crud
+    version: 1.0.0
+    label: Template CRUD Processor
+    description: Business logic for templates operations.
+    className: systems.porto.shinemedia.processor.TemplateCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: payment-condition-crud
+    version: 1.0.0
+    label: PaymentCondition CRUD Processor
+    description: Business logic for payment-conditions operations.
+    className: systems.porto.shinemedia.processor.PaymentConditionCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: company-legal-entity-crud
+    version: 1.0.0
+    label: CompanyLegalEntity CRUD Processor
+    description: Business logic for company legal entities (tax id per country).
+    className: systems.porto.shinemedia.processor.CompanyLegalEntityCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: media-provider-sow-crud
+    version: 1.0.0
+    label: MediaProviderSow CRUD Processor
+    description: Business logic for media-provider-sows operations.
+    className: systems.porto.shinemedia.processor.MediaProviderSowCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: media-provider-sow-line-crud
+    version: 1.0.0
+    label: MediaProviderSowLine CRUD Processor
+    description: Business logic for media-provider-sow-lines operations.
+    className: systems.porto.shinemedia.processor.MediaProviderSowLineCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: media-provider-sow-line-position-crud
+    version: 1.0.0
+    label: MediaProviderSowLinePosition CRUD Processor
+    description: Business logic for provider SoW line positions (pages, breaks, rolls).
+    className: systems.porto.shinemedia.processor.MediaProviderSowLinePositionCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: media-creative-sow-crud
+    version: 1.0.0
+    label: MediaCreativeSow CRUD Processor
+    description: Business logic for media-creative-sows operations.
+    className: systems.porto.shinemedia.processor.MediaCreativeSowCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: creative-service-line-crud
+    version: 1.0.0
+    label: CreativeServiceLine CRUD Processor
+    description: Business logic for creative-service-lines operations.
+    className: systems.porto.shinemedia.processor.CreativeServiceLineCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: creative-deliverable-crud
+    version: 1.0.0
+    label: CreativeDeliverable CRUD Processor
+    description: Business logic for creative-deliverables operations.
+    className: systems.porto.shinemedia.processor.CreativeDeliverableCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: media-insertion-sow-crud
+    version: 1.0.0
+    label: MediaInsertionSow CRUD Processor
+    description: Business logic for media-insertion-sows operations.
+    className: systems.porto.shinemedia.processor.MediaInsertionSowCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: insertion-line-crud
+    version: 1.0.0
+    label: InsertionLine CRUD Processor
+    description: Business logic for insertion-lines operations.
+    className: systems.porto.shinemedia.processor.InsertionLineCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: insertion-media-content-crud
+    version: 1.0.0
+    label: InsertionMediaContent CRUD Processor
+    description: Business logic for insertion-media-contents operations.
+    className: systems.porto.shinemedia.processor.InsertionMediaContentCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: provider-media-content-crud
+    version: 1.0.0
+    label: ProviderMediaContent CRUD Processor
+    description: Business logic for provider-media-contents operations.
+    className: systems.porto.shinemedia.processor.ProviderMediaContentCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: contract-execution-evidence-crud
+    version: 1.0.0
+    label: ContractExecutionEvidence CRUD Processor
+    description: Business logic for contract-execution-evidences operations.
+    className: systems.porto.shinemedia.processor.ContractExecutionEvidenceCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: account-crud
+    version: 1.0.0
+    label: Account CRUD Processor
+    description: Business logic for chart-of-accounts operations.
+    className: systems.porto.shinemedia.processor.AccountCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: cash-flow-crud
+    version: 1.0.0
+    label: CashFlow CRUD Processor
+    description: Business logic for cash-flows operations.
+    className: systems.porto.shinemedia.processor.CashFlowCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: user-crud
+    version: 1.0.0
+    label: User CRUD Processor
+    description: Business logic for users operations.
+    className: systems.porto.shinemedia.processor.UserCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: role-crud
+    version: 1.0.0
+    label: Role CRUD Processor
+    description: Business logic for roles operations.
+    className: systems.porto.shinemedia.processor.RoleCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: role-permission-crud
+    version: 1.0.0
+    label: RolePermission CRUD Processor
+    description: Business logic for role-permissions operations.
+    className: systems.porto.shinemedia.processor.RolePermissionCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: user-role-crud
+    version: 1.0.0
+    label: UserRole CRUD Processor
+    description: Business logic for user-roles operations.
+    className: systems.porto.shinemedia.processor.UserRoleCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+  - id: scheduled-job-crud
+    version: 1.0.0
+    label: ScheduledJob CRUD Processor
+    description: Persist cron schedules and provision them into the host JobScheduler.
+    className: systems.porto.shinemedia.processor.ScheduledJobCrudProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+        - jarFile: shine-media-dtos-1.0.0.jar
+
+  - id: auth-token
+    version: 1.0.0
+    label: Auth token processor
+    description: Issues access tokens through the configured IdentityProvider.
+    className: systems.porto.shinemedia.processor.AuthTokenProcessor
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar

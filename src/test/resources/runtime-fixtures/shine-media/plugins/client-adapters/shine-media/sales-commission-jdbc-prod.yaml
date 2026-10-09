@@ -1,0 +1,109 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: postgres
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_SALES_COMMISSION
+        sql: |
+          SELECT id, name, rate_full_stack, rate_insertion_only, rate_provider_origin, rate_creative_services
+          FROM sales_commissions
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_SALES_COMMISSION
+        sql: |
+          SELECT COUNT(*) FROM sales_commissions
+      - name: READ_SALES_COMMISSION
+        sql: |
+          SELECT id, name, rate_full_stack, rate_insertion_only, rate_provider_origin, rate_creative_services
+          FROM sales_commissions WHERE id = ?
+      - name: SEARCH_SALES_COMMISSION
+        sql: |
+          SELECT id, name, rate_full_stack, rate_insertion_only, rate_provider_origin, rate_creative_services
+          FROM sales_commissions
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_SALES_COMMISSION
+        sql: |
+          INSERT INTO sales_commissions (name, rate_full_stack, rate_insertion_only, rate_provider_origin, rate_creative_services)
+          VALUES (?, ?, ?, ?, ?)
+      - name: UPDATE_SALES_COMMISSION
+        sql: |
+          UPDATE sales_commissions
+          SET name = ?, rate_full_stack = ?, rate_insertion_only = ?, rate_provider_origin = ?, rate_creative_services = ?
+          WHERE id = ?
+      - name: DELETE_SALES_COMMISSION
+        sql: |
+          DELETE FROM sales_commissions WHERE id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_SALES_COMMISSION
+        sql: |
+          SELECT id, name, rate_full_stack, rate_insertion_only, rate_provider_origin, rate_creative_services
+          FROM sales_commissions
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_SALES_COMMISSION
+        sql: |
+          SELECT COUNT(*) FROM sales_commissions
+      - name: READ_SALES_COMMISSION
+        sql: |
+          SELECT id, name, rate_full_stack, rate_insertion_only, rate_provider_origin, rate_creative_services
+          FROM sales_commissions WHERE id = ?
+      - name: SEARCH_SALES_COMMISSION
+        sql: |
+          SELECT id, name, rate_full_stack, rate_insertion_only, rate_provider_origin, rate_creative_services
+          FROM sales_commissions
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_SALES_COMMISSION
+        sql: |
+          INSERT INTO sales_commissions (name, rate_full_stack, rate_insertion_only, rate_provider_origin, rate_creative_services)
+          VALUES (?, ?, ?, ?, ?)
+      - name: UPDATE_SALES_COMMISSION
+        sql: |
+          UPDATE sales_commissions
+          SET name = ?, rate_full_stack = ?, rate_insertion_only = ?, rate_provider_origin = ?, rate_creative_services = ?
+          WHERE id = ?
+      - name: DELETE_SALES_COMMISSION
+        sql: |
+          DELETE FROM sales_commissions WHERE id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_SALES_COMMISSION
+        sql: |
+          SELECT id, name, rate_full_stack, rate_insertion_only, rate_provider_origin, rate_creative_services
+          FROM sales_commissions
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_SALES_COMMISSION
+        sql: |
+          SELECT COUNT(*) FROM sales_commissions
+      - name: READ_SALES_COMMISSION
+        sql: |
+          SELECT id, name, rate_full_stack, rate_insertion_only, rate_provider_origin, rate_creative_services
+          FROM sales_commissions WHERE id = ?
+      - name: SEARCH_SALES_COMMISSION
+        sql: |
+          SELECT id, name, rate_full_stack, rate_insertion_only, rate_provider_origin, rate_creative_services
+          FROM sales_commissions
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_SALES_COMMISSION
+        sql: |
+          INSERT INTO sales_commissions (name, rate_full_stack, rate_insertion_only, rate_provider_origin, rate_creative_services)
+          VALUES (?, ?, ?, ?, ?)
+      - name: UPDATE_SALES_COMMISSION
+        sql: |
+          UPDATE sales_commissions
+          SET name = ?, rate_full_stack = ?, rate_insertion_only = ?, rate_provider_origin = ?, rate_creative_services = ?
+          WHERE id = ?
+      - name: DELETE_SALES_COMMISSION
+        sql: |
+          DELETE FROM sales_commissions WHERE id = ?
+

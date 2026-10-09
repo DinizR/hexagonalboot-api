@@ -1,0 +1,109 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: h2
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_BUSINESS_AREA
+        sql: |
+          SELECT id, name, description
+          FROM business_areas
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_BUSINESS_AREA
+        sql: |
+          SELECT COUNT(*) FROM business_areas
+      - name: READ_BUSINESS_AREA
+        sql: |
+          SELECT id, name, description
+          FROM business_areas WHERE id = ?
+      - name: SEARCH_BUSINESS_AREA
+        sql: |
+          SELECT id, name, description
+          FROM business_areas
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(description AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_BUSINESS_AREA
+        sql: |
+          INSERT INTO business_areas (name, description)
+          VALUES (?, ?)
+      - name: UPDATE_BUSINESS_AREA
+        sql: |
+          UPDATE business_areas
+          SET name = ?, description = ?
+          WHERE id = ?
+      - name: DELETE_BUSINESS_AREA
+        sql: |
+          DELETE FROM business_areas WHERE id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_BUSINESS_AREA
+        sql: |
+          SELECT id, name, description
+          FROM business_areas
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_BUSINESS_AREA
+        sql: |
+          SELECT COUNT(*) FROM business_areas
+      - name: READ_BUSINESS_AREA
+        sql: |
+          SELECT id, name, description
+          FROM business_areas WHERE id = ?
+      - name: SEARCH_BUSINESS_AREA
+        sql: |
+          SELECT id, name, description
+          FROM business_areas
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(description AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_BUSINESS_AREA
+        sql: |
+          INSERT INTO business_areas (name, description)
+          VALUES (?, ?)
+      - name: UPDATE_BUSINESS_AREA
+        sql: |
+          UPDATE business_areas
+          SET name = ?, description = ?
+          WHERE id = ?
+      - name: DELETE_BUSINESS_AREA
+        sql: |
+          DELETE FROM business_areas WHERE id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_BUSINESS_AREA
+        sql: |
+          SELECT id, name, description
+          FROM business_areas
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_BUSINESS_AREA
+        sql: |
+          SELECT COUNT(*) FROM business_areas
+      - name: READ_BUSINESS_AREA
+        sql: |
+          SELECT id, name, description
+          FROM business_areas WHERE id = ?
+      - name: SEARCH_BUSINESS_AREA
+        sql: |
+          SELECT id, name, description
+          FROM business_areas
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(description AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_BUSINESS_AREA
+        sql: |
+          INSERT INTO business_areas (name, description)
+          VALUES (?, ?)
+      - name: UPDATE_BUSINESS_AREA
+        sql: |
+          UPDATE business_areas
+          SET name = ?, description = ?
+          WHERE id = ?
+      - name: DELETE_BUSINESS_AREA
+        sql: |
+          DELETE FROM business_areas WHERE id = ?
+

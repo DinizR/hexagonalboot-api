@@ -1,0 +1,10 @@
+datasources:
+  - id: registry
+    version: 1.0.0
+    label: Registry DataSource
+    description: Primary registry database (shares Spring Boot DataSource by default).
+    className: systems.porto.registry.datasource.RegistryDataSourceAdapter
+    jarFile: registry-db-1.0.0.jar
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar

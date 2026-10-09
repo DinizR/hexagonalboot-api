@@ -1,0 +1,12 @@
+connectors:
+  - id: DB
+    adapter: template-jdbc
+  - id: STORAGE
+    adapter: document-storage-s3
+properties:
+  - key: page.default.size
+    value: "16"
+  # Uploaded SoW / proposal / email HTML: UTF-8, <html> root, max size.
+  # Active content (script, javascript: URLs, event handlers) is stripped; Thymeleaf th:* is kept.
+  - key: html.maxBytes
+    value: "524288"

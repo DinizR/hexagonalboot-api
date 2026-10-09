@@ -1,0 +1,15 @@
+configs:
+  - key: datasource.id
+    value: registry
+  - key: datasource.source
+    value: spring
+  - key: liquibase.change-log
+    value: config/registry/db/registry/changelog/db.changelog-master.yaml
+  - key: jdbc.url
+    value: jdbc:h2:tcp://127.0.0.1:9092/registry
+  - key: jdbc.driver
+    value: org.h2.Driver
+  - key: jdbc.username
+    value: registry
+  - key: jdbc.password
+    value: registry

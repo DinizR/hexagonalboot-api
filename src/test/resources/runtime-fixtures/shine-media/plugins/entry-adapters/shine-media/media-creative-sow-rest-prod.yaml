@@ -1,0 +1,3 @@
+configs:
+  - key: api.base.path
+    value: /api/v1.0.0

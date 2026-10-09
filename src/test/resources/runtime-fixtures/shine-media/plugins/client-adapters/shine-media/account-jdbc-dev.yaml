@@ -1,0 +1,138 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: h2
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_ACCOUNT
+        sql: |
+          SELECT id, code, name, kind, cash_flow_type, system, house_typical
+          FROM accounts
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_ACCOUNT
+        sql: |
+          SELECT COUNT(*) FROM accounts
+      - name: READ_ACCOUNT
+        sql: |
+          SELECT id, code, name, kind, cash_flow_type, system, house_typical
+          FROM accounts WHERE id = ?
+
+      - name: FIND_ACCOUNT_BY_CODE
+        sql: |
+          SELECT id, code, name, kind, cash_flow_type, system, house_typical
+          FROM accounts WHERE code = ?
+      - name: SEARCH_ACCOUNT
+        sql: |
+          SELECT id, code, name, kind, cash_flow_type, system, house_typical
+          FROM accounts
+          WHERE (LOWER(CAST(code AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(name AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(kind AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_ACCOUNT
+        sql: |
+          INSERT INTO accounts (code, name, kind, cash_flow_type, system, house_typical)
+          VALUES (?, ?, ?, ?, ?, ?)
+      - name: UPDATE_ACCOUNT
+        sql: |
+          UPDATE accounts
+          SET code = ?, name = ?, kind = ?, cash_flow_type = ?, system = ?, house_typical = ?
+          WHERE id = ?
+      - name: DELETE_ACCOUNT
+        sql: |
+          DELETE FROM accounts WHERE id = ?
+      - name: COUNT_ACCOUNT_CASH_FLOWS
+        sql: |
+          SELECT COUNT(*) FROM cash_flows WHERE account_id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_ACCOUNT
+        sql: |
+          SELECT id, code, name, kind, cash_flow_type, system, house_typical
+          FROM accounts
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_ACCOUNT
+        sql: |
+          SELECT COUNT(*) FROM accounts
+      - name: READ_ACCOUNT
+        sql: |
+          SELECT id, code, name, kind, cash_flow_type, system, house_typical
+          FROM accounts WHERE id = ?
+
+      - name: FIND_ACCOUNT_BY_CODE
+        sql: |
+          SELECT id, code, name, kind, cash_flow_type, system, house_typical
+          FROM accounts WHERE code = ?
+      - name: SEARCH_ACCOUNT
+        sql: |
+          SELECT id, code, name, kind, cash_flow_type, system, house_typical
+          FROM accounts
+          WHERE (LOWER(CAST(code AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(name AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(kind AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_ACCOUNT
+        sql: |
+          INSERT INTO accounts (code, name, kind, cash_flow_type, system, house_typical)
+          VALUES (?, ?, ?, ?, ?, ?)
+      - name: UPDATE_ACCOUNT
+        sql: |
+          UPDATE accounts
+          SET code = ?, name = ?, kind = ?, cash_flow_type = ?, system = ?, house_typical = ?
+          WHERE id = ?
+      - name: DELETE_ACCOUNT
+        sql: |
+          DELETE FROM accounts WHERE id = ?
+      - name: COUNT_ACCOUNT_CASH_FLOWS
+        sql: |
+          SELECT COUNT(*) FROM cash_flows WHERE account_id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_ACCOUNT
+        sql: |
+          SELECT id, code, name, kind, cash_flow_type, system, house_typical
+          FROM accounts
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_ACCOUNT
+        sql: |
+          SELECT COUNT(*) FROM accounts
+      - name: READ_ACCOUNT
+        sql: |
+          SELECT id, code, name, kind, cash_flow_type, system, house_typical
+          FROM accounts WHERE id = ?
+
+      - name: FIND_ACCOUNT_BY_CODE
+        sql: |
+          SELECT id, code, name, kind, cash_flow_type, system, house_typical
+          FROM accounts WHERE code = ?
+      - name: SEARCH_ACCOUNT
+        sql: |
+          SELECT id, code, name, kind, cash_flow_type, system, house_typical
+          FROM accounts
+          WHERE (LOWER(CAST(code AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(name AS VARCHAR(4000))) LIKE ?
+             OR LOWER(CAST(kind AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_ACCOUNT
+        sql: |
+          INSERT INTO accounts (code, name, kind, cash_flow_type, system, house_typical)
+          VALUES (?, ?, ?, ?, ?, ?)
+      - name: UPDATE_ACCOUNT
+        sql: |
+          UPDATE accounts
+          SET code = ?, name = ?, kind = ?, cash_flow_type = ?, system = ?, house_typical = ?
+          WHERE id = ?
+      - name: DELETE_ACCOUNT
+        sql: |
+          DELETE FROM accounts WHERE id = ?
+      - name: COUNT_ACCOUNT_CASH_FLOWS
+        sql: |
+          SELECT COUNT(*) FROM cash_flows WHERE account_id = ?

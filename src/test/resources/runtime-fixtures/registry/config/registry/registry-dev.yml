@@ -1,0 +1,18 @@
+# Registry application (dev) — overrides framework defaults from application.yml / api-dev.yml.
+
+spring:
+  application:
+    name: registry
+  datasource:
+    # Connect to embedded H2 TCP server (started in PortoApiApplication.main for dev).
+    # IntelliJ / other apps use the same tcp:// URL — no file-lock conflicts.
+    url: jdbc:h2:tcp://127.0.0.1:9092/registry
+    driver-class-name: org.h2.Driver
+    username: registry
+    password: registry
+  h2:
+    console:
+      enabled: true
+  liquibase:
+    # Migrations run per database from the datasource plugin (liquibase.change-log).
+    enabled: false

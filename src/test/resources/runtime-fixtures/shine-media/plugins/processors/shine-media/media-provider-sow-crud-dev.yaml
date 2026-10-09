@@ -1,0 +1,64 @@
+connectors:
+  - id: DB
+    adapter: media-provider-sow-jdbc
+  - id: STORAGE
+    adapter: document-storage-s3
+  - id: ESIGN
+    adapter: e-sign-docusign
+  - id: EMAIL
+    adapter: email-smtp
+  - id: RENDER
+    adapter: document-render-thymeleaf
+  - id: PARTY
+    adapter: party-jdbc
+  - id: TEMPLATE
+    adapter: template-jdbc
+  - id: CHANNEL
+    adapter: media-channel-jdbc
+  - id: LEGAL
+    adapter: company-legal-entity-jdbc
+  - id: USER
+    adapter: user-jdbc
+properties:
+  - key: page.default.size
+    value: "8"
+  - key: provider.paymentDayOfMonth
+    value: "5"
+  # Media type (slug of media_channels.name) + country → catalog templates.id.
+  # OOH (Static) → OOH_STATIC; Online Video (OLV) → OLV. Email id is the PROPOSAL row that holds email HTML.
+  - key: template.OOH_STATIC.AU.sow
+    value: "1"
+  - key: template.OOH_STATIC.AU.proposal
+    value: "11"
+  - key: template.OOH_STATIC.AU.email
+    value: "11"
+  - key: template.DOOH.AU.sow
+    value: "2"
+  - key: template.DOOH.AU.proposal
+    value: "9"
+  - key: template.DOOH.AU.email
+    value: "9"
+  - key: template.PRINT.AU.sow
+    value: "3"
+  - key: template.PRINT.AU.proposal
+    value: "12"
+  - key: template.PRINT.AU.email
+    value: "12"
+  - key: template.DOOH.BR.sow
+    value: "6"
+  - key: template.DOOH.BR.proposal
+    value: "10"
+  - key: template.DOOH.BR.email
+    value: "10"
+  - key: template.OOH_STATIC.BR.sow
+    value: "7"
+  - key: template.OOH_STATIC.BR.proposal
+    value: "13"
+  - key: template.OOH_STATIC.BR.email
+    value: "13"
+  - key: template.OLV.BR.sow
+    value: "8"
+  - key: template.OLV.BR.proposal
+    value: "14"
+  - key: template.OLV.BR.email
+    value: "14"

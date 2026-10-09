@@ -1,0 +1,298 @@
+entry-adapters:
+  - id: business-area-rest
+    version: 1.0.0
+    label: BusinessArea REST Entry Adapter
+    description: REST routes for shine-media business-area APIs.
+    className: systems.porto.shinemedia.entry.rest.BusinessAreaRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: city-rest
+    version: 1.0.0
+    label: City REST Entry Adapter
+    description: REST routes for shine-media city APIs.
+    className: systems.porto.shinemedia.entry.rest.CityRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: city-regulation-rest
+    version: 1.0.0
+    label: CityRegulation REST Entry Adapter
+    description: REST routes for shine-media city-regulation APIs.
+    className: systems.porto.shinemedia.entry.rest.CityRegulationRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: sales-commission-rest
+    version: 1.0.0
+    label: SalesCommission REST Entry Adapter
+    description: REST routes for shine-media sales-commission APIs.
+    className: systems.porto.shinemedia.entry.rest.SalesCommissionRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: commission-allocation-rest
+    version: 1.0.0
+    label: CommissionAllocation REST Entry Adapter
+    description: REST routes for shine-media commission-allocation APIs.
+    className: systems.porto.shinemedia.entry.rest.CommissionAllocationRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: media-category-rest
+    version: 1.0.0
+    label: MediaCategory REST Entry Adapter
+    description: REST routes for shine-media media-category APIs.
+    className: systems.porto.shinemedia.entry.rest.MediaCategoryRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: media-channel-rest
+    version: 1.0.0
+    label: MediaChannel REST Entry Adapter
+    description: REST routes for shine-media media-channel APIs.
+    className: systems.porto.shinemedia.entry.rest.MediaChannelRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: media-vehicle-rest
+    version: 1.0.0
+    label: MediaVehicle REST Entry Adapter
+    description: REST routes for shine-media media-vehicle APIs.
+    className: systems.porto.shinemedia.entry.rest.MediaVehicleRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: media-location-rest
+    version: 1.0.0
+    label: MediaLocation REST Entry Adapter
+    description: REST routes for shine-media media-location APIs.
+    className: systems.porto.shinemedia.entry.rest.MediaLocationRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: offering-media-rest
+    version: 1.0.0
+    label: OfferingMedia REST Entry Adapter
+    description: REST routes for shine-media offering-media APIs.
+    className: systems.porto.shinemedia.entry.rest.OfferingMediaRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: inventory-slot-rest
+    version: 1.0.0
+    label: InventorySlot REST Entry Adapter
+    description: REST routes for shine-media inventory-slot APIs.
+    className: systems.porto.shinemedia.entry.rest.InventorySlotRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: house-fill-rest
+    version: 1.0.0
+    label: HouseFill REST Entry Adapter
+    description: REST routes for shine-media house-fill APIs.
+    className: systems.porto.shinemedia.entry.rest.HouseFillRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: creative-service-rest
+    version: 1.0.0
+    label: CreativeService REST Entry Adapter
+    description: REST routes for shine-media creative-service APIs.
+    className: systems.porto.shinemedia.entry.rest.CreativeServiceRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: creative-service-rate-rest
+    version: 1.0.0
+    label: CreativeServiceRate REST Entry Adapter
+    description: REST routes for shine-media creative-service-rate APIs.
+    className: systems.porto.shinemedia.entry.rest.CreativeServiceRateRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: party-rest
+    version: 1.0.0
+    label: Party REST Entry Adapter
+    description: REST routes for shine-media party APIs.
+    className: systems.porto.shinemedia.entry.rest.PartyRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: template-rest
+    version: 1.0.0
+    label: Template REST Entry Adapter
+    description: REST routes for shine-media template APIs.
+    className: systems.porto.shinemedia.entry.rest.TemplateRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: payment-condition-rest
+    version: 1.0.0
+    label: PaymentCondition REST Entry Adapter
+    description: REST routes for shine-media payment-condition APIs.
+    className: systems.porto.shinemedia.entry.rest.PaymentConditionRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: company-legal-entity-rest
+    version: 1.0.0
+    label: CompanyLegalEntity REST Entry Adapter
+    description: REST routes for shine-media company-legal-entity APIs.
+    className: systems.porto.shinemedia.entry.rest.CompanyLegalEntityRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: media-provider-sow-rest
+    version: 1.0.0
+    label: MediaProviderSow REST Entry Adapter
+    description: REST routes for shine-media media-provider-sow APIs.
+    className: systems.porto.shinemedia.entry.rest.MediaProviderSowRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: media-provider-sow-line-rest
+    version: 1.0.0
+    label: MediaProviderSowLine REST Entry Adapter
+    description: REST routes for shine-media media-provider-sow-line APIs.
+    className: systems.porto.shinemedia.entry.rest.MediaProviderSowLineRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: media-provider-sow-line-position-rest
+    version: 1.0.0
+    label: MediaProviderSowLinePosition REST Entry Adapter
+    description: REST routes for shine-media media-provider-sow-line-position APIs.
+    className: systems.porto.shinemedia.entry.rest.MediaProviderSowLinePositionRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: media-creative-sow-rest
+    version: 1.0.0
+    label: MediaCreativeSow REST Entry Adapter
+    description: REST routes for shine-media media-creative-sow APIs.
+    className: systems.porto.shinemedia.entry.rest.MediaCreativeSowRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: creative-service-line-rest
+    version: 1.0.0
+    label: CreativeServiceLine REST Entry Adapter
+    description: REST routes for shine-media creative-service-line APIs.
+    className: systems.porto.shinemedia.entry.rest.CreativeServiceLineRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: creative-deliverable-rest
+    version: 1.0.0
+    label: CreativeDeliverable REST Entry Adapter
+    description: REST routes for shine-media creative-deliverable APIs.
+    className: systems.porto.shinemedia.entry.rest.CreativeDeliverableRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: media-insertion-sow-rest
+    version: 1.0.0
+    label: MediaInsertionSow REST Entry Adapter
+    description: REST routes for shine-media media-insertion-sow APIs.
+    className: systems.porto.shinemedia.entry.rest.MediaInsertionSowRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: insertion-line-rest
+    version: 1.0.0
+    label: InsertionLine REST Entry Adapter
+    description: REST routes for shine-media insertion-line APIs.
+    className: systems.porto.shinemedia.entry.rest.InsertionLineRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: insertion-media-content-rest
+    version: 1.0.0
+    label: InsertionMediaContent REST Entry Adapter
+    description: REST routes for shine-media insertion-media-content APIs.
+    className: systems.porto.shinemedia.entry.rest.InsertionMediaContentRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: provider-media-content-rest
+    version: 1.0.0
+    label: ProviderMediaContent REST Entry Adapter
+    description: REST routes for shine-media provider-media-content APIs.
+    className: systems.porto.shinemedia.entry.rest.ProviderMediaContentRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: contract-execution-evidence-rest
+    version: 1.0.0
+    label: ContractExecutionEvidence REST Entry Adapter
+    description: REST routes for shine-media contract-execution-evidence APIs.
+    className: systems.porto.shinemedia.entry.rest.ContractExecutionEvidenceRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: account-rest
+    version: 1.0.0
+    label: Account REST Entry Adapter
+    description: REST routes for shine-media chart-of-accounts APIs.
+    className: systems.porto.shinemedia.entry.rest.AccountRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: cash-flow-rest
+    version: 1.0.0
+    label: CashFlow REST Entry Adapter
+    description: REST routes for shine-media cash-flow APIs.
+    className: systems.porto.shinemedia.entry.rest.CashFlowRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: user-rest
+    version: 1.0.0
+    label: User REST Entry Adapter
+    description: REST routes for shine-media user APIs.
+    className: systems.porto.shinemedia.entry.rest.UserRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: role-rest
+    version: 1.0.0
+    label: Role REST Entry Adapter
+    description: REST routes for shine-media role APIs.
+    className: systems.porto.shinemedia.entry.rest.RoleRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: role-permission-rest
+    version: 1.0.0
+    label: RolePermission REST Entry Adapter
+    description: REST routes for shine-media role-permission APIs.
+    className: systems.porto.shinemedia.entry.rest.RolePermissionRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: user-role-rest
+    version: 1.0.0
+    label: UserRole REST Entry Adapter
+    description: REST routes for shine-media user-role APIs.
+    className: systems.porto.shinemedia.entry.rest.UserRoleRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+  - id: scheduled-job-rest
+    version: 1.0.0
+    label: ScheduledJob REST Entry Adapter
+    description: REST routes for shine-media scheduled-job APIs.
+    className: systems.porto.shinemedia.entry.rest.ScheduledJobRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar
+
+  - id: auth-token-rest
+    version: 1.0.0
+    label: Auth token REST Entry Adapter
+    description: POST /auth/token for the configured IdentityProvider.
+    className: systems.porto.shinemedia.entry.rest.AuthTokenRestEntryAdapter
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar

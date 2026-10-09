@@ -1,0 +1,6 @@
+connectors:
+  - id: DB
+    adapter: inventory-slot-jdbc
+properties:
+  - key: page.default.size
+    value: "50"

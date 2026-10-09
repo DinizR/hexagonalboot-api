@@ -1,0 +1,30 @@
+connectors:
+  - id: DB
+    adapter: media-insertion-sow-jdbc
+  - id: STORAGE
+    adapter: document-storage-s3
+  - id: EMAIL
+    adapter: email-smtp
+  - id: RENDER
+    adapter: document-render-thymeleaf
+  - id: PARTY
+    adapter: party-jdbc
+  - id: TEMPLATE
+    adapter: template-jdbc
+  - id: LEGAL
+    adapter: company-legal-entity-jdbc
+  - id: USER
+    adapter: user-jdbc
+  - id: CASH_FLOW
+    adapter: cash-flow-jdbc
+  - id: ACCOUNT
+    adapter: account-jdbc
+  - id: PAYMENT
+    adapter: payment-condition-jdbc
+  - id: COMMISSION
+    adapter: sales-commission-jdbc
+  - id: COMMISSION_ALLOCATION
+    adapter: commission-allocation-jdbc
+properties:
+  - key: page.default.size
+    value: "8"

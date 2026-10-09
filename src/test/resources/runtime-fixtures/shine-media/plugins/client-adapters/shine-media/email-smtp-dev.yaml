@@ -1,0 +1,21 @@
+configs:
+  - key: smtp.enabled
+    value: "true"
+  - key: smtp.host
+    value: localhost
+    description: Mailpit SMTP (UI http://localhost:8025). Use smtp-mail.outlook.com:587 for Outlook.
+  - key: smtp.port
+    value: "1025"
+  - key: smtp.username
+    value: ""
+  - key: smtp.password
+    value: ""
+  - key: smtp.passwordFile
+    value: ""
+  - key: smtp.from
+    value: "shine@media.local"
+  - key: smtp.redirectTo
+    value: ""
+    description: Empty so Mailpit shows the real To. Set an address to force all recipients there.
+  - key: smtp.startTls
+    value: "false"

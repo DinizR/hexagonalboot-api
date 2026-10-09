@@ -1,0 +1,27 @@
+configs:
+  - key: storage.backend
+    value: s3
+    description: filesystem (local free) or s3
+  - key: storage.filesystem.root
+    value: data/shine-media/documents
+  - key: storage.filesystem.images-root
+    value: data/shine-media/images
+  - key: storage.filesystem.templates-root
+    value: data/shine-media/templates
+    description: Used only when storage.backend=filesystem; keys sow-templates/{key}.html
+  - key: storage.filesystem.artefacts-root
+    value: data/shine-media/media-artefacts
+    description: Used only when storage.backend=filesystem; keys media-artefacts/{slotId}/{contentId}.{ext}
+  - key: storage.publicBaseUrl
+    value: ""
+  - key: s3.region
+    value: ap-southeast-2
+  - key: s3.bucket
+    value: shine-media-docs
+  - key: s3.endpoint
+    value: ""
+  - key: s3.accessKeyId
+    value: ""
+    description: Leave blank to use default IAM / env credentials
+  - key: s3.secretAccessKey
+    value: ""

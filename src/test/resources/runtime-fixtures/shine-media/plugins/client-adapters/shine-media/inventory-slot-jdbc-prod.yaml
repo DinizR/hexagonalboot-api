@@ -1,0 +1,927 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: h2
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_INVENTORY_SLOT
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+                 slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          FROM inventory_slots
+          ORDER BY slot_date, slot_index, id
+          LIMIT ? OFFSET ?
+      - name: COUNT_INVENTORY_SLOT
+        sql: |
+          SELECT COUNT(*) FROM inventory_slots
+      - name: LIST_INVENTORY_SLOT_BY_PERIOD
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+                 slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          FROM inventory_slots
+          WHERE slot_date >= ?
+            AND slot_date <= ?
+          ORDER BY slot_date, slot_index, id
+          LIMIT ? OFFSET ?
+      - name: COUNT_INVENTORY_SLOT_BY_PERIOD
+        sql: |
+          SELECT COUNT(*)
+          FROM inventory_slots
+          WHERE slot_date >= ?
+            AND slot_date <= ?
+      - name: LIST_INVENTORY_SLOT_BY_PERIOD_STATUS
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+                 slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          FROM inventory_slots
+          WHERE slot_date >= ?
+            AND slot_date <= ?
+            AND UPPER(TRIM(status)) = ?
+          ORDER BY slot_date, slot_index, id
+          LIMIT ? OFFSET ?
+      - name: COUNT_INVENTORY_SLOT_BY_PERIOD_STATUS
+        sql: |
+          SELECT COUNT(*)
+          FROM inventory_slots
+          WHERE slot_date >= ?
+            AND slot_date <= ?
+            AND UPPER(TRIM(status)) = ?
+      - name: READ_INVENTORY_SLOT
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+                 slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          FROM inventory_slots WHERE id = ?
+      - name: SEARCH_INVENTORY_SLOT
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+                 slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          FROM inventory_slots
+          WHERE (LOWER(CAST(status AS VARCHAR(4000))) LIKE ?
+              OR LOWER(CAST(held_by AS VARCHAR(4000))) LIKE ?
+              OR LOWER(CAST(position_code AS VARCHAR(4000))) LIKE ?)
+          ORDER BY slot_date, slot_index, id
+      - name: INSERT_INVENTORY_SLOT
+        sql: |
+          INSERT INTO inventory_slots (
+            offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+            slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          )
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_INVENTORY_SLOT
+        sql: |
+          UPDATE inventory_slots
+          SET status = ?, insertion_line_id = ?, house_fill_id = ?, held_by = ?, updated_at = ?
+          WHERE id = ?
+      - name: DELETE_INVENTORY_SLOT
+        sql: |
+          DELETE FROM inventory_slots WHERE id = ?
+      - name: LIST_INVENTORY_SLOT_FOR_OFFERING
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+                 slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          FROM inventory_slots
+          WHERE offering_media_id = ?
+            AND slot_date >= ?
+            AND slot_date <= ?
+          ORDER BY slot_date, slot_index, id
+          LIMIT ? OFFSET ?
+      - name: COUNT_INVENTORY_SLOT_FOR_OFFERING
+        sql: |
+          SELECT COUNT(*)
+          FROM inventory_slots
+          WHERE offering_media_id = ?
+            AND slot_date >= ?
+            AND slot_date <= ?
+      - name: LIST_INVENTORY_SLOT_FOR_OFFERING_STATUS
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+                 slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          FROM inventory_slots
+          WHERE offering_media_id = ?
+            AND slot_date >= ?
+            AND slot_date <= ?
+            AND UPPER(TRIM(status)) = ?
+          ORDER BY slot_date, slot_index, id
+          LIMIT ? OFFSET ?
+      - name: COUNT_INVENTORY_SLOT_FOR_OFFERING_STATUS
+        sql: |
+          SELECT COUNT(*)
+          FROM inventory_slots
+          WHERE offering_media_id = ?
+            AND slot_date >= ?
+            AND slot_date <= ?
+            AND UPPER(TRIM(status)) = ?
+      - name: SUMMARY_INVENTORY_SLOT_BY_STATUS
+        sql: |
+          SELECT status, COUNT(*) AS cnt
+          FROM inventory_slots
+          WHERE offering_media_id = ?
+            AND slot_date >= ?
+            AND slot_date <= ?
+          GROUP BY status
+      - name: SUMMARY_INVENTORY_SLOT_BY_DAY
+        sql: |
+          SELECT slot_date,
+                 SUM(CASE WHEN UPPER(TRIM(status)) = 'AVAILABLE' THEN 1 ELSE 0 END) AS available_cnt,
+                 SUM(CASE WHEN UPPER(TRIM(status)) NOT IN ('AVAILABLE', 'CANCELLED') THEN 1 ELSE 0 END) AS used_cnt,
+                 SUM(CASE WHEN UPPER(TRIM(status)) = 'CANCELLED' THEN 1 ELSE 0 END) AS cancelled_cnt
+          FROM inventory_slots
+          WHERE offering_media_id = ?
+            AND slot_date >= ?
+            AND slot_date <= ?
+          GROUP BY slot_date
+          ORDER BY slot_date
+
+      - name: INV_OFFERINGS_FOR_PROVIDER_SOW_LINE
+        sql: |
+          SELECT om.id
+          FROM offering_media om
+          WHERE om.media_provider_sow_line_id = ?
+      - name: INV_CANCEL_AVAILABLE_FOR_POSITION
+        sql: |
+          UPDATE inventory_slots
+          SET status = 'CANCELLED',
+              insertion_line_id = NULL,
+              house_fill_id = NULL,
+              held_by = NULL,
+              updated_at = ?
+          WHERE media_provider_sow_line_id = ?
+            AND UPPER(TRIM(position_code)) = ?
+            AND UPPER(TRIM(status)) = 'AVAILABLE'
+      - name: INV_INSERT_ANONYMOUS_SLOT
+        sql: |
+          INSERT INTO inventory_slots (
+            offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+            slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          )
+          SELECT ?, ?, ?, ?, ?, ?, NULL, 'AVAILABLE', NULL, NULL, NULL, ?
+          WHERE NOT EXISTS (
+            SELECT 1 FROM inventory_slots s
+            WHERE s.offering_media_id = ? AND s.slot_date = ? AND s.slot_index = ?
+          )
+      - name: INV_INSERT_POSITIONED_SLOT
+        sql: |
+          INSERT INTO inventory_slots (
+            offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+            slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          )
+          SELECT ?, ?, ?, ?, ?, ?, ?, 'AVAILABLE', NULL, NULL, NULL, ?
+          WHERE NOT EXISTS (
+            SELECT 1 FROM inventory_slots s
+            WHERE s.offering_media_id = ?
+              AND s.slot_date = ?
+              AND UPPER(TRIM(s.position_code)) = ?
+              AND s.slot_index = ?
+          )
+      - name: INV_LIST_LINE_POSITIONS
+        sql: |
+          SELECT position_code, position_label, sort_order, page_from, page_to, capacity
+          FROM media_provider_sow_line_positions
+          WHERE media_provider_sow_line_id = ?
+          ORDER BY sort_order, id
+      - name: INV_LIST_UNHELD_ACTIVE_HOUSE_FILLS
+        sql: |
+          SELECT id, slot_quantity, effective_from, effective_to
+          FROM house_fills
+          WHERE offering_media_id = ?
+            AND UPPER(TRIM(status)) = 'ACTIVE'
+            AND NOT EXISTS (
+              SELECT 1 FROM inventory_slots s
+              WHERE s.house_fill_id = house_fills.id AND UPPER(TRIM(s.status)) = 'USED'
+            )
+      - name: INV_LIST_UNHELD_ACTIVE_INSERTION_LINES
+        sql: |
+          SELECT il.id, il.number_of_insertions * COALESCE(il.duration_minutes, 1) AS number_of_insertions, sow.duration_from, sow.duration_to
+          FROM insertion_lines il
+          INNER JOIN media_insertion_sows sow ON sow.id = il.media_insertion_sow_id
+          WHERE il.offering_media_id = ?
+            AND UPPER(TRIM(sow.status)) IN ('PENDING_APPROVAL', 'APPROVED', 'PROPOSAL', 'PENDING', 'ACTIVE')
+            AND NOT EXISTS (
+              SELECT 1 FROM inventory_slots s
+              WHERE s.insertion_line_id = il.id
+            )
+      - name: INV_LIST_LINES_FOR_INSERTION_SOW
+        sql: |
+          SELECT id, offering_media_id, number_of_insertions * COALESCE(duration_minutes, 1) AS number_of_insertions
+          FROM insertion_lines
+          WHERE media_insertion_sow_id = ?
+      - name: INV_OFFERINGS_FOR_PROVIDER_SOW
+        sql: |
+          SELECT om.id
+          FROM offering_media om
+          INNER JOIN media_provider_sow_lines psl ON psl.id = om.media_provider_sow_line_id
+          WHERE psl.media_provider_sow_id = ?
+      - name: INV_RELEASE_ALL_FOR_INSERTION_SOW
+        sql: |
+          UPDATE inventory_slots
+          SET status = 'AVAILABLE',
+              insertion_line_id = NULL,
+              house_fill_id = NULL,
+              held_by = NULL,
+              updated_at = ?
+          WHERE insertion_line_id IN (
+            SELECT id FROM insertion_lines WHERE media_insertion_sow_id = ?
+          )
+            AND UPPER(TRIM(status)) IN (
+              'USED', 'SOLD', 'WAITING_FOR_PARTNER_MEDIA', 'MEDIA_INSERTED',
+              'MEDIA_APPROVED', 'MEDIA_DEPLOYED'
+            )
+      - name: INV_CANCEL_AVAILABLE_FOR_PROVIDER_SOW
+        sql: |
+          UPDATE inventory_slots
+          SET status = 'CANCELLED',
+              insertion_line_id = NULL,
+              house_fill_id = NULL,
+              held_by = NULL,
+              updated_at = ?
+          WHERE media_provider_sow_id = ?
+            AND UPPER(TRIM(status)) = 'AVAILABLE'
+      - name: INV_LOCK_AVAILABLE_SLOTS
+        sql: |
+          SELECT id
+          FROM inventory_slots
+          WHERE offering_media_id = ?
+            AND UPPER(TRIM(status)) = 'AVAILABLE'
+            AND slot_date >= ?
+            AND slot_date <= ?
+          ORDER BY slot_date, slot_index, position_code, id
+          FOR UPDATE
+      - name: INV_MARK_USED
+        sql: |
+          UPDATE inventory_slots
+          SET status = ?,
+              insertion_line_id = ?,
+              house_fill_id = ?,
+              held_by = ?,
+              updated_at = ?
+          WHERE id = ?
+            AND UPPER(TRIM(status)) = 'AVAILABLE'
+      - name: INV_TRANSITION_STATUS
+        sql: |
+          UPDATE inventory_slots
+          SET status = ?,
+              updated_at = ?
+          WHERE id = ?
+            AND UPPER(TRIM(status)) = ?
+      - name: INV_TRANSITION_LINE_STATUS
+        sql: |
+          UPDATE inventory_slots
+          SET status = ?,
+              updated_at = ?
+          WHERE insertion_line_id = ?
+            AND UPPER(TRIM(status)) = ?
+      - name: INV_RELEASE_BY_INSERTION_LINE
+        sql: |
+          UPDATE inventory_slots
+          SET status = 'AVAILABLE',
+              insertion_line_id = NULL,
+              house_fill_id = NULL,
+              held_by = NULL,
+              updated_at = ?
+          WHERE insertion_line_id = ?
+            AND UPPER(TRIM(status)) IN (
+              'USED', 'SOLD', 'WAITING_FOR_PARTNER_MEDIA', 'MEDIA_INSERTED',
+              'MEDIA_APPROVED', 'MEDIA_DEPLOYED'
+            )
+      - name: INV_RELEASE_BY_HOUSE_FILL
+        sql: |
+          UPDATE inventory_slots
+          SET status = 'AVAILABLE',
+              insertion_line_id = NULL,
+              house_fill_id = NULL,
+              held_by = NULL,
+              updated_at = ?
+          WHERE house_fill_id = ?
+            AND UPPER(TRIM(status)) = 'USED'
+      - name: INV_READ_OFFERING_META
+        sql: |
+          SELECT om.id,
+                 om.media_provider_sow_line_id,
+                 psl.media_vehicle_id,
+                 psl.media_provider_sow_id,
+                 mv.capacity_quantity,
+                 mv.recurrence,
+                 sow.duration_from,
+                 sow.duration_to,
+                 sow.status
+          FROM offering_media om
+          INNER JOIN media_provider_sow_lines psl ON psl.id = om.media_provider_sow_line_id
+          INNER JOIN media_provider_sows sow ON sow.id = psl.media_provider_sow_id
+          INNER JOIN media_vehicles mv ON mv.id = psl.media_vehicle_id
+          WHERE om.id = ?
+  - dialect: postgres
+    statements:
+      - name: LIST_INVENTORY_SLOT
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+                 slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          FROM inventory_slots
+          ORDER BY slot_date, slot_index, id
+          LIMIT ? OFFSET ?
+      - name: COUNT_INVENTORY_SLOT
+        sql: |
+          SELECT COUNT(*) FROM inventory_slots
+      - name: LIST_INVENTORY_SLOT_BY_PERIOD
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+                 slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          FROM inventory_slots
+          WHERE slot_date >= ?
+            AND slot_date <= ?
+          ORDER BY slot_date, slot_index, id
+          LIMIT ? OFFSET ?
+      - name: COUNT_INVENTORY_SLOT_BY_PERIOD
+        sql: |
+          SELECT COUNT(*)
+          FROM inventory_slots
+          WHERE slot_date >= ?
+            AND slot_date <= ?
+      - name: LIST_INVENTORY_SLOT_BY_PERIOD_STATUS
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+                 slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          FROM inventory_slots
+          WHERE slot_date >= ?
+            AND slot_date <= ?
+            AND UPPER(TRIM(status)) = ?
+          ORDER BY slot_date, slot_index, id
+          LIMIT ? OFFSET ?
+      - name: COUNT_INVENTORY_SLOT_BY_PERIOD_STATUS
+        sql: |
+          SELECT COUNT(*)
+          FROM inventory_slots
+          WHERE slot_date >= ?
+            AND slot_date <= ?
+            AND UPPER(TRIM(status)) = ?
+      - name: READ_INVENTORY_SLOT
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+                 slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          FROM inventory_slots WHERE id = ?
+      - name: SEARCH_INVENTORY_SLOT
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+                 slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          FROM inventory_slots
+          WHERE (LOWER(CAST(status AS VARCHAR(4000))) LIKE ?
+              OR LOWER(CAST(held_by AS VARCHAR(4000))) LIKE ?
+              OR LOWER(CAST(position_code AS VARCHAR(4000))) LIKE ?)
+          ORDER BY slot_date, slot_index, id
+      - name: INSERT_INVENTORY_SLOT
+        sql: |
+          INSERT INTO inventory_slots (
+            offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+            slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          )
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_INVENTORY_SLOT
+        sql: |
+          UPDATE inventory_slots
+          SET status = ?, insertion_line_id = ?, house_fill_id = ?, held_by = ?, updated_at = ?
+          WHERE id = ?
+      - name: DELETE_INVENTORY_SLOT
+        sql: |
+          DELETE FROM inventory_slots WHERE id = ?
+      - name: LIST_INVENTORY_SLOT_FOR_OFFERING
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+                 slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          FROM inventory_slots
+          WHERE offering_media_id = ?
+            AND slot_date >= ?
+            AND slot_date <= ?
+          ORDER BY slot_date, slot_index, id
+          LIMIT ? OFFSET ?
+      - name: COUNT_INVENTORY_SLOT_FOR_OFFERING
+        sql: |
+          SELECT COUNT(*)
+          FROM inventory_slots
+          WHERE offering_media_id = ?
+            AND slot_date >= ?
+            AND slot_date <= ?
+      - name: LIST_INVENTORY_SLOT_FOR_OFFERING_STATUS
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+                 slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          FROM inventory_slots
+          WHERE offering_media_id = ?
+            AND slot_date >= ?
+            AND slot_date <= ?
+            AND UPPER(TRIM(status)) = ?
+          ORDER BY slot_date, slot_index, id
+          LIMIT ? OFFSET ?
+      - name: COUNT_INVENTORY_SLOT_FOR_OFFERING_STATUS
+        sql: |
+          SELECT COUNT(*)
+          FROM inventory_slots
+          WHERE offering_media_id = ?
+            AND slot_date >= ?
+            AND slot_date <= ?
+            AND UPPER(TRIM(status)) = ?
+      - name: SUMMARY_INVENTORY_SLOT_BY_STATUS
+        sql: |
+          SELECT status, COUNT(*) AS cnt
+          FROM inventory_slots
+          WHERE offering_media_id = ?
+            AND slot_date >= ?
+            AND slot_date <= ?
+          GROUP BY status
+      - name: SUMMARY_INVENTORY_SLOT_BY_DAY
+        sql: |
+          SELECT slot_date,
+                 SUM(CASE WHEN UPPER(TRIM(status)) = 'AVAILABLE' THEN 1 ELSE 0 END) AS available_cnt,
+                 SUM(CASE WHEN UPPER(TRIM(status)) NOT IN ('AVAILABLE', 'CANCELLED') THEN 1 ELSE 0 END) AS used_cnt,
+                 SUM(CASE WHEN UPPER(TRIM(status)) = 'CANCELLED' THEN 1 ELSE 0 END) AS cancelled_cnt
+          FROM inventory_slots
+          WHERE offering_media_id = ?
+            AND slot_date >= ?
+            AND slot_date <= ?
+          GROUP BY slot_date
+          ORDER BY slot_date
+
+      - name: INV_OFFERINGS_FOR_PROVIDER_SOW_LINE
+        sql: |
+          SELECT om.id
+          FROM offering_media om
+          WHERE om.media_provider_sow_line_id = ?
+      - name: INV_CANCEL_AVAILABLE_FOR_POSITION
+        sql: |
+          UPDATE inventory_slots
+          SET status = 'CANCELLED',
+              insertion_line_id = NULL,
+              house_fill_id = NULL,
+              held_by = NULL,
+              updated_at = ?
+          WHERE media_provider_sow_line_id = ?
+            AND UPPER(TRIM(position_code)) = ?
+            AND UPPER(TRIM(status)) = 'AVAILABLE'
+      - name: INV_INSERT_ANONYMOUS_SLOT
+        sql: |
+          INSERT INTO inventory_slots (
+            offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+            slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          )
+          SELECT ?, ?, ?, ?, ?, ?, NULL, 'AVAILABLE', NULL, NULL, NULL, ?
+          WHERE NOT EXISTS (
+            SELECT 1 FROM inventory_slots s
+            WHERE s.offering_media_id = ? AND s.slot_date = ? AND s.slot_index = ?
+          )
+      - name: INV_INSERT_POSITIONED_SLOT
+        sql: |
+          INSERT INTO inventory_slots (
+            offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+            slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          )
+          SELECT ?, ?, ?, ?, ?, ?, ?, 'AVAILABLE', NULL, NULL, NULL, ?
+          WHERE NOT EXISTS (
+            SELECT 1 FROM inventory_slots s
+            WHERE s.offering_media_id = ?
+              AND s.slot_date = ?
+              AND UPPER(TRIM(s.position_code)) = ?
+              AND s.slot_index = ?
+          )
+      - name: INV_LIST_LINE_POSITIONS
+        sql: |
+          SELECT position_code, position_label, sort_order, page_from, page_to, capacity
+          FROM media_provider_sow_line_positions
+          WHERE media_provider_sow_line_id = ?
+          ORDER BY sort_order, id
+      - name: INV_LIST_UNHELD_ACTIVE_HOUSE_FILLS
+        sql: |
+          SELECT id, slot_quantity, effective_from, effective_to
+          FROM house_fills
+          WHERE offering_media_id = ?
+            AND UPPER(TRIM(status)) = 'ACTIVE'
+            AND NOT EXISTS (
+              SELECT 1 FROM inventory_slots s
+              WHERE s.house_fill_id = house_fills.id AND UPPER(TRIM(s.status)) = 'USED'
+            )
+      - name: INV_LIST_UNHELD_ACTIVE_INSERTION_LINES
+        sql: |
+          SELECT il.id, il.number_of_insertions * COALESCE(il.duration_minutes, 1) AS number_of_insertions, sow.duration_from, sow.duration_to
+          FROM insertion_lines il
+          INNER JOIN media_insertion_sows sow ON sow.id = il.media_insertion_sow_id
+          WHERE il.offering_media_id = ?
+            AND UPPER(TRIM(sow.status)) IN ('PENDING_APPROVAL', 'APPROVED', 'PROPOSAL', 'PENDING', 'ACTIVE')
+            AND NOT EXISTS (
+              SELECT 1 FROM inventory_slots s
+              WHERE s.insertion_line_id = il.id
+            )
+      - name: INV_LIST_LINES_FOR_INSERTION_SOW
+        sql: |
+          SELECT id, offering_media_id, number_of_insertions * COALESCE(duration_minutes, 1) AS number_of_insertions
+          FROM insertion_lines
+          WHERE media_insertion_sow_id = ?
+      - name: INV_OFFERINGS_FOR_PROVIDER_SOW
+        sql: |
+          SELECT om.id
+          FROM offering_media om
+          INNER JOIN media_provider_sow_lines psl ON psl.id = om.media_provider_sow_line_id
+          WHERE psl.media_provider_sow_id = ?
+      - name: INV_RELEASE_ALL_FOR_INSERTION_SOW
+        sql: |
+          UPDATE inventory_slots
+          SET status = 'AVAILABLE',
+              insertion_line_id = NULL,
+              house_fill_id = NULL,
+              held_by = NULL,
+              updated_at = ?
+          WHERE insertion_line_id IN (
+            SELECT id FROM insertion_lines WHERE media_insertion_sow_id = ?
+          )
+            AND UPPER(TRIM(status)) IN (
+              'USED', 'SOLD', 'WAITING_FOR_PARTNER_MEDIA', 'MEDIA_INSERTED',
+              'MEDIA_APPROVED', 'MEDIA_DEPLOYED'
+            )
+      - name: INV_CANCEL_AVAILABLE_FOR_PROVIDER_SOW
+        sql: |
+          UPDATE inventory_slots
+          SET status = 'CANCELLED',
+              insertion_line_id = NULL,
+              house_fill_id = NULL,
+              held_by = NULL,
+              updated_at = ?
+          WHERE media_provider_sow_id = ?
+            AND UPPER(TRIM(status)) = 'AVAILABLE'
+      - name: INV_LOCK_AVAILABLE_SLOTS
+        sql: |
+          SELECT id
+          FROM inventory_slots
+          WHERE offering_media_id = ?
+            AND UPPER(TRIM(status)) = 'AVAILABLE'
+            AND slot_date >= ?
+            AND slot_date <= ?
+          ORDER BY slot_date, slot_index, position_code, id
+          FOR UPDATE
+      - name: INV_MARK_USED
+        sql: |
+          UPDATE inventory_slots
+          SET status = ?,
+              insertion_line_id = ?,
+              house_fill_id = ?,
+              held_by = ?,
+              updated_at = ?
+          WHERE id = ?
+            AND UPPER(TRIM(status)) = 'AVAILABLE'
+      - name: INV_TRANSITION_STATUS
+        sql: |
+          UPDATE inventory_slots
+          SET status = ?,
+              updated_at = ?
+          WHERE id = ?
+            AND UPPER(TRIM(status)) = ?
+      - name: INV_TRANSITION_LINE_STATUS
+        sql: |
+          UPDATE inventory_slots
+          SET status = ?,
+              updated_at = ?
+          WHERE insertion_line_id = ?
+            AND UPPER(TRIM(status)) = ?
+      - name: INV_RELEASE_BY_INSERTION_LINE
+        sql: |
+          UPDATE inventory_slots
+          SET status = 'AVAILABLE',
+              insertion_line_id = NULL,
+              house_fill_id = NULL,
+              held_by = NULL,
+              updated_at = ?
+          WHERE insertion_line_id = ?
+            AND UPPER(TRIM(status)) IN (
+              'USED', 'SOLD', 'WAITING_FOR_PARTNER_MEDIA', 'MEDIA_INSERTED',
+              'MEDIA_APPROVED', 'MEDIA_DEPLOYED'
+            )
+      - name: INV_RELEASE_BY_HOUSE_FILL
+        sql: |
+          UPDATE inventory_slots
+          SET status = 'AVAILABLE',
+              insertion_line_id = NULL,
+              house_fill_id = NULL,
+              held_by = NULL,
+              updated_at = ?
+          WHERE house_fill_id = ?
+            AND UPPER(TRIM(status)) = 'USED'
+      - name: INV_READ_OFFERING_META
+        sql: |
+          SELECT om.id,
+                 om.media_provider_sow_line_id,
+                 psl.media_vehicle_id,
+                 psl.media_provider_sow_id,
+                 mv.capacity_quantity,
+                 mv.recurrence,
+                 sow.duration_from,
+                 sow.duration_to,
+                 sow.status
+          FROM offering_media om
+          INNER JOIN media_provider_sow_lines psl ON psl.id = om.media_provider_sow_line_id
+          INNER JOIN media_provider_sows sow ON sow.id = psl.media_provider_sow_id
+          INNER JOIN media_vehicles mv ON mv.id = psl.media_vehicle_id
+          WHERE om.id = ?
+  - dialect: mysql
+    statements:
+      - name: LIST_INVENTORY_SLOT
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+                 slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          FROM inventory_slots
+          ORDER BY slot_date, slot_index, id
+          LIMIT ? OFFSET ?
+      - name: COUNT_INVENTORY_SLOT
+        sql: |
+          SELECT COUNT(*) FROM inventory_slots
+      - name: LIST_INVENTORY_SLOT_BY_PERIOD
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+                 slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          FROM inventory_slots
+          WHERE slot_date >= ?
+            AND slot_date <= ?
+          ORDER BY slot_date, slot_index, id
+          LIMIT ? OFFSET ?
+      - name: COUNT_INVENTORY_SLOT_BY_PERIOD
+        sql: |
+          SELECT COUNT(*)
+          FROM inventory_slots
+          WHERE slot_date >= ?
+            AND slot_date <= ?
+      - name: LIST_INVENTORY_SLOT_BY_PERIOD_STATUS
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+                 slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          FROM inventory_slots
+          WHERE slot_date >= ?
+            AND slot_date <= ?
+            AND UPPER(TRIM(status)) = ?
+          ORDER BY slot_date, slot_index, id
+          LIMIT ? OFFSET ?
+      - name: COUNT_INVENTORY_SLOT_BY_PERIOD_STATUS
+        sql: |
+          SELECT COUNT(*)
+          FROM inventory_slots
+          WHERE slot_date >= ?
+            AND slot_date <= ?
+            AND UPPER(TRIM(status)) = ?
+      - name: READ_INVENTORY_SLOT
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+                 slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          FROM inventory_slots WHERE id = ?
+      - name: SEARCH_INVENTORY_SLOT
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+                 slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          FROM inventory_slots
+          WHERE (LOWER(CAST(status AS CHAR(4000))) LIKE ?
+              OR LOWER(CAST(held_by AS CHAR(4000))) LIKE ?)
+          ORDER BY slot_date, slot_index, id
+      - name: INSERT_INVENTORY_SLOT
+        sql: |
+          INSERT INTO inventory_slots (
+            offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+            slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          )
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_INVENTORY_SLOT
+        sql: |
+          UPDATE inventory_slots
+          SET status = ?, insertion_line_id = ?, house_fill_id = ?, held_by = ?, updated_at = ?
+          WHERE id = ?
+      - name: DELETE_INVENTORY_SLOT
+        sql: |
+          DELETE FROM inventory_slots WHERE id = ?
+      - name: LIST_INVENTORY_SLOT_FOR_OFFERING
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+                 slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          FROM inventory_slots
+          WHERE offering_media_id = ?
+            AND slot_date >= ?
+            AND slot_date <= ?
+          ORDER BY slot_date, slot_index, id
+          LIMIT ? OFFSET ?
+      - name: COUNT_INVENTORY_SLOT_FOR_OFFERING
+        sql: |
+          SELECT COUNT(*)
+          FROM inventory_slots
+          WHERE offering_media_id = ?
+            AND slot_date >= ?
+            AND slot_date <= ?
+      - name: LIST_INVENTORY_SLOT_FOR_OFFERING_STATUS
+        sql: |
+          SELECT id, offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+                 slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          FROM inventory_slots
+          WHERE offering_media_id = ?
+            AND slot_date >= ?
+            AND slot_date <= ?
+            AND UPPER(TRIM(status)) = ?
+          ORDER BY slot_date, slot_index, id
+          LIMIT ? OFFSET ?
+      - name: COUNT_INVENTORY_SLOT_FOR_OFFERING_STATUS
+        sql: |
+          SELECT COUNT(*)
+          FROM inventory_slots
+          WHERE offering_media_id = ?
+            AND slot_date >= ?
+            AND slot_date <= ?
+            AND UPPER(TRIM(status)) = ?
+      - name: SUMMARY_INVENTORY_SLOT_BY_STATUS
+        sql: |
+          SELECT status, COUNT(*) AS cnt
+          FROM inventory_slots
+          WHERE offering_media_id = ?
+            AND slot_date >= ?
+            AND slot_date <= ?
+          GROUP BY status
+      - name: SUMMARY_INVENTORY_SLOT_BY_DAY
+        sql: |
+          SELECT slot_date,
+                 SUM(CASE WHEN UPPER(TRIM(status)) = 'AVAILABLE' THEN 1 ELSE 0 END) AS available_cnt,
+                 SUM(CASE WHEN UPPER(TRIM(status)) NOT IN ('AVAILABLE', 'CANCELLED') THEN 1 ELSE 0 END) AS used_cnt,
+                 SUM(CASE WHEN UPPER(TRIM(status)) = 'CANCELLED' THEN 1 ELSE 0 END) AS cancelled_cnt
+          FROM inventory_slots
+          WHERE offering_media_id = ?
+            AND slot_date >= ?
+            AND slot_date <= ?
+          GROUP BY slot_date
+          ORDER BY slot_date
+
+      - name: INV_OFFERINGS_FOR_PROVIDER_SOW_LINE
+        sql: |
+          SELECT om.id
+          FROM offering_media om
+          WHERE om.media_provider_sow_line_id = ?
+      - name: INV_CANCEL_AVAILABLE_FOR_POSITION
+        sql: |
+          UPDATE inventory_slots
+          SET status = 'CANCELLED',
+              insertion_line_id = NULL,
+              house_fill_id = NULL,
+              held_by = NULL,
+              updated_at = ?
+          WHERE media_provider_sow_line_id = ?
+            AND UPPER(TRIM(position_code)) = ?
+            AND UPPER(TRIM(status)) = 'AVAILABLE'
+      - name: INV_INSERT_ANONYMOUS_SLOT
+        sql: |
+          INSERT INTO inventory_slots (
+            offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+            slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          )
+          SELECT ?, ?, ?, ?, ?, ?, NULL, 'AVAILABLE', NULL, NULL, NULL, ?
+          WHERE NOT EXISTS (
+            SELECT 1 FROM inventory_slots s
+            WHERE s.offering_media_id = ? AND s.slot_date = ? AND s.slot_index = ?
+          )
+      - name: INV_INSERT_POSITIONED_SLOT
+        sql: |
+          INSERT INTO inventory_slots (
+            offering_media_id, media_vehicle_id, media_provider_sow_id, media_provider_sow_line_id,
+            slot_date, slot_index, position_code, status, insertion_line_id, house_fill_id, held_by, updated_at
+          )
+          SELECT ?, ?, ?, ?, ?, ?, ?, 'AVAILABLE', NULL, NULL, NULL, ?
+          WHERE NOT EXISTS (
+            SELECT 1 FROM inventory_slots s
+            WHERE s.offering_media_id = ?
+              AND s.slot_date = ?
+              AND UPPER(TRIM(s.position_code)) = ?
+              AND s.slot_index = ?
+          )
+      - name: INV_LIST_LINE_POSITIONS
+        sql: |
+          SELECT position_code, position_label, sort_order, page_from, page_to, capacity
+          FROM media_provider_sow_line_positions
+          WHERE media_provider_sow_line_id = ?
+          ORDER BY sort_order, id
+      - name: INV_LIST_UNHELD_ACTIVE_HOUSE_FILLS
+        sql: |
+          SELECT id, slot_quantity, effective_from, effective_to
+          FROM house_fills
+          WHERE offering_media_id = ?
+            AND UPPER(TRIM(status)) = 'ACTIVE'
+            AND NOT EXISTS (
+              SELECT 1 FROM inventory_slots s
+              WHERE s.house_fill_id = house_fills.id AND UPPER(TRIM(s.status)) = 'USED'
+            )
+      - name: INV_LIST_UNHELD_ACTIVE_INSERTION_LINES
+        sql: |
+          SELECT il.id, il.number_of_insertions * COALESCE(il.duration_minutes, 1) AS number_of_insertions, sow.duration_from, sow.duration_to
+          FROM insertion_lines il
+          INNER JOIN media_insertion_sows sow ON sow.id = il.media_insertion_sow_id
+          WHERE il.offering_media_id = ?
+            AND UPPER(TRIM(sow.status)) IN ('PENDING_APPROVAL', 'APPROVED', 'PROPOSAL', 'PENDING', 'ACTIVE')
+            AND NOT EXISTS (
+              SELECT 1 FROM inventory_slots s
+              WHERE s.insertion_line_id = il.id
+            )
+      - name: INV_LIST_LINES_FOR_INSERTION_SOW
+        sql: |
+          SELECT id, offering_media_id, number_of_insertions * COALESCE(duration_minutes, 1) AS number_of_insertions
+          FROM insertion_lines
+          WHERE media_insertion_sow_id = ?
+      - name: INV_OFFERINGS_FOR_PROVIDER_SOW
+        sql: |
+          SELECT om.id
+          FROM offering_media om
+          INNER JOIN media_provider_sow_lines psl ON psl.id = om.media_provider_sow_line_id
+          WHERE psl.media_provider_sow_id = ?
+      - name: INV_RELEASE_ALL_FOR_INSERTION_SOW
+        sql: |
+          UPDATE inventory_slots
+          SET status = 'AVAILABLE',
+              insertion_line_id = NULL,
+              house_fill_id = NULL,
+              held_by = NULL,
+              updated_at = ?
+          WHERE insertion_line_id IN (
+            SELECT id FROM insertion_lines WHERE media_insertion_sow_id = ?
+          )
+            AND UPPER(TRIM(status)) IN (
+              'USED', 'SOLD', 'WAITING_FOR_PARTNER_MEDIA', 'MEDIA_INSERTED',
+              'MEDIA_APPROVED', 'MEDIA_DEPLOYED'
+            )
+      - name: INV_CANCEL_AVAILABLE_FOR_PROVIDER_SOW
+        sql: |
+          UPDATE inventory_slots
+          SET status = 'CANCELLED',
+              insertion_line_id = NULL,
+              house_fill_id = NULL,
+              held_by = NULL,
+              updated_at = ?
+          WHERE media_provider_sow_id = ?
+            AND UPPER(TRIM(status)) = 'AVAILABLE'
+      - name: INV_LOCK_AVAILABLE_SLOTS
+        sql: |
+          SELECT id
+          FROM inventory_slots
+          WHERE offering_media_id = ?
+            AND UPPER(TRIM(status)) = 'AVAILABLE'
+            AND slot_date >= ?
+            AND slot_date <= ?
+          ORDER BY slot_date, slot_index, position_code, id
+          FOR UPDATE
+      - name: INV_MARK_USED
+        sql: |
+          UPDATE inventory_slots
+          SET status = ?,
+              insertion_line_id = ?,
+              house_fill_id = ?,
+              held_by = ?,
+              updated_at = ?
+          WHERE id = ?
+            AND UPPER(TRIM(status)) = 'AVAILABLE'
+      - name: INV_TRANSITION_STATUS
+        sql: |
+          UPDATE inventory_slots
+          SET status = ?,
+              updated_at = ?
+          WHERE id = ?
+            AND UPPER(TRIM(status)) = ?
+      - name: INV_TRANSITION_LINE_STATUS
+        sql: |
+          UPDATE inventory_slots
+          SET status = ?,
+              updated_at = ?
+          WHERE insertion_line_id = ?
+            AND UPPER(TRIM(status)) = ?
+      - name: INV_RELEASE_BY_INSERTION_LINE
+        sql: |
+          UPDATE inventory_slots
+          SET status = 'AVAILABLE',
+              insertion_line_id = NULL,
+              house_fill_id = NULL,
+              held_by = NULL,
+              updated_at = ?
+          WHERE insertion_line_id = ?
+            AND UPPER(TRIM(status)) IN (
+              'USED', 'SOLD', 'WAITING_FOR_PARTNER_MEDIA', 'MEDIA_INSERTED',
+              'MEDIA_APPROVED', 'MEDIA_DEPLOYED'
+            )
+      - name: INV_RELEASE_BY_HOUSE_FILL
+        sql: |
+          UPDATE inventory_slots
+          SET status = 'AVAILABLE',
+              insertion_line_id = NULL,
+              house_fill_id = NULL,
+              held_by = NULL,
+              updated_at = ?
+          WHERE house_fill_id = ?
+            AND UPPER(TRIM(status)) = 'USED'
+      - name: INV_READ_OFFERING_META
+        sql: |
+          SELECT om.id,
+                 om.media_provider_sow_line_id,
+                 psl.media_vehicle_id,
+                 psl.media_provider_sow_id,
+                 mv.capacity_quantity,
+                 mv.recurrence,
+                 sow.duration_from,
+                 sow.duration_to,
+                 sow.status
+          FROM offering_media om
+          INNER JOIN media_provider_sow_lines psl ON psl.id = om.media_provider_sow_line_id
+          INNER JOIN media_provider_sows sow ON sow.id = psl.media_provider_sow_id
+          INNER JOIN media_vehicles mv ON mv.id = psl.media_vehicle_id
+          WHERE om.id = ?

@@ -1,0 +1,109 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: postgres
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_ROLE
+        sql: |
+          SELECT id, name
+          FROM roles
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_ROLE
+        sql: |
+          SELECT COUNT(*) FROM roles
+      - name: READ_ROLE
+        sql: |
+          SELECT id, name
+          FROM roles WHERE id = ?
+      - name: SEARCH_ROLE
+        sql: |
+          SELECT id, name
+          FROM roles
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_ROLE
+        sql: |
+          INSERT INTO roles (name)
+          VALUES (?)
+      - name: UPDATE_ROLE
+        sql: |
+          UPDATE roles
+          SET name = ?
+          WHERE id = ?
+      - name: DELETE_ROLE
+        sql: |
+          DELETE FROM roles WHERE id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_ROLE
+        sql: |
+          SELECT id, name
+          FROM roles
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_ROLE
+        sql: |
+          SELECT COUNT(*) FROM roles
+      - name: READ_ROLE
+        sql: |
+          SELECT id, name
+          FROM roles WHERE id = ?
+      - name: SEARCH_ROLE
+        sql: |
+          SELECT id, name
+          FROM roles
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_ROLE
+        sql: |
+          INSERT INTO roles (name)
+          VALUES (?)
+      - name: UPDATE_ROLE
+        sql: |
+          UPDATE roles
+          SET name = ?
+          WHERE id = ?
+      - name: DELETE_ROLE
+        sql: |
+          DELETE FROM roles WHERE id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_ROLE
+        sql: |
+          SELECT id, name
+          FROM roles
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_ROLE
+        sql: |
+          SELECT COUNT(*) FROM roles
+      - name: READ_ROLE
+        sql: |
+          SELECT id, name
+          FROM roles WHERE id = ?
+      - name: SEARCH_ROLE
+        sql: |
+          SELECT id, name
+          FROM roles
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_ROLE
+        sql: |
+          INSERT INTO roles (name)
+          VALUES (?)
+      - name: UPDATE_ROLE
+        sql: |
+          UPDATE roles
+          SET name = ?
+          WHERE id = ?
+      - name: DELETE_ROLE
+        sql: |
+          DELETE FROM roles WHERE id = ?
+

@@ -1,0 +1,109 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: h2
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_CREATIVE_SERVICE_LINE
+        sql: |
+          SELECT id, media_creative_sow_id, creative_service_id, hours, rate, description
+          FROM creative_service_lines
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CREATIVE_SERVICE_LINE
+        sql: |
+          SELECT COUNT(*) FROM creative_service_lines
+      - name: READ_CREATIVE_SERVICE_LINE
+        sql: |
+          SELECT id, media_creative_sow_id, creative_service_id, hours, rate, description
+          FROM creative_service_lines WHERE id = ?
+      - name: SEARCH_CREATIVE_SERVICE_LINE
+        sql: |
+          SELECT id, media_creative_sow_id, creative_service_id, hours, rate, description
+          FROM creative_service_lines
+          WHERE (LOWER(CAST(description AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_CREATIVE_SERVICE_LINE
+        sql: |
+          INSERT INTO creative_service_lines (media_creative_sow_id, creative_service_id, hours, rate, description)
+          VALUES (?, ?, ?, ?, ?)
+      - name: UPDATE_CREATIVE_SERVICE_LINE
+        sql: |
+          UPDATE creative_service_lines
+          SET media_creative_sow_id = ?, creative_service_id = ?, hours = ?, rate = ?, description = ?
+          WHERE id = ?
+      - name: DELETE_CREATIVE_SERVICE_LINE
+        sql: |
+          DELETE FROM creative_service_lines WHERE id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_CREATIVE_SERVICE_LINE
+        sql: |
+          SELECT id, media_creative_sow_id, creative_service_id, hours, rate, description
+          FROM creative_service_lines
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CREATIVE_SERVICE_LINE
+        sql: |
+          SELECT COUNT(*) FROM creative_service_lines
+      - name: READ_CREATIVE_SERVICE_LINE
+        sql: |
+          SELECT id, media_creative_sow_id, creative_service_id, hours, rate, description
+          FROM creative_service_lines WHERE id = ?
+      - name: SEARCH_CREATIVE_SERVICE_LINE
+        sql: |
+          SELECT id, media_creative_sow_id, creative_service_id, hours, rate, description
+          FROM creative_service_lines
+          WHERE (LOWER(CAST(description AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_CREATIVE_SERVICE_LINE
+        sql: |
+          INSERT INTO creative_service_lines (media_creative_sow_id, creative_service_id, hours, rate, description)
+          VALUES (?, ?, ?, ?, ?)
+      - name: UPDATE_CREATIVE_SERVICE_LINE
+        sql: |
+          UPDATE creative_service_lines
+          SET media_creative_sow_id = ?, creative_service_id = ?, hours = ?, rate = ?, description = ?
+          WHERE id = ?
+      - name: DELETE_CREATIVE_SERVICE_LINE
+        sql: |
+          DELETE FROM creative_service_lines WHERE id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_CREATIVE_SERVICE_LINE
+        sql: |
+          SELECT id, media_creative_sow_id, creative_service_id, hours, rate, description
+          FROM creative_service_lines
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CREATIVE_SERVICE_LINE
+        sql: |
+          SELECT COUNT(*) FROM creative_service_lines
+      - name: READ_CREATIVE_SERVICE_LINE
+        sql: |
+          SELECT id, media_creative_sow_id, creative_service_id, hours, rate, description
+          FROM creative_service_lines WHERE id = ?
+      - name: SEARCH_CREATIVE_SERVICE_LINE
+        sql: |
+          SELECT id, media_creative_sow_id, creative_service_id, hours, rate, description
+          FROM creative_service_lines
+          WHERE (LOWER(CAST(description AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_CREATIVE_SERVICE_LINE
+        sql: |
+          INSERT INTO creative_service_lines (media_creative_sow_id, creative_service_id, hours, rate, description)
+          VALUES (?, ?, ?, ?, ?)
+      - name: UPDATE_CREATIVE_SERVICE_LINE
+        sql: |
+          UPDATE creative_service_lines
+          SET media_creative_sow_id = ?, creative_service_id = ?, hours = ?, rate = ?, description = ?
+          WHERE id = ?
+      - name: DELETE_CREATIVE_SERVICE_LINE
+        sql: |
+          DELETE FROM creative_service_lines WHERE id = ?
+

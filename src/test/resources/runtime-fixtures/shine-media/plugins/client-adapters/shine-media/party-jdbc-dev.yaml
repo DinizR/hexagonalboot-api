@@ -1,0 +1,117 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: h2
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_PARTY
+        sql: |
+          SELECT id, name, type, address, tax_number_id, business_area_id
+          FROM parties
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_PARTY
+        sql: |
+          SELECT COUNT(*) FROM parties
+      - name: READ_PARTY
+        sql: |
+          SELECT id, name, type, address, tax_number_id, business_area_id
+          FROM parties WHERE id = ?
+      - name: SEARCH_PARTY
+        sql: |
+          SELECT id, name, type, address, tax_number_id, business_area_id
+          FROM parties
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ?
+              OR LOWER(CAST(type AS VARCHAR(4000))) LIKE ?
+              OR LOWER(CAST(tax_number_id AS VARCHAR(4000))) LIKE ?
+              OR LOWER(CAST(address AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_PARTY
+        sql: |
+          INSERT INTO parties (name, type, address, tax_number_id, business_area_id)
+          VALUES (?, ?, ?, ?, ?)
+      - name: UPDATE_PARTY
+        sql: |
+          UPDATE parties
+          SET name = ?, type = ?, address = ?, tax_number_id = ?, business_area_id = ?
+          WHERE id = ?
+      - name: DELETE_PARTY
+        sql: |
+          DELETE FROM parties WHERE id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_PARTY
+        sql: |
+          SELECT id, name, type, address, tax_number_id, business_area_id
+          FROM parties
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_PARTY
+        sql: |
+          SELECT COUNT(*) FROM parties
+      - name: READ_PARTY
+        sql: |
+          SELECT id, name, type, address, tax_number_id, business_area_id
+          FROM parties WHERE id = ?
+      - name: SEARCH_PARTY
+        sql: |
+          SELECT id, name, type, address, tax_number_id, business_area_id
+          FROM parties
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ?
+              OR LOWER(CAST(type AS VARCHAR(4000))) LIKE ?
+              OR LOWER(CAST(tax_number_id AS VARCHAR(4000))) LIKE ?
+              OR LOWER(CAST(address AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_PARTY
+        sql: |
+          INSERT INTO parties (name, type, address, tax_number_id, business_area_id)
+          VALUES (?, ?, ?, ?, ?)
+      - name: UPDATE_PARTY
+        sql: |
+          UPDATE parties
+          SET name = ?, type = ?, address = ?, tax_number_id = ?, business_area_id = ?
+          WHERE id = ?
+      - name: DELETE_PARTY
+        sql: |
+          DELETE FROM parties WHERE id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_PARTY
+        sql: |
+          SELECT id, name, type, address, tax_number_id, business_area_id
+          FROM parties
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_PARTY
+        sql: |
+          SELECT COUNT(*) FROM parties
+      - name: READ_PARTY
+        sql: |
+          SELECT id, name, type, address, tax_number_id, business_area_id
+          FROM parties WHERE id = ?
+      - name: SEARCH_PARTY
+        sql: |
+          SELECT id, name, type, address, tax_number_id, business_area_id
+          FROM parties
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ?
+              OR LOWER(CAST(type AS VARCHAR(4000))) LIKE ?
+              OR LOWER(CAST(tax_number_id AS VARCHAR(4000))) LIKE ?
+              OR LOWER(CAST(address AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_PARTY
+        sql: |
+          INSERT INTO parties (name, type, address, tax_number_id, business_area_id)
+          VALUES (?, ?, ?, ?, ?)
+      - name: UPDATE_PARTY
+        sql: |
+          UPDATE parties
+          SET name = ?, type = ?, address = ?, tax_number_id = ?, business_area_id = ?
+          WHERE id = ?
+      - name: DELETE_PARTY
+        sql: |
+          DELETE FROM parties WHERE id = ?

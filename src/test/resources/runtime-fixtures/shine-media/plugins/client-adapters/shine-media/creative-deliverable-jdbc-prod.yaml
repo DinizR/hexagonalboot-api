@@ -1,0 +1,109 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: postgres
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_CREATIVE_DELIVERABLE
+        sql: |
+          SELECT id, creative_sow_line_id, name, storage_location_url, status
+          FROM creative_deliverables
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CREATIVE_DELIVERABLE
+        sql: |
+          SELECT COUNT(*) FROM creative_deliverables
+      - name: READ_CREATIVE_DELIVERABLE
+        sql: |
+          SELECT id, creative_sow_line_id, name, storage_location_url, status
+          FROM creative_deliverables WHERE id = ?
+      - name: SEARCH_CREATIVE_DELIVERABLE
+        sql: |
+          SELECT id, creative_sow_line_id, name, storage_location_url, status
+          FROM creative_deliverables
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(status AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_CREATIVE_DELIVERABLE
+        sql: |
+          INSERT INTO creative_deliverables (creative_sow_line_id, name, storage_location_url, status)
+          VALUES (?, ?, ?, ?)
+      - name: UPDATE_CREATIVE_DELIVERABLE
+        sql: |
+          UPDATE creative_deliverables
+          SET creative_sow_line_id = ?, name = ?, storage_location_url = ?, status = ?
+          WHERE id = ?
+      - name: DELETE_CREATIVE_DELIVERABLE
+        sql: |
+          DELETE FROM creative_deliverables WHERE id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_CREATIVE_DELIVERABLE
+        sql: |
+          SELECT id, creative_sow_line_id, name, storage_location_url, status
+          FROM creative_deliverables
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CREATIVE_DELIVERABLE
+        sql: |
+          SELECT COUNT(*) FROM creative_deliverables
+      - name: READ_CREATIVE_DELIVERABLE
+        sql: |
+          SELECT id, creative_sow_line_id, name, storage_location_url, status
+          FROM creative_deliverables WHERE id = ?
+      - name: SEARCH_CREATIVE_DELIVERABLE
+        sql: |
+          SELECT id, creative_sow_line_id, name, storage_location_url, status
+          FROM creative_deliverables
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(status AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_CREATIVE_DELIVERABLE
+        sql: |
+          INSERT INTO creative_deliverables (creative_sow_line_id, name, storage_location_url, status)
+          VALUES (?, ?, ?, ?)
+      - name: UPDATE_CREATIVE_DELIVERABLE
+        sql: |
+          UPDATE creative_deliverables
+          SET creative_sow_line_id = ?, name = ?, storage_location_url = ?, status = ?
+          WHERE id = ?
+      - name: DELETE_CREATIVE_DELIVERABLE
+        sql: |
+          DELETE FROM creative_deliverables WHERE id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_CREATIVE_DELIVERABLE
+        sql: |
+          SELECT id, creative_sow_line_id, name, storage_location_url, status
+          FROM creative_deliverables
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CREATIVE_DELIVERABLE
+        sql: |
+          SELECT COUNT(*) FROM creative_deliverables
+      - name: READ_CREATIVE_DELIVERABLE
+        sql: |
+          SELECT id, creative_sow_line_id, name, storage_location_url, status
+          FROM creative_deliverables WHERE id = ?
+      - name: SEARCH_CREATIVE_DELIVERABLE
+        sql: |
+          SELECT id, creative_sow_line_id, name, storage_location_url, status
+          FROM creative_deliverables
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(status AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_CREATIVE_DELIVERABLE
+        sql: |
+          INSERT INTO creative_deliverables (creative_sow_line_id, name, storage_location_url, status)
+          VALUES (?, ?, ?, ?)
+      - name: UPDATE_CREATIVE_DELIVERABLE
+        sql: |
+          UPDATE creative_deliverables
+          SET creative_sow_line_id = ?, name = ?, storage_location_url = ?, status = ?
+          WHERE id = ?
+      - name: DELETE_CREATIVE_DELIVERABLE
+        sql: |
+          DELETE FROM creative_deliverables WHERE id = ?
+

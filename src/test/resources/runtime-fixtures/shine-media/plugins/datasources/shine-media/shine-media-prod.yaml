@@ -1,0 +1,7 @@
+configs:
+  - key: datasource.id
+    value: shine-media
+  - key: datasource.source
+    value: spring
+  - key: liquibase.change-log
+    value: config/shine-media/db/shine-media/changelog/db.changelog-master.yaml

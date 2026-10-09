@@ -1,0 +1,18 @@
+configs:
+  - key: smtp.enabled
+    value: "true"
+  - key: smtp.host
+    value: email-smtp.ap-southeast-2.amazonaws.com
+    description: SES SMTP endpoint (or any SMTP relay)
+  - key: smtp.port
+    value: "587"
+  - key: smtp.username
+    value: ""
+    description: SES SMTP username
+  - key: smtp.password
+    value: ""
+    description: SES SMTP password
+  - key: smtp.from
+    value: noreply@shinemedia.com
+  - key: smtp.startTls
+    value: "true"

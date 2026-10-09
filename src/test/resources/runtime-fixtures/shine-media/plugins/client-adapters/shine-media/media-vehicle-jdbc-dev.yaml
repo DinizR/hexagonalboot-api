@@ -1,0 +1,109 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: h2
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_MEDIA_VEHICLE
+        sql: |
+          SELECT id, media_channel_id, location_id, name, schedule_type, capacity_type, capacity_quantity, duration_hint, air_time, recurrence, operating_from, operating_to, insertion_duration_minutes, audience_capacity, audience_capacity_unit
+          FROM media_vehicles
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_MEDIA_VEHICLE
+        sql: |
+          SELECT COUNT(*) FROM media_vehicles
+      - name: READ_MEDIA_VEHICLE
+        sql: |
+          SELECT id, media_channel_id, location_id, name, schedule_type, capacity_type, capacity_quantity, duration_hint, air_time, recurrence, operating_from, operating_to, insertion_duration_minutes, audience_capacity, audience_capacity_unit
+          FROM media_vehicles WHERE id = ?
+      - name: SEARCH_MEDIA_VEHICLE
+        sql: |
+          SELECT id, media_channel_id, location_id, name, schedule_type, capacity_type, capacity_quantity, duration_hint, air_time, recurrence, operating_from, operating_to, insertion_duration_minutes, audience_capacity, audience_capacity_unit
+          FROM media_vehicles
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(duration_hint AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_MEDIA_VEHICLE
+        sql: |
+          INSERT INTO media_vehicles (media_channel_id, location_id, name, schedule_type, capacity_type, capacity_quantity, duration_hint, air_time, recurrence, operating_from, operating_to, insertion_duration_minutes, audience_capacity, audience_capacity_unit)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_MEDIA_VEHICLE
+        sql: |
+          UPDATE media_vehicles
+          SET media_channel_id = ?, location_id = ?, name = ?, schedule_type = ?, capacity_type = ?, capacity_quantity = ?, duration_hint = ?, air_time = ?, recurrence = ?, operating_from = ?, operating_to = ?, insertion_duration_minutes = ?, audience_capacity = ?, audience_capacity_unit = ?
+          WHERE id = ?
+      - name: DELETE_MEDIA_VEHICLE
+        sql: |
+          DELETE FROM media_vehicles WHERE id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_MEDIA_VEHICLE
+        sql: |
+          SELECT id, media_channel_id, location_id, name, schedule_type, capacity_type, capacity_quantity, duration_hint, air_time, recurrence, operating_from, operating_to, insertion_duration_minutes, audience_capacity, audience_capacity_unit
+          FROM media_vehicles
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_MEDIA_VEHICLE
+        sql: |
+          SELECT COUNT(*) FROM media_vehicles
+      - name: READ_MEDIA_VEHICLE
+        sql: |
+          SELECT id, media_channel_id, location_id, name, schedule_type, capacity_type, capacity_quantity, duration_hint, air_time, recurrence, operating_from, operating_to, insertion_duration_minutes, audience_capacity, audience_capacity_unit
+          FROM media_vehicles WHERE id = ?
+      - name: SEARCH_MEDIA_VEHICLE
+        sql: |
+          SELECT id, media_channel_id, location_id, name, schedule_type, capacity_type, capacity_quantity, duration_hint, air_time, recurrence, operating_from, operating_to, insertion_duration_minutes, audience_capacity, audience_capacity_unit
+          FROM media_vehicles
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(duration_hint AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_MEDIA_VEHICLE
+        sql: |
+          INSERT INTO media_vehicles (media_channel_id, location_id, name, schedule_type, capacity_type, capacity_quantity, duration_hint, air_time, recurrence, operating_from, operating_to, insertion_duration_minutes, audience_capacity, audience_capacity_unit)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_MEDIA_VEHICLE
+        sql: |
+          UPDATE media_vehicles
+          SET media_channel_id = ?, location_id = ?, name = ?, schedule_type = ?, capacity_type = ?, capacity_quantity = ?, duration_hint = ?, air_time = ?, recurrence = ?, operating_from = ?, operating_to = ?, insertion_duration_minutes = ?, audience_capacity = ?, audience_capacity_unit = ?
+          WHERE id = ?
+      - name: DELETE_MEDIA_VEHICLE
+        sql: |
+          DELETE FROM media_vehicles WHERE id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_MEDIA_VEHICLE
+        sql: |
+          SELECT id, media_channel_id, location_id, name, schedule_type, capacity_type, capacity_quantity, duration_hint, air_time, recurrence, operating_from, operating_to, insertion_duration_minutes, audience_capacity, audience_capacity_unit
+          FROM media_vehicles
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_MEDIA_VEHICLE
+        sql: |
+          SELECT COUNT(*) FROM media_vehicles
+      - name: READ_MEDIA_VEHICLE
+        sql: |
+          SELECT id, media_channel_id, location_id, name, schedule_type, capacity_type, capacity_quantity, duration_hint, air_time, recurrence, operating_from, operating_to, insertion_duration_minutes, audience_capacity, audience_capacity_unit
+          FROM media_vehicles WHERE id = ?
+      - name: SEARCH_MEDIA_VEHICLE
+        sql: |
+          SELECT id, media_channel_id, location_id, name, schedule_type, capacity_type, capacity_quantity, duration_hint, air_time, recurrence, operating_from, operating_to, insertion_duration_minutes, audience_capacity, audience_capacity_unit
+          FROM media_vehicles
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(duration_hint AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_MEDIA_VEHICLE
+        sql: |
+          INSERT INTO media_vehicles (media_channel_id, location_id, name, schedule_type, capacity_type, capacity_quantity, duration_hint, air_time, recurrence, operating_from, operating_to, insertion_duration_minutes, audience_capacity, audience_capacity_unit)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_MEDIA_VEHICLE
+        sql: |
+          UPDATE media_vehicles
+          SET media_channel_id = ?, location_id = ?, name = ?, schedule_type = ?, capacity_type = ?, capacity_quantity = ?, duration_hint = ?, air_time = ?, recurrence = ?, operating_from = ?, operating_to = ?, insertion_duration_minutes = ?, audience_capacity = ?, audience_capacity_unit = ?
+          WHERE id = ?
+      - name: DELETE_MEDIA_VEHICLE
+        sql: |
+          DELETE FROM media_vehicles WHERE id = ?
+

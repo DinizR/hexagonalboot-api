@@ -1,0 +1,411 @@
+openapi: 3.0.3
+info:
+  title: Registry API
+  description: Product and category registry REST API (aligned with porto-smart-ui POSCategory).
+  version: 1.0.0
+servers:
+  - url: /api/v1.0.0
+    description: Registry application base path
+tags:
+  - name: Categories
+    description: Category CRUD operations
+  - name: Products
+    description: Product CRUD operations
+paths:
+  /categories:
+    get:
+      tags: [Categories]
+      operationId: listCategories
+      summary: List categories
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: 8
+      responses:
+        "200":
+          description: Paginated category list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoryPageResponse"
+    post:
+      tags: [Categories]
+      operationId: createCategory
+      summary: Create a category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCategoryRequest"
+      responses:
+        "201":
+          description: Created category
+          headers:
+            Location:
+              description: URI of the created category
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+  /categories/search:
+    get:
+      tags: [Categories]
+      operationId: searchCategories
+      summary: Search categories by name
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Matching categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Category"
+  /categories/{id}:
+    get:
+      tags: [Categories]
+      operationId: readCategory
+      summary: Read a category by id
+      parameters:
+        - $ref: "#/components/parameters/CategoryId"
+      responses:
+        "200":
+          description: Category details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+        "404":
+          description: Category not found
+    put:
+      tags: [Categories]
+      operationId: updateCategory
+      summary: Update a category
+      parameters:
+        - $ref: "#/components/parameters/CategoryId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCategoryRequest"
+      responses:
+        "200":
+          description: Updated category
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+        "404":
+          description: Category not found
+    delete:
+      tags: [Categories]
+      operationId: deleteCategory
+      summary: Delete a category
+      parameters:
+        - $ref: "#/components/parameters/CategoryId"
+      responses:
+        "200":
+          description: Category deleted
+        "404":
+          description: Category not found
+  /products:
+    get:
+      tags: [Products]
+      operationId: listProducts
+      summary: List products
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: 8
+      responses:
+        "200":
+          description: Paginated product list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductPageResponse"
+    post:
+      tags: [Products]
+      operationId: createProduct
+      summary: Create a product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProductRequest"
+      responses:
+        "201":
+          description: Created product
+          headers:
+            Location:
+              description: URI of the created product
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+  /products/search:
+    get:
+      tags: [Products]
+      operationId: searchProducts
+      summary: Search products by description
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Matching products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+  /products/{id}:
+    get:
+      tags: [Products]
+      operationId: readProduct
+      summary: Read a product by id
+      parameters:
+        - $ref: "#/components/parameters/ProductId"
+      responses:
+        "200":
+          description: Product details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "404":
+          description: Product not found
+    put:
+      tags: [Products]
+      operationId: updateProduct
+      summary: Update a product
+      parameters:
+        - $ref: "#/components/parameters/ProductId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateProductRequest"
+      responses:
+        "200":
+          description: Updated product
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "404":
+          description: Product not found
+    delete:
+      tags: [Products]
+      operationId: deleteProduct
+      summary: Delete a product
+      parameters:
+        - $ref: "#/components/parameters/ProductId"
+      responses:
+        "200":
+          description: Product deleted
+        "404":
+          description: Product not found
+components:
+  parameters:
+    CategoryId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int32
+    ProductId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int32
+  schemas:
+    Decimal:
+      type: number
+      format: double
+      example: 9.99
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        imageURL:
+          type: string
+        enabled:
+          type: boolean
+        barcodeDigit:
+          type: string
+          description: Barcode digit used for in-house product barcodes in this category.
+    CreateCategoryRequest:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+        imageURL:
+          type: string
+        enabled:
+          type: boolean
+          default: true
+        barcodeDigit:
+          type: string
+          default: "0"
+    UpdateCategoryRequest:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+        imageURL:
+          type: string
+        enabled:
+          type: boolean
+        barcodeDigit:
+          type: string
+    CategoryPageResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Category"
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        total:
+          type: integer
+          format: int64
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        barcode:
+          type: string
+        description:
+          type: string
+        unitPrice:
+          $ref: "#/components/schemas/Decimal"
+        discount:
+          $ref: "#/components/schemas/Decimal"
+        taxRate:
+          $ref: "#/components/schemas/Decimal"
+        unit:
+          type: string
+        imageURL:
+          type: string
+        categoryId:
+          type: integer
+          format: int32
+          description: Foreign key to Category.id
+        enabled:
+          type: boolean
+    CreateProductRequest:
+      type: object
+      required: [description, unitPrice, unit, categoryId]
+      properties:
+        barcode:
+          type: string
+        description:
+          type: string
+        unitPrice:
+          $ref: "#/components/schemas/Decimal"
+        discount:
+          $ref: "#/components/schemas/Decimal"
+        taxRate:
+          $ref: "#/components/schemas/Decimal"
+        unit:
+          type: string
+        imageURL:
+          type: string
+        categoryId:
+          type: integer
+          format: int32
+        enabled:
+          type: boolean
+          default: true
+    UpdateProductRequest:
+      type: object
+      required: [barcode, description, unitPrice, unit, categoryId]
+      properties:
+        barcode:
+          type: string
+        description:
+          type: string
+        unitPrice:
+          $ref: "#/components/schemas/Decimal"
+        discount:
+          $ref: "#/components/schemas/Decimal"
+        taxRate:
+          $ref: "#/components/schemas/Decimal"
+        unit:
+          type: string
+        imageURL:
+          type: string
+        categoryId:
+          type: integer
+          format: int32
+        enabled:
+          type: boolean
+    ProductPageResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Product"
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        total:
+          type: integer
+          format: int64

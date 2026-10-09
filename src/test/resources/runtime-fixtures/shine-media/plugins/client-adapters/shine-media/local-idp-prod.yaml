@@ -1,0 +1,7 @@
+configs:
+  - key: store.adapter
+    value: identity-store-jdbc
+  - key: authorization.adapter
+    value: identity-store-jdbc
+  - key: token.ttl
+    value: PT8H

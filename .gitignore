@@ -1,0 +1,11 @@
+.envrc.local
+target/
+logs/
+.idea/
+.vscode/
+.cursor/
+.DS_Store
+*.iml
+*.log
+*.jar
+!**/maven-wrapper.jar

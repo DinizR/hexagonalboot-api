@@ -1,0 +1,12 @@
+connectors:
+  - id: DB
+    adapter: cash-flow-jdbc
+  - id: ACCOUNT
+    adapter: account-jdbc
+  - id: INSERTION_SOW
+    adapter: media-insertion-sow-jdbc
+  - id: PROVIDER_SOW
+    adapter: media-provider-sow-jdbc
+properties:
+  - key: page.default.size
+    value: "8"

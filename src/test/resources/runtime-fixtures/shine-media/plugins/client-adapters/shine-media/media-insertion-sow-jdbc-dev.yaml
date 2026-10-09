@@ -1,0 +1,288 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: h2
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_MEDIA_INSERTION_SOW
+        sql: |
+          SELECT id, creation_date, party_id, duration_from, duration_to, template_id, currency, payment_condition_id, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, tax_rate, payment_method, status, advertiser_contact_user_id, proposal_document_url, discount, late_payment_fine_rate
+          FROM media_insertion_sows
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_MEDIA_INSERTION_SOW
+        sql: |
+          SELECT COUNT(*) FROM media_insertion_sows
+      - name: READ_MEDIA_INSERTION_SOW
+        sql: |
+          SELECT id, creation_date, party_id, duration_from, duration_to, template_id, currency, payment_condition_id, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, tax_rate, payment_method, status, advertiser_contact_user_id, proposal_document_url, discount, late_payment_fine_rate
+          FROM media_insertion_sows WHERE id = ?
+      - name: SEARCH_MEDIA_INSERTION_SOW
+        sql: |
+          SELECT id, creation_date, party_id, duration_from, duration_to, template_id, currency, payment_condition_id, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, tax_rate, payment_method, status, advertiser_contact_user_id, proposal_document_url, discount, late_payment_fine_rate
+          FROM media_insertion_sows
+          WHERE (LOWER(CAST(currency AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(status AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(signature_reference AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(payment_method AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_MEDIA_INSERTION_SOW
+        sql: |
+          INSERT INTO media_insertion_sows (creation_date, party_id, duration_from, duration_to, template_id, currency, payment_condition_id, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, tax_rate, payment_method, status, advertiser_contact_user_id, proposal_document_url, discount, late_payment_fine_rate)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_MEDIA_INSERTION_SOW
+        sql: |
+          UPDATE media_insertion_sows
+          SET creation_date = ?, party_id = ?, duration_from = ?, duration_to = ?, template_id = ?, currency = ?, payment_condition_id = ?, signed_by_user_id = ?, signature_reference = ?, signed_sow_url = ?, sales_manager_id = ?, tax_rate = ?, payment_method = ?, status = ?, advertiser_contact_user_id = ?, proposal_document_url = ?, discount = ?, late_payment_fine_rate = ?
+          WHERE id = ?
+      - name: DELETE_MEDIA_INSERTION_SOW
+        sql: |
+          DELETE FROM media_insertion_sows WHERE id = ?
+      - name: LIST_LINES_FOR_DOCUMENT
+        sql: |
+          SELECT l.id AS line_id,
+                 o.name AS offering_name,
+                 ch.name AS channel_name,
+                 loc.name AS location_name,
+                 city.name AS city_name,
+                 city.state AS city_state,
+                 mv.name AS vehicle_name,
+                 mv.schedule_type,
+                 mv.capacity_type,
+                 mv.recurrence,
+                 mv.duration_hint,
+                 o.print_run,
+                 o.subscriber_count,
+                 o.audience_capacity,
+                 o.audience_capacity_unit,
+                 l.number_of_insertions,
+                 l.duration_minutes,
+                 l.unit_price,
+                 (l.unit_price * l.number_of_insertions) AS line_total
+          FROM insertion_lines l
+          INNER JOIN offering_media o ON o.id = l.offering_media_id
+          INNER JOIN media_provider_sow_lines pl ON pl.id = o.media_provider_sow_line_id
+          INNER JOIN media_channels ch ON ch.id = pl.media_channel_id
+          INNER JOIN media_vehicles mv ON mv.id = pl.media_vehicle_id
+          LEFT JOIN media_locations loc ON loc.id = COALESCE(pl.location_id, mv.location_id)
+          LEFT JOIN cities city ON city.id = loc.city_id
+          WHERE l.media_insertion_sow_id = ?
+          ORDER BY l.id
+
+      - name: LIST_BOOKED_DATES_BY_LINE
+        sql: |
+          SELECT DISTINCT s.insertion_line_id, s.slot_date
+          FROM inventory_slots s
+          INNER JOIN insertion_lines l ON l.id = s.insertion_line_id
+          WHERE l.media_insertion_sow_id = ?
+            AND s.held_by = 'INSERTION'
+          ORDER BY s.insertion_line_id, s.slot_date
+      - name: SUM_INSERTION_LINE_NET
+        sql: |
+          SELECT COALESCE(SUM(unit_price * number_of_insertions - COALESCE(discount, 0)), 0)
+          FROM insertion_lines
+          WHERE media_insertion_sow_id = ?
+      - name: LIST_INSERTION_PROVIDER_SHARES
+        sql: |
+          SELECT ps.id AS provider_sow_id,
+                 ps.contract_type,
+                 ps.sales_manager_id,
+                 ps.party_id,
+                 ps.services_fee_rate,
+                 SUM(l.unit_price * l.number_of_insertions - COALESCE(l.discount, 0)) AS line_net
+          FROM insertion_lines l
+          INNER JOIN offering_media o ON o.id = l.offering_media_id
+          INNER JOIN media_provider_sow_lines pl ON pl.id = o.media_provider_sow_line_id
+          INNER JOIN media_provider_sows ps ON ps.id = pl.media_provider_sow_id
+          WHERE l.media_insertion_sow_id = ?
+          GROUP BY ps.id, ps.contract_type, ps.sales_manager_id, ps.party_id, ps.services_fee_rate
+          ORDER BY ps.id
+
+
+  - dialect: postgres
+    statements:
+      - name: LIST_MEDIA_INSERTION_SOW
+        sql: |
+          SELECT id, creation_date, party_id, duration_from, duration_to, template_id, currency, payment_condition_id, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, tax_rate, payment_method, status, advertiser_contact_user_id, proposal_document_url, discount, late_payment_fine_rate
+          FROM media_insertion_sows
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_MEDIA_INSERTION_SOW
+        sql: |
+          SELECT COUNT(*) FROM media_insertion_sows
+      - name: READ_MEDIA_INSERTION_SOW
+        sql: |
+          SELECT id, creation_date, party_id, duration_from, duration_to, template_id, currency, payment_condition_id, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, tax_rate, payment_method, status, advertiser_contact_user_id, proposal_document_url, discount, late_payment_fine_rate
+          FROM media_insertion_sows WHERE id = ?
+      - name: SEARCH_MEDIA_INSERTION_SOW
+        sql: |
+          SELECT id, creation_date, party_id, duration_from, duration_to, template_id, currency, payment_condition_id, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, tax_rate, payment_method, status, advertiser_contact_user_id, proposal_document_url, discount, late_payment_fine_rate
+          FROM media_insertion_sows
+          WHERE (LOWER(CAST(currency AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(status AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(signature_reference AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(payment_method AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_MEDIA_INSERTION_SOW
+        sql: |
+          INSERT INTO media_insertion_sows (creation_date, party_id, duration_from, duration_to, template_id, currency, payment_condition_id, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, tax_rate, payment_method, status, advertiser_contact_user_id, proposal_document_url, discount, late_payment_fine_rate)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_MEDIA_INSERTION_SOW
+        sql: |
+          UPDATE media_insertion_sows
+          SET creation_date = ?, party_id = ?, duration_from = ?, duration_to = ?, template_id = ?, currency = ?, payment_condition_id = ?, signed_by_user_id = ?, signature_reference = ?, signed_sow_url = ?, sales_manager_id = ?, tax_rate = ?, payment_method = ?, status = ?, advertiser_contact_user_id = ?, proposal_document_url = ?, discount = ?, late_payment_fine_rate = ?
+          WHERE id = ?
+      - name: DELETE_MEDIA_INSERTION_SOW
+        sql: |
+          DELETE FROM media_insertion_sows WHERE id = ?
+      - name: LIST_LINES_FOR_DOCUMENT
+        sql: |
+          SELECT l.id AS line_id,
+                 o.name AS offering_name,
+                 ch.name AS channel_name,
+                 loc.name AS location_name,
+                 city.name AS city_name,
+                 city.state AS city_state,
+                 mv.name AS vehicle_name,
+                 mv.schedule_type,
+                 mv.capacity_type,
+                 mv.recurrence,
+                 mv.duration_hint,
+                 o.print_run,
+                 o.subscriber_count,
+                 o.audience_capacity,
+                 o.audience_capacity_unit,
+                 l.number_of_insertions,
+                 l.duration_minutes,
+                 l.unit_price,
+                 (l.unit_price * l.number_of_insertions) AS line_total
+          FROM insertion_lines l
+          INNER JOIN offering_media o ON o.id = l.offering_media_id
+          INNER JOIN media_provider_sow_lines pl ON pl.id = o.media_provider_sow_line_id
+          INNER JOIN media_channels ch ON ch.id = pl.media_channel_id
+          INNER JOIN media_vehicles mv ON mv.id = pl.media_vehicle_id
+          LEFT JOIN media_locations loc ON loc.id = COALESCE(pl.location_id, mv.location_id)
+          LEFT JOIN cities city ON city.id = loc.city_id
+          WHERE l.media_insertion_sow_id = ?
+          ORDER BY l.id
+
+      - name: LIST_BOOKED_DATES_BY_LINE
+        sql: |
+          SELECT DISTINCT s.insertion_line_id, s.slot_date
+          FROM inventory_slots s
+          INNER JOIN insertion_lines l ON l.id = s.insertion_line_id
+          WHERE l.media_insertion_sow_id = ?
+            AND s.held_by = 'INSERTION'
+          ORDER BY s.insertion_line_id, s.slot_date
+      - name: SUM_INSERTION_LINE_NET
+        sql: |
+          SELECT COALESCE(SUM(unit_price * number_of_insertions - COALESCE(discount, 0)), 0)
+          FROM insertion_lines
+          WHERE media_insertion_sow_id = ?
+      - name: LIST_INSERTION_PROVIDER_SHARES
+        sql: |
+          SELECT ps.id AS provider_sow_id,
+                 ps.contract_type,
+                 ps.sales_manager_id,
+                 ps.party_id,
+                 ps.services_fee_rate,
+                 SUM(l.unit_price * l.number_of_insertions - COALESCE(l.discount, 0)) AS line_net
+          FROM insertion_lines l
+          INNER JOIN offering_media o ON o.id = l.offering_media_id
+          INNER JOIN media_provider_sow_lines pl ON pl.id = o.media_provider_sow_line_id
+          INNER JOIN media_provider_sows ps ON ps.id = pl.media_provider_sow_id
+          WHERE l.media_insertion_sow_id = ?
+          GROUP BY ps.id, ps.contract_type, ps.sales_manager_id, ps.party_id, ps.services_fee_rate
+          ORDER BY ps.id
+
+
+  - dialect: mysql
+    statements:
+      - name: LIST_MEDIA_INSERTION_SOW
+        sql: |
+          SELECT id, creation_date, party_id, duration_from, duration_to, template_id, currency, payment_condition_id, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, tax_rate, payment_method, status, advertiser_contact_user_id, proposal_document_url, discount, late_payment_fine_rate
+          FROM media_insertion_sows
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_MEDIA_INSERTION_SOW
+        sql: |
+          SELECT COUNT(*) FROM media_insertion_sows
+      - name: READ_MEDIA_INSERTION_SOW
+        sql: |
+          SELECT id, creation_date, party_id, duration_from, duration_to, template_id, currency, payment_condition_id, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, tax_rate, payment_method, status, advertiser_contact_user_id, proposal_document_url, discount, late_payment_fine_rate
+          FROM media_insertion_sows WHERE id = ?
+      - name: SEARCH_MEDIA_INSERTION_SOW
+        sql: |
+          SELECT id, creation_date, party_id, duration_from, duration_to, template_id, currency, payment_condition_id, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, tax_rate, payment_method, status, advertiser_contact_user_id, proposal_document_url, discount, late_payment_fine_rate
+          FROM media_insertion_sows
+          WHERE (LOWER(CAST(currency AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(status AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(signature_reference AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(payment_method AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_MEDIA_INSERTION_SOW
+        sql: |
+          INSERT INTO media_insertion_sows (creation_date, party_id, duration_from, duration_to, template_id, currency, payment_condition_id, signed_by_user_id, signature_reference, signed_sow_url, sales_manager_id, tax_rate, payment_method, status, advertiser_contact_user_id, proposal_document_url, discount, late_payment_fine_rate)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_MEDIA_INSERTION_SOW
+        sql: |
+          UPDATE media_insertion_sows
+          SET creation_date = ?, party_id = ?, duration_from = ?, duration_to = ?, template_id = ?, currency = ?, payment_condition_id = ?, signed_by_user_id = ?, signature_reference = ?, signed_sow_url = ?, sales_manager_id = ?, tax_rate = ?, payment_method = ?, status = ?, advertiser_contact_user_id = ?, proposal_document_url = ?, discount = ?, late_payment_fine_rate = ?
+          WHERE id = ?
+      - name: DELETE_MEDIA_INSERTION_SOW
+        sql: |
+          DELETE FROM media_insertion_sows WHERE id = ?
+      - name: LIST_LINES_FOR_DOCUMENT
+        sql: |
+          SELECT l.id AS line_id,
+                 o.name AS offering_name,
+                 ch.name AS channel_name,
+                 loc.name AS location_name,
+                 city.name AS city_name,
+                 city.state AS city_state,
+                 mv.name AS vehicle_name,
+                 mv.schedule_type,
+                 mv.capacity_type,
+                 mv.recurrence,
+                 mv.duration_hint,
+                 o.print_run,
+                 o.subscriber_count,
+                 o.audience_capacity,
+                 o.audience_capacity_unit,
+                 l.number_of_insertions,
+                 l.duration_minutes,
+                 l.unit_price,
+                 (l.unit_price * l.number_of_insertions) AS line_total
+          FROM insertion_lines l
+          INNER JOIN offering_media o ON o.id = l.offering_media_id
+          INNER JOIN media_provider_sow_lines pl ON pl.id = o.media_provider_sow_line_id
+          INNER JOIN media_channels ch ON ch.id = pl.media_channel_id
+          INNER JOIN media_vehicles mv ON mv.id = pl.media_vehicle_id
+          LEFT JOIN media_locations loc ON loc.id = COALESCE(pl.location_id, mv.location_id)
+          LEFT JOIN cities city ON city.id = loc.city_id
+          WHERE l.media_insertion_sow_id = ?
+          ORDER BY l.id
+
+      - name: LIST_BOOKED_DATES_BY_LINE
+        sql: |
+          SELECT DISTINCT s.insertion_line_id, s.slot_date
+          FROM inventory_slots s
+          INNER JOIN insertion_lines l ON l.id = s.insertion_line_id
+          WHERE l.media_insertion_sow_id = ?
+            AND s.held_by = 'INSERTION'
+          ORDER BY s.insertion_line_id, s.slot_date
+      - name: SUM_INSERTION_LINE_NET
+        sql: |
+          SELECT COALESCE(SUM(unit_price * number_of_insertions - COALESCE(discount, 0)), 0)
+          FROM insertion_lines
+          WHERE media_insertion_sow_id = ?
+      - name: LIST_INSERTION_PROVIDER_SHARES
+        sql: |
+          SELECT ps.id AS provider_sow_id,
+                 ps.contract_type,
+                 ps.sales_manager_id,
+                 ps.party_id,
+                 ps.services_fee_rate,
+                 SUM(l.unit_price * l.number_of_insertions - COALESCE(l.discount, 0)) AS line_net
+          FROM insertion_lines l
+          INNER JOIN offering_media o ON o.id = l.offering_media_id
+          INNER JOIN media_provider_sow_lines pl ON pl.id = o.media_provider_sow_line_id
+          INNER JOIN media_provider_sows ps ON ps.id = pl.media_provider_sow_id
+          WHERE l.media_insertion_sow_id = ?
+          GROUP BY ps.id, ps.contract_type, ps.sales_manager_id, ps.party_id, ps.services_fee_rate
+          ORDER BY ps.id
+

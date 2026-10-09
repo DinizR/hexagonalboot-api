@@ -1,0 +1,117 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: h2
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_PROVIDER_MEDIA_CONTENT
+        sql: |
+          SELECT id, name, provider_line_id, slot_duration_minutes, storage_location_url, detected_mime_type, detected_extension, width_px, height_px, duration_seconds, byte_size
+          FROM provider_media_contents
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_PROVIDER_MEDIA_CONTENT
+        sql: |
+          SELECT COUNT(*) FROM provider_media_contents
+      - name: READ_PROVIDER_MEDIA_CONTENT
+        sql: |
+          SELECT id, name, provider_line_id, slot_duration_minutes, storage_location_url, detected_mime_type, detected_extension, width_px, height_px, duration_seconds, byte_size
+          FROM provider_media_contents WHERE id = ?
+      - name: SEARCH_PROVIDER_MEDIA_CONTENT
+        sql: |
+          SELECT id, name, provider_line_id, slot_duration_minutes, storage_location_url, detected_mime_type, detected_extension, width_px, height_px, duration_seconds, byte_size
+          FROM provider_media_contents
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_PROVIDER_MEDIA_CONTENT
+        sql: |
+          INSERT INTO provider_media_contents (name, provider_line_id, slot_duration_minutes, storage_location_url,
+            detected_mime_type, detected_extension, width_px, height_px, duration_seconds, byte_size)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_PROVIDER_MEDIA_CONTENT
+        sql: |
+          UPDATE provider_media_contents
+          SET name = ?, provider_line_id = ?, slot_duration_minutes = ?, storage_location_url = ?,
+              detected_mime_type = ?, detected_extension = ?, width_px = ?, height_px = ?,
+              duration_seconds = ?, byte_size = ?
+          WHERE id = ?
+      - name: DELETE_PROVIDER_MEDIA_CONTENT
+        sql: |
+          DELETE FROM provider_media_contents WHERE id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_PROVIDER_MEDIA_CONTENT
+        sql: |
+          SELECT id, name, provider_line_id, slot_duration_minutes, storage_location_url, detected_mime_type, detected_extension, width_px, height_px, duration_seconds, byte_size
+          FROM provider_media_contents
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_PROVIDER_MEDIA_CONTENT
+        sql: |
+          SELECT COUNT(*) FROM provider_media_contents
+      - name: READ_PROVIDER_MEDIA_CONTENT
+        sql: |
+          SELECT id, name, provider_line_id, slot_duration_minutes, storage_location_url, detected_mime_type, detected_extension, width_px, height_px, duration_seconds, byte_size
+          FROM provider_media_contents WHERE id = ?
+      - name: SEARCH_PROVIDER_MEDIA_CONTENT
+        sql: |
+          SELECT id, name, provider_line_id, slot_duration_minutes, storage_location_url, detected_mime_type, detected_extension, width_px, height_px, duration_seconds, byte_size
+          FROM provider_media_contents
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_PROVIDER_MEDIA_CONTENT
+        sql: |
+          INSERT INTO provider_media_contents (name, provider_line_id, slot_duration_minutes, storage_location_url,
+            detected_mime_type, detected_extension, width_px, height_px, duration_seconds, byte_size)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_PROVIDER_MEDIA_CONTENT
+        sql: |
+          UPDATE provider_media_contents
+          SET name = ?, provider_line_id = ?, slot_duration_minutes = ?, storage_location_url = ?,
+              detected_mime_type = ?, detected_extension = ?, width_px = ?, height_px = ?,
+              duration_seconds = ?, byte_size = ?
+          WHERE id = ?
+      - name: DELETE_PROVIDER_MEDIA_CONTENT
+        sql: |
+          DELETE FROM provider_media_contents WHERE id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_PROVIDER_MEDIA_CONTENT
+        sql: |
+          SELECT id, name, provider_line_id, slot_duration_minutes, storage_location_url, detected_mime_type, detected_extension, width_px, height_px, duration_seconds, byte_size
+          FROM provider_media_contents
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_PROVIDER_MEDIA_CONTENT
+        sql: |
+          SELECT COUNT(*) FROM provider_media_contents
+      - name: READ_PROVIDER_MEDIA_CONTENT
+        sql: |
+          SELECT id, name, provider_line_id, slot_duration_minutes, storage_location_url, detected_mime_type, detected_extension, width_px, height_px, duration_seconds, byte_size
+          FROM provider_media_contents WHERE id = ?
+      - name: SEARCH_PROVIDER_MEDIA_CONTENT
+        sql: |
+          SELECT id, name, provider_line_id, slot_duration_minutes, storage_location_url, detected_mime_type, detected_extension, width_px, height_px, duration_seconds, byte_size
+          FROM provider_media_contents
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_PROVIDER_MEDIA_CONTENT
+        sql: |
+          INSERT INTO provider_media_contents (name, provider_line_id, slot_duration_minutes, storage_location_url,
+            detected_mime_type, detected_extension, width_px, height_px, duration_seconds, byte_size)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_PROVIDER_MEDIA_CONTENT
+        sql: |
+          UPDATE provider_media_contents
+          SET name = ?, provider_line_id = ?, slot_duration_minutes = ?, storage_location_url = ?,
+              detected_mime_type = ?, detected_extension = ?, width_px = ?, height_px = ?,
+              duration_seconds = ?, byte_size = ?
+          WHERE id = ?
+      - name: DELETE_PROVIDER_MEDIA_CONTENT
+        sql: |
+          DELETE FROM provider_media_contents WHERE id = ?

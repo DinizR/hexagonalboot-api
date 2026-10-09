@@ -1,0 +1,6 @@
+connectors:
+  - id: DB
+    adapter: media-provider-sow-line-position-jdbc
+properties:
+  - key: page.default.size
+    value: "8"

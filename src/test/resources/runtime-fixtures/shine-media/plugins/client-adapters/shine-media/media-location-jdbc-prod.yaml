@@ -1,0 +1,109 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: postgres
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_MEDIA_LOCATION
+        sql: |
+          SELECT id, name, address, coordinates, city_id, media_channel_id, status
+          FROM media_locations
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_MEDIA_LOCATION
+        sql: |
+          SELECT COUNT(*) FROM media_locations
+      - name: READ_MEDIA_LOCATION
+        sql: |
+          SELECT id, name, address, coordinates, city_id, media_channel_id, status
+          FROM media_locations WHERE id = ?
+      - name: SEARCH_MEDIA_LOCATION
+        sql: |
+          SELECT id, name, address, coordinates, city_id, media_channel_id, status
+          FROM media_locations
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(address AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_MEDIA_LOCATION
+        sql: |
+          INSERT INTO media_locations (name, address, coordinates, city_id, media_channel_id, status)
+          VALUES (?, ?, ?, ?, ?, ?)
+      - name: UPDATE_MEDIA_LOCATION
+        sql: |
+          UPDATE media_locations
+          SET name = ?, address = ?, coordinates = ?, city_id = ?, media_channel_id = ?, status = ?
+          WHERE id = ?
+      - name: DELETE_MEDIA_LOCATION
+        sql: |
+          DELETE FROM media_locations WHERE id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_MEDIA_LOCATION
+        sql: |
+          SELECT id, name, address, coordinates, city_id, media_channel_id, status
+          FROM media_locations
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_MEDIA_LOCATION
+        sql: |
+          SELECT COUNT(*) FROM media_locations
+      - name: READ_MEDIA_LOCATION
+        sql: |
+          SELECT id, name, address, coordinates, city_id, media_channel_id, status
+          FROM media_locations WHERE id = ?
+      - name: SEARCH_MEDIA_LOCATION
+        sql: |
+          SELECT id, name, address, coordinates, city_id, media_channel_id, status
+          FROM media_locations
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(address AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_MEDIA_LOCATION
+        sql: |
+          INSERT INTO media_locations (name, address, coordinates, city_id, media_channel_id, status)
+          VALUES (?, ?, ?, ?, ?, ?)
+      - name: UPDATE_MEDIA_LOCATION
+        sql: |
+          UPDATE media_locations
+          SET name = ?, address = ?, coordinates = ?, city_id = ?, media_channel_id = ?, status = ?
+          WHERE id = ?
+      - name: DELETE_MEDIA_LOCATION
+        sql: |
+          DELETE FROM media_locations WHERE id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_MEDIA_LOCATION
+        sql: |
+          SELECT id, name, address, coordinates, city_id, media_channel_id, status
+          FROM media_locations
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_MEDIA_LOCATION
+        sql: |
+          SELECT COUNT(*) FROM media_locations
+      - name: READ_MEDIA_LOCATION
+        sql: |
+          SELECT id, name, address, coordinates, city_id, media_channel_id, status
+          FROM media_locations WHERE id = ?
+      - name: SEARCH_MEDIA_LOCATION
+        sql: |
+          SELECT id, name, address, coordinates, city_id, media_channel_id, status
+          FROM media_locations
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(address AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_MEDIA_LOCATION
+        sql: |
+          INSERT INTO media_locations (name, address, coordinates, city_id, media_channel_id, status)
+          VALUES (?, ?, ?, ?, ?, ?)
+      - name: UPDATE_MEDIA_LOCATION
+        sql: |
+          UPDATE media_locations
+          SET name = ?, address = ?, coordinates = ?, city_id = ?, media_channel_id = ?, status = ?
+          WHERE id = ?
+      - name: DELETE_MEDIA_LOCATION
+        sql: |
+          DELETE FROM media_locations WHERE id = ?
+

@@ -1,0 +1,115 @@
+configs:
+  - key: datasource
+    value: registry
+  - key: sql.dialect
+    value: postgres
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_CATEGORY
+        sql: |
+          SELECT id, name, image_url, enabled, barcode_digit
+          FROM categories
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CATEGORY
+        sql: |
+          SELECT COUNT(*) FROM categories
+      - name: READ_CATEGORY
+        sql: |
+          SELECT id, name, image_url, enabled, barcode_digit
+          FROM categories WHERE id = ?
+      - name: SEARCH_CATEGORY
+        sql: |
+          SELECT id, name, image_url, enabled, barcode_digit
+          FROM categories
+          WHERE enabled = TRUE AND LOWER(name) LIKE ?
+          ORDER BY id
+      - name: INSERT_CATEGORY
+        sql: |
+          INSERT INTO categories (name, image_url, enabled, barcode_digit)
+          VALUES (?, ?, ?, ?)
+      - name: UPDATE_CATEGORY
+        sql: |
+          UPDATE categories
+          SET name = ?, image_url = ?, enabled = ?, barcode_digit = ?
+          WHERE id = ?
+      - name: DELETE_CATEGORY
+        sql: |
+          DELETE FROM categories WHERE id = ?
+      - name: EXISTS_CATEGORY
+        sql: |
+          SELECT 1 FROM categories WHERE id = ?
+  - dialect: postgres
+    statements:
+      - name: LIST_CATEGORY
+        sql: |
+          SELECT id, name, image_url, enabled, barcode_digit
+          FROM categories
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CATEGORY
+        sql: |
+          SELECT COUNT(*) FROM categories
+      - name: READ_CATEGORY
+        sql: |
+          SELECT id, name, image_url, enabled, barcode_digit
+          FROM categories WHERE id = ?
+      - name: SEARCH_CATEGORY
+        sql: |
+          SELECT id, name, image_url, enabled, barcode_digit
+          FROM categories
+          WHERE enabled = TRUE AND LOWER(name) LIKE ?
+          ORDER BY id
+      - name: INSERT_CATEGORY
+        sql: |
+          INSERT INTO categories (name, image_url, enabled, barcode_digit)
+          VALUES (?, ?, ?, ?)
+      - name: UPDATE_CATEGORY
+        sql: |
+          UPDATE categories
+          SET name = ?, image_url = ?, enabled = ?, barcode_digit = ?
+          WHERE id = ?
+      - name: DELETE_CATEGORY
+        sql: |
+          DELETE FROM categories WHERE id = ?
+      - name: EXISTS_CATEGORY
+        sql: |
+          SELECT 1 FROM categories WHERE id = ?
+  - dialect: mysql
+    statements:
+      - name: LIST_CATEGORY
+        sql: |
+          SELECT id, name, image_url, enabled, barcode_digit
+          FROM categories
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CATEGORY
+        sql: |
+          SELECT COUNT(*) FROM categories
+      - name: READ_CATEGORY
+        sql: |
+          SELECT id, name, image_url, enabled, barcode_digit
+          FROM categories WHERE id = ?
+      - name: SEARCH_CATEGORY
+        sql: |
+          SELECT id, name, image_url, enabled, barcode_digit
+          FROM categories
+          WHERE enabled = TRUE AND LOWER(name) LIKE ?
+          ORDER BY id
+      - name: INSERT_CATEGORY
+        sql: |
+          INSERT INTO categories (name, image_url, enabled, barcode_digit)
+          VALUES (?, ?, ?, ?)
+      - name: UPDATE_CATEGORY
+        sql: |
+          UPDATE categories
+          SET name = ?, image_url = ?, enabled = ?, barcode_digit = ?
+          WHERE id = ?
+      - name: DELETE_CATEGORY
+        sql: |
+          DELETE FROM categories WHERE id = ?
+      - name: EXISTS_CATEGORY
+        sql: |
+          SELECT 1 FROM categories WHERE id = ?

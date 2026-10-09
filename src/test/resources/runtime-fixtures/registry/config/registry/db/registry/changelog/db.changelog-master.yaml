@@ -1,0 +1,139 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: porto-api
+      changes:
+        - tagDatabase:
+            tag: baseline
+  - changeSet:
+      id: 2
+      author: porto-api
+      changes:
+        - createTable:
+            tableName: products
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: barcode
+                  type: VARCHAR(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: unit_price
+                  type: DECIMAL(19,4)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: discount
+                  type: DECIMAL(19,4)
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: tax_rate
+                  type: DECIMAL(19,4)
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: unit
+                  type: VARCHAR(16)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: image_url
+                  type: VARCHAR(512)
+              - column:
+                  name: category
+                  type: VARCHAR(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: enabled
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+        - createIndex:
+            tableName: products
+            indexName: idx_products_barcode
+            columns:
+              - column:
+                  name: barcode
+  - changeSet:
+      id: 3
+      author: porto-api
+      validCheckSum:
+        - 9:9b9d812730f499478ef033a22b3c5212
+        - 9:d6e16c97258663fdb342973a99223480
+      changes:
+        - createTable:
+            tableName: categories
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: image_url
+                  type: VARCHAR(512)
+              - column:
+                  name: enabled
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: barcode_digit
+                  type: VARCHAR(8)
+                  defaultValue: "0"
+                  constraints:
+                    nullable: false
+        - addColumn:
+            tableName: products
+            columns:
+              - column:
+                  name: category_id
+                  type: INT
+        - sql:
+            sql: INSERT INTO categories (name, enabled, barcode_digit) SELECT 'Default', TRUE, '0' WHERE EXISTS (SELECT 1 FROM products)
+        - sql:
+            sql: UPDATE products SET category_id = (SELECT MIN(id) FROM categories) WHERE category_id IS NULL AND EXISTS (SELECT 1 FROM categories)
+        - addNotNullConstraint:
+            tableName: products
+            columnName: category_id
+            columnDataType: INT
+        - addForeignKeyConstraint:
+            baseTableName: products
+            baseColumnNames: category_id
+            referencedTableName: categories
+            referencedColumnNames: id
+            constraintName: fk_products_category
+        - dropColumn:
+            tableName: products
+            columnName: category
+        - createIndex:
+            tableName: products
+            indexName: idx_products_category_id
+            columns:
+              - column:
+                  name: category_id

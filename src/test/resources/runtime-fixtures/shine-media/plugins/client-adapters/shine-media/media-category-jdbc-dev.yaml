@@ -1,0 +1,109 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: h2
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_MEDIA_CATEGORY
+        sql: |
+          SELECT id, name, description, icon_url
+          FROM media_categories
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_MEDIA_CATEGORY
+        sql: |
+          SELECT COUNT(*) FROM media_categories
+      - name: READ_MEDIA_CATEGORY
+        sql: |
+          SELECT id, name, description, icon_url
+          FROM media_categories WHERE id = ?
+      - name: SEARCH_MEDIA_CATEGORY
+        sql: |
+          SELECT id, name, description, icon_url
+          FROM media_categories
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(description AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_MEDIA_CATEGORY
+        sql: |
+          INSERT INTO media_categories (name, description, icon_url)
+          VALUES (?, ?, ?)
+      - name: UPDATE_MEDIA_CATEGORY
+        sql: |
+          UPDATE media_categories
+          SET name = ?, description = ?, icon_url = ?
+          WHERE id = ?
+      - name: DELETE_MEDIA_CATEGORY
+        sql: |
+          DELETE FROM media_categories WHERE id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_MEDIA_CATEGORY
+        sql: |
+          SELECT id, name, description, icon_url
+          FROM media_categories
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_MEDIA_CATEGORY
+        sql: |
+          SELECT COUNT(*) FROM media_categories
+      - name: READ_MEDIA_CATEGORY
+        sql: |
+          SELECT id, name, description, icon_url
+          FROM media_categories WHERE id = ?
+      - name: SEARCH_MEDIA_CATEGORY
+        sql: |
+          SELECT id, name, description, icon_url
+          FROM media_categories
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(description AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_MEDIA_CATEGORY
+        sql: |
+          INSERT INTO media_categories (name, description, icon_url)
+          VALUES (?, ?, ?)
+      - name: UPDATE_MEDIA_CATEGORY
+        sql: |
+          UPDATE media_categories
+          SET name = ?, description = ?, icon_url = ?
+          WHERE id = ?
+      - name: DELETE_MEDIA_CATEGORY
+        sql: |
+          DELETE FROM media_categories WHERE id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_MEDIA_CATEGORY
+        sql: |
+          SELECT id, name, description, icon_url
+          FROM media_categories
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_MEDIA_CATEGORY
+        sql: |
+          SELECT COUNT(*) FROM media_categories
+      - name: READ_MEDIA_CATEGORY
+        sql: |
+          SELECT id, name, description, icon_url
+          FROM media_categories WHERE id = ?
+      - name: SEARCH_MEDIA_CATEGORY
+        sql: |
+          SELECT id, name, description, icon_url
+          FROM media_categories
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(description AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_MEDIA_CATEGORY
+        sql: |
+          INSERT INTO media_categories (name, description, icon_url)
+          VALUES (?, ?, ?)
+      - name: UPDATE_MEDIA_CATEGORY
+        sql: |
+          UPDATE media_categories
+          SET name = ?, description = ?, icon_url = ?
+          WHERE id = ?
+      - name: DELETE_MEDIA_CATEGORY
+        sql: |
+          DELETE FROM media_categories WHERE id = ?
+

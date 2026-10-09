@@ -1,0 +1,132 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: postgres
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_TEMPLATE
+        sql: |
+          SELECT id, type, name, media_channel_id, document_template_url, country_code, locale, document_template_key, email_template_key, email_template_url
+          FROM templates
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_TEMPLATE
+        sql: |
+          SELECT COUNT(*) FROM templates
+      - name: READ_TEMPLATE
+        sql: |
+          SELECT id, type, name, media_channel_id, document_template_url, country_code, locale, document_template_key, email_template_key, email_template_url
+          FROM templates WHERE id = ?
+      - name: SEARCH_TEMPLATE
+        sql: |
+          SELECT id, type, name, media_channel_id, document_template_url, country_code, locale, document_template_key, email_template_key, email_template_url
+          FROM templates
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(type AS VARCHAR(4000))) LIKE ?
+                 OR LOWER(CAST(country_code AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_TEMPLATE
+        sql: |
+          INSERT INTO templates (type, name, media_channel_id, document_template_url, country_code, locale, document_template_key, email_template_key, email_template_url)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_TEMPLATE
+        sql: |
+          UPDATE templates
+          SET type = ?, name = ?, media_channel_id = ?, document_template_url = ?, country_code = ?, locale = ?, document_template_key = ?, email_template_key = ?, email_template_url = ?
+          WHERE id = ?
+      - name: DELETE_TEMPLATE
+        sql: |
+          DELETE FROM templates WHERE id = ?
+      - name: FIND_TEMPLATE_BY_TYPE_COUNTRY_AND_CHANNEL
+        sql: |
+          SELECT id, type, name, media_channel_id, document_template_url, country_code, locale, document_template_key, email_template_key, email_template_url
+          FROM templates
+          WHERE UPPER(type) = UPPER(?) AND UPPER(country_code) = UPPER(?) AND media_channel_id = ?
+          ORDER BY id
+          LIMIT 1
+
+  - dialect: postgres
+    statements:
+      - name: LIST_TEMPLATE
+        sql: |
+          SELECT id, type, name, media_channel_id, document_template_url, country_code, locale, document_template_key, email_template_key, email_template_url
+          FROM templates
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_TEMPLATE
+        sql: |
+          SELECT COUNT(*) FROM templates
+      - name: READ_TEMPLATE
+        sql: |
+          SELECT id, type, name, media_channel_id, document_template_url, country_code, locale, document_template_key, email_template_key, email_template_url
+          FROM templates WHERE id = ?
+      - name: SEARCH_TEMPLATE
+        sql: |
+          SELECT id, type, name, media_channel_id, document_template_url, country_code, locale, document_template_key, email_template_key, email_template_url
+          FROM templates
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(type AS VARCHAR(4000))) LIKE ?
+                 OR LOWER(CAST(country_code AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_TEMPLATE
+        sql: |
+          INSERT INTO templates (type, name, media_channel_id, document_template_url, country_code, locale, document_template_key, email_template_key, email_template_url)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_TEMPLATE
+        sql: |
+          UPDATE templates
+          SET type = ?, name = ?, media_channel_id = ?, document_template_url = ?, country_code = ?, locale = ?, document_template_key = ?, email_template_key = ?, email_template_url = ?
+          WHERE id = ?
+      - name: DELETE_TEMPLATE
+        sql: |
+          DELETE FROM templates WHERE id = ?
+      - name: FIND_TEMPLATE_BY_TYPE_COUNTRY_AND_CHANNEL
+        sql: |
+          SELECT id, type, name, media_channel_id, document_template_url, country_code, locale, document_template_key, email_template_key, email_template_url
+          FROM templates
+          WHERE UPPER(type) = UPPER(?) AND UPPER(country_code) = UPPER(?) AND media_channel_id = ?
+          ORDER BY id
+          LIMIT 1
+
+  - dialect: mysql
+    statements:
+      - name: LIST_TEMPLATE
+        sql: |
+          SELECT id, type, name, media_channel_id, document_template_url, country_code, locale, document_template_key, email_template_key, email_template_url
+          FROM templates
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_TEMPLATE
+        sql: |
+          SELECT COUNT(*) FROM templates
+      - name: READ_TEMPLATE
+        sql: |
+          SELECT id, type, name, media_channel_id, document_template_url, country_code, locale, document_template_key, email_template_key, email_template_url
+          FROM templates WHERE id = ?
+      - name: SEARCH_TEMPLATE
+        sql: |
+          SELECT id, type, name, media_channel_id, document_template_url, country_code, locale, document_template_key, email_template_key, email_template_url
+          FROM templates
+          WHERE (LOWER(CAST(name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(type AS VARCHAR(4000))) LIKE ?
+                 OR LOWER(CAST(country_code AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_TEMPLATE
+        sql: |
+          INSERT INTO templates (type, name, media_channel_id, document_template_url, country_code, locale, document_template_key, email_template_key, email_template_url)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      - name: UPDATE_TEMPLATE
+        sql: |
+          UPDATE templates
+          SET type = ?, name = ?, media_channel_id = ?, document_template_url = ?, country_code = ?, locale = ?, document_template_key = ?, email_template_key = ?, email_template_url = ?
+          WHERE id = ?
+      - name: DELETE_TEMPLATE
+        sql: |
+          DELETE FROM templates WHERE id = ?
+      - name: FIND_TEMPLATE_BY_TYPE_COUNTRY_AND_CHANNEL
+        sql: |
+          SELECT id, type, name, media_channel_id, document_template_url, country_code, locale, document_template_key, email_template_key, email_template_url
+          FROM templates
+          WHERE UPPER(type) = UPPER(?) AND UPPER(country_code) = UPPER(?) AND media_channel_id = ?
+          ORDER BY id
+          LIMIT 1

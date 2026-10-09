@@ -1,0 +1,21 @@
+${AnsiColor.BRIGHT_CYAN}
+   ███████╗██╗  ██╗██╗███╗   ██╗███████╗
+   ██╔════╝██║  ██║██║████╗  ██║██╔════╝
+   ███████╗███████║██║██╔██╗ ██║█████╗
+   ╚════██║██╔══██║██║██║╚██╗██║██╔══╝
+   ███████║██║  ██║██║██║ ╚████║███████╗
+   ╚══════╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝╚══════╝
+${AnsiColor.BRIGHT_WHITE}
+   ███╗   ███╗███████╗██████╗ ██╗ █████╗
+   ████╗ ████║██╔════╝██╔══██╗██║██╔══██╗
+   ██╔████╔██║█████╗  ██║  ██║██║███████║
+   ██║╚██╔╝██║██╔══╝  ██║  ██║██║██╔══██║
+   ██║ ╚═╝ ██║███████╗██████╔╝██║██║  ██║
+   ╚═╝     ╚═╝╚══════╝╚═════╝ ╚═╝╚═╝  ╚═╝
+${AnsiColor.BRIGHT_YELLOW}
+              ▸  A  P  I  ◂
+${AnsiColor.DEFAULT}
+${AnsiColor.BRIGHT_BLACK}   ─────────────────────────────────────────────${AnsiColor.DEFAULT}
+${AnsiColor.BRIGHT_CYAN}   :: Shine Media API ::${AnsiColor.DEFAULT}  ${AnsiColor.BRIGHT_BLACK}media · creative · commerce${AnsiColor.DEFAULT}
+${AnsiColor.BRIGHT_BLACK}   Powered by Spring Boot ${spring-boot.version} · ${porto.api.environment:dev}${AnsiColor.DEFAULT}
+

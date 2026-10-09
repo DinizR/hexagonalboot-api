@@ -1,0 +1,118 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: h2
+
+queries:
+
+  - dialect: h2
+    statements:
+      - name: LIST_CREATIVE_SERVICE_RATE
+        sql: |
+          SELECT id, creative_service_id, city_id, hourly_rate, tax_rate
+          FROM creative_service_rates
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CREATIVE_SERVICE_RATE
+        sql: |
+          SELECT COUNT(*) FROM creative_service_rates
+      - name: READ_CREATIVE_SERVICE_RATE
+        sql: |
+          SELECT id, creative_service_id, city_id, hourly_rate, tax_rate
+          FROM creative_service_rates WHERE id = ?
+      - name: SEARCH_CREATIVE_SERVICE_RATE
+        sql: |
+          SELECT r.id, r.creative_service_id, r.city_id, r.hourly_rate, r.tax_rate
+          FROM creative_service_rates r
+          INNER JOIN creative_services s ON s.id = r.creative_service_id
+          INNER JOIN cities c ON c.id = r.city_id
+          WHERE (LOWER(CAST(s.name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(c.name AS VARCHAR(4000))) LIKE ?)
+          ORDER BY r.id
+      - name: INSERT_CREATIVE_SERVICE_RATE
+        sql: |
+          INSERT INTO creative_service_rates (creative_service_id, city_id, hourly_rate, tax_rate)
+          VALUES (?, ?, ?, ?)
+      - name: UPDATE_CREATIVE_SERVICE_RATE
+        sql: |
+          UPDATE creative_service_rates
+          SET creative_service_id = ?, city_id = ?, hourly_rate = ?, tax_rate = ?
+          WHERE id = ?
+      - name: DELETE_CREATIVE_SERVICE_RATE
+        sql: |
+          DELETE FROM creative_service_rates WHERE id = ?
+
+
+  - dialect: postgres
+    statements:
+      - name: LIST_CREATIVE_SERVICE_RATE
+        sql: |
+          SELECT id, creative_service_id, city_id, hourly_rate, tax_rate
+          FROM creative_service_rates
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CREATIVE_SERVICE_RATE
+        sql: |
+          SELECT COUNT(*) FROM creative_service_rates
+      - name: READ_CREATIVE_SERVICE_RATE
+        sql: |
+          SELECT id, creative_service_id, city_id, hourly_rate, tax_rate
+          FROM creative_service_rates WHERE id = ?
+      - name: SEARCH_CREATIVE_SERVICE_RATE
+        sql: |
+          SELECT r.id, r.creative_service_id, r.city_id, r.hourly_rate, r.tax_rate
+          FROM creative_service_rates r
+          INNER JOIN creative_services s ON s.id = r.creative_service_id
+          INNER JOIN cities c ON c.id = r.city_id
+          WHERE (LOWER(CAST(s.name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(c.name AS VARCHAR(4000))) LIKE ?)
+          ORDER BY r.id
+      - name: INSERT_CREATIVE_SERVICE_RATE
+        sql: |
+          INSERT INTO creative_service_rates (creative_service_id, city_id, hourly_rate, tax_rate)
+          VALUES (?, ?, ?, ?)
+      - name: UPDATE_CREATIVE_SERVICE_RATE
+        sql: |
+          UPDATE creative_service_rates
+          SET creative_service_id = ?, city_id = ?, hourly_rate = ?, tax_rate = ?
+          WHERE id = ?
+      - name: DELETE_CREATIVE_SERVICE_RATE
+        sql: |
+          DELETE FROM creative_service_rates WHERE id = ?
+
+
+  - dialect: mysql
+    statements:
+      - name: LIST_CREATIVE_SERVICE_RATE
+        sql: |
+          SELECT id, creative_service_id, city_id, hourly_rate, tax_rate
+          FROM creative_service_rates
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CREATIVE_SERVICE_RATE
+        sql: |
+          SELECT COUNT(*) FROM creative_service_rates
+      - name: READ_CREATIVE_SERVICE_RATE
+        sql: |
+          SELECT id, creative_service_id, city_id, hourly_rate, tax_rate
+          FROM creative_service_rates WHERE id = ?
+      - name: SEARCH_CREATIVE_SERVICE_RATE
+        sql: |
+          SELECT r.id, r.creative_service_id, r.city_id, r.hourly_rate, r.tax_rate
+          FROM creative_service_rates r
+          INNER JOIN creative_services s ON s.id = r.creative_service_id
+          INNER JOIN cities c ON c.id = r.city_id
+          WHERE (LOWER(CAST(s.name AS VARCHAR(4000))) LIKE ? OR LOWER(CAST(c.name AS VARCHAR(4000))) LIKE ?)
+          ORDER BY r.id
+      - name: INSERT_CREATIVE_SERVICE_RATE
+        sql: |
+          INSERT INTO creative_service_rates (creative_service_id, city_id, hourly_rate, tax_rate)
+          VALUES (?, ?, ?, ?)
+      - name: UPDATE_CREATIVE_SERVICE_RATE
+        sql: |
+          UPDATE creative_service_rates
+          SET creative_service_id = ?, city_id = ?, hourly_rate = ?, tax_rate = ?
+          WHERE id = ?
+      - name: DELETE_CREATIVE_SERVICE_RATE
+        sql: |
+          DELETE FROM creative_service_rates WHERE id = ?
+

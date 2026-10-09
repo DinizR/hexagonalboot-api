@@ -1,0 +1,109 @@
+configs:
+  - key: datasource
+    value: shine-media
+  - key: sql.dialect
+    value: h2
+
+queries:
+  - dialect: h2
+    statements:
+      - name: LIST_CONTRACT_EXECUTION_EVIDENCE
+        sql: |
+          SELECT id, media_insertion_sow_id, offering_media_id, storage_location_url, execution_logs, user_id
+          FROM contract_execution_evidences
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CONTRACT_EXECUTION_EVIDENCE
+        sql: |
+          SELECT COUNT(*) FROM contract_execution_evidences
+      - name: READ_CONTRACT_EXECUTION_EVIDENCE
+        sql: |
+          SELECT id, media_insertion_sow_id, offering_media_id, storage_location_url, execution_logs, user_id
+          FROM contract_execution_evidences WHERE id = ?
+      - name: SEARCH_CONTRACT_EXECUTION_EVIDENCE
+        sql: |
+          SELECT id, media_insertion_sow_id, offering_media_id, storage_location_url, execution_logs, user_id
+          FROM contract_execution_evidences
+          WHERE (LOWER(CAST(execution_logs AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_CONTRACT_EXECUTION_EVIDENCE
+        sql: |
+          INSERT INTO contract_execution_evidences (media_insertion_sow_id, offering_media_id, storage_location_url, execution_logs, user_id)
+          VALUES (?, ?, ?, ?, ?)
+      - name: UPDATE_CONTRACT_EXECUTION_EVIDENCE
+        sql: |
+          UPDATE contract_execution_evidences
+          SET media_insertion_sow_id = ?, offering_media_id = ?, storage_location_url = ?, execution_logs = ?, user_id = ?
+          WHERE id = ?
+      - name: DELETE_CONTRACT_EXECUTION_EVIDENCE
+        sql: |
+          DELETE FROM contract_execution_evidences WHERE id = ?
+
+  - dialect: postgres
+    statements:
+      - name: LIST_CONTRACT_EXECUTION_EVIDENCE
+        sql: |
+          SELECT id, media_insertion_sow_id, offering_media_id, storage_location_url, execution_logs, user_id
+          FROM contract_execution_evidences
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CONTRACT_EXECUTION_EVIDENCE
+        sql: |
+          SELECT COUNT(*) FROM contract_execution_evidences
+      - name: READ_CONTRACT_EXECUTION_EVIDENCE
+        sql: |
+          SELECT id, media_insertion_sow_id, offering_media_id, storage_location_url, execution_logs, user_id
+          FROM contract_execution_evidences WHERE id = ?
+      - name: SEARCH_CONTRACT_EXECUTION_EVIDENCE
+        sql: |
+          SELECT id, media_insertion_sow_id, offering_media_id, storage_location_url, execution_logs, user_id
+          FROM contract_execution_evidences
+          WHERE (LOWER(CAST(execution_logs AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_CONTRACT_EXECUTION_EVIDENCE
+        sql: |
+          INSERT INTO contract_execution_evidences (media_insertion_sow_id, offering_media_id, storage_location_url, execution_logs, user_id)
+          VALUES (?, ?, ?, ?, ?)
+      - name: UPDATE_CONTRACT_EXECUTION_EVIDENCE
+        sql: |
+          UPDATE contract_execution_evidences
+          SET media_insertion_sow_id = ?, offering_media_id = ?, storage_location_url = ?, execution_logs = ?, user_id = ?
+          WHERE id = ?
+      - name: DELETE_CONTRACT_EXECUTION_EVIDENCE
+        sql: |
+          DELETE FROM contract_execution_evidences WHERE id = ?
+
+  - dialect: mysql
+    statements:
+      - name: LIST_CONTRACT_EXECUTION_EVIDENCE
+        sql: |
+          SELECT id, media_insertion_sow_id, offering_media_id, storage_location_url, execution_logs, user_id
+          FROM contract_execution_evidences
+          ORDER BY id
+          LIMIT ? OFFSET ?
+      - name: COUNT_CONTRACT_EXECUTION_EVIDENCE
+        sql: |
+          SELECT COUNT(*) FROM contract_execution_evidences
+      - name: READ_CONTRACT_EXECUTION_EVIDENCE
+        sql: |
+          SELECT id, media_insertion_sow_id, offering_media_id, storage_location_url, execution_logs, user_id
+          FROM contract_execution_evidences WHERE id = ?
+      - name: SEARCH_CONTRACT_EXECUTION_EVIDENCE
+        sql: |
+          SELECT id, media_insertion_sow_id, offering_media_id, storage_location_url, execution_logs, user_id
+          FROM contract_execution_evidences
+          WHERE (LOWER(CAST(execution_logs AS VARCHAR(4000))) LIKE ?)
+          ORDER BY id
+      - name: INSERT_CONTRACT_EXECUTION_EVIDENCE
+        sql: |
+          INSERT INTO contract_execution_evidences (media_insertion_sow_id, offering_media_id, storage_location_url, execution_logs, user_id)
+          VALUES (?, ?, ?, ?, ?)
+      - name: UPDATE_CONTRACT_EXECUTION_EVIDENCE
+        sql: |
+          UPDATE contract_execution_evidences
+          SET media_insertion_sow_id = ?, offering_media_id = ?, storage_location_url = ?, execution_logs = ?, user_id = ?
+          WHERE id = ?
+      - name: DELETE_CONTRACT_EXECUTION_EVIDENCE
+        sql: |
+          DELETE FROM contract_execution_evidences WHERE id = ?
+

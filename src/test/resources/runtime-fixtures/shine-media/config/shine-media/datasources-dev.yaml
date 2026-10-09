@@ -1,0 +1,10 @@
+datasources:
+  - id: shine-media
+    version: 1.0.0
+    label: Shine Media DataSource
+    description: Primary shine-media database (shares Spring Boot DataSource by default).
+    className: systems.porto.shinemedia.datasource.ShineMediaDataSourceAdapter
+    jarFile: shine-media-db-1.0.0.jar
+    dependencies:
+      external:
+        - jarFile: porto-api-common-1.0.0.jar

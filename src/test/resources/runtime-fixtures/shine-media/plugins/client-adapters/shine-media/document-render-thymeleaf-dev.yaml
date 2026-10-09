@@ -1,0 +1,2 @@
+# Inline HTML from DocumentStorage (filesystem locally, S3 in production).
+configs: []
