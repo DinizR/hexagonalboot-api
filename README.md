@@ -151,34 +151,6 @@ copy into the current home; the other app’s plugins do not.
 Override in a gitignored `.envrc.local` next to a **repo** `.envrc` if needed.
 Do not commit the workspace `.envrc`.
 
-### Switch GitHub / GitLab (local script)
-
-`git push` uses `origin`. To point `origin` at GitHub (`DinizR`) or GitLab
-(`shine-group114134`) without changing how you commit:
-
-```bash
-cd ~/projects/porto-workspace
-cp hexagonalboot-api/docs/switch-remote.sh.example switch-remote.sh
-chmod +x switch-remote.sh
-
-./switch-remote.sh github    # hexagonalboot-api + registry-api-deploy
-./switch-remote.sh gitlab
-./switch-remote.sh status
-./switch-remote.sh github hexagonalboot-api
-```
-
-That file is **local** (gitignored as `switch-remote.sh`). Named remotes
-`github` and `gitlab` stay on each repo, so `git push github` still works
-without switching.
-
-`porto-api-common`, `porto-shared-plugins`, and `registry` are **folders** in
-the GitLab `porto-api-plugins` repo, not their own git roots. GitHub has them
-as separate repos; this script does not retarget the plugins monorepo to
-GitHub. Shine Media deploy stays GitLab-only. HexagonalBoot on GitLab may
-need the GitLab project created before the first `git push`. GitHub
-`registry-api-deploy` has no GitLab history — the first GitHub push may need
-`--force`.
-
 ## Runtime home
 
 `PORTO_API_HOME` is the product on disk. A typical layout:
