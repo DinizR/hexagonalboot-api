@@ -375,3 +375,8 @@ A Java bump without a Spring Boot bump is fine if Boot still supports that JDK. 
 
 - **porto-core** — hexagonal contracts: `EntryAdapter`, `ClientAdapter`, `BusinessProcessor`, `Context` (host-agnostic)
 - **porto-api-common** — SPI that application plugins compile against (keep host-agnostic so the same JARs can run on Spring Boot, Quarkus, or Micronaut)
+
+## License
+
+Copyright 2026 Rodrigo Dinis. Licensed under the Apache License, Version 2.0.
+See [LICENSE](LICENSE) and [NOTICE](NOTICE).
